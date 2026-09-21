@@ -1,0 +1,1358 @@
+# Copyright (C) 2026 PFont contributors
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: PFont 1.4.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/universal-custom-fonts\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-19T19:48:09+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: universal-custom-fonts\n"
+
+#. Plugin Name of the plugin
+#: universal-custom-fonts.php
+msgid "PFont"
+msgstr ""
+
+#. Description of the plugin
+#: universal-custom-fonts.php
+msgid "One font library for WordPress. Upload fonts or add Google Fonts once, then pick them from the native font dropdowns of the Classic Editor, Block Editor, Elementor, Astra and supported themes."
+msgstr ""
+
+#. Author of the plugin
+#: universal-custom-fonts.php
+msgid "PFont contributors"
+msgstr ""
+
+#: includes/Admin/Actions.php:44
+msgid "You are not allowed to manage fonts."
+msgstr ""
+
+#: includes/Admin/Actions.php:88
+msgid "Upload at least one font file (WOFF2 is recommended)."
+msgstr ""
+
+#. translators: %s: font name.
+#: includes/Admin/Actions.php:116
+#, php-format
+msgid "“%s” was saved."
+msgstr ""
+
+#. translators: %s: font name.
+#: includes/Admin/Actions.php:149
+#, php-format
+msgid "“%s” was deleted."
+msgstr ""
+
+#. translators: %s: comma-separated font names.
+#: includes/Admin/Actions.php:185
+#, php-format
+msgid "Added: %s. They load from the CDN until you open a font and choose “Host on this server”."
+msgstr ""
+
+#: includes/Admin/Actions.php:187
+msgid "Nothing was added."
+msgstr ""
+
+#: includes/Admin/Actions.php:219
+msgid "Changes saved."
+msgstr ""
+
+#. translators: 1: font name, 2: number of files.
+#: includes/Admin/Actions.php:254
+#, php-format
+msgid "“%1$s” is now served from your server (%2$d files, no third-party requests)."
+msgstr ""
+
+#. translators: %s: Google family name.
+#: includes/Admin/Actions.php:266
+#, php-format
+msgid "Rename the CSS family back to “%s” before switching to the CDN."
+msgstr ""
+
+#: includes/Admin/Actions.php:282
+msgid "Switched back to the CDN and removed the local copies."
+msgstr ""
+
+#: includes/Admin/Actions.php:295
+msgid "The stylesheet could not be checked right now. It was saved anyway."
+msgstr ""
+
+#. translators: %d: HTTP status.
+#: includes/Admin/Actions.php:300
+#, php-format
+msgid "The stylesheet URL answered with HTTP %d."
+msgstr ""
+
+#. translators: 1: declared names, 2: entered family.
+#: includes/Admin/Actions.php:311
+#, php-format
+msgid "That stylesheet declares %1$s, not “%2$s”. Use the exact family name it declares."
+msgstr ""
+
+#: includes/Admin/Actions.php:320
+msgid "The font service could not be reached to verify this font. It was saved anyway."
+msgstr ""
+
+#. translators: %s: family.
+#: includes/Admin/Actions.php:325
+#, php-format
+msgid "The font service rejected “%s” with the selected weights or styles. Check the exact name and the available weights on fonts.google.com."
+msgstr ""
+
+#. translators: %d: HTTP status.
+#: includes/Admin/Actions.php:329
+#, php-format
+msgid "The font service answered with HTTP %d, so the font could not be verified. It was saved anyway."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:97
+msgid "Fonts"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:193
+#: includes/Admin/FontForm.php:50
+#: includes/Admin/FontForm.php:81
+#: includes/Admin/FontView.php:92
+#: includes/Admin/FontView.php:149
+msgid "Library"
+msgstr ""
+
+#. translators: %s: font name.
+#: includes/Admin/AdminPage.php:194
+#: includes/Admin/FontForm.php:77
+msgid "Add new font"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:195
+#: includes/Admin/IntegrationsView.php:24
+msgid "Integrations"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:196
+#: includes/Admin/AdminPage.php:335
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:199
+#: includes/Admin/DebugPanel.php:28
+msgid "Debug"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:203
+msgid "PFont sections"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:208
+#: includes/Admin/HelpView.php:21
+msgid "Help"
+msgstr ""
+
+#. translators: %s: plugin version.
+#. translators: %s: version number.
+#: includes/Admin/AdminPage.php:211
+#: includes/Admin/IntegrationsView.php:48
+#, php-format
+msgid "Version %s"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:335
+msgid "How fonts load on your site, and what happens when the plugin is deleted."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:339
+#: includes/Admin/FontForm.php:171
+msgid "Loading"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:340
+msgid "Load CDN fonts"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:341
+msgid "Only on pages that use them"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:341
+msgid "Recommended. Elementor and Astra report exactly which fonts a page uses; for other editors the font name is found in the page content and settings."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:342
+msgid "On every page"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:342
+msgid "Only for troubleshooting a font that does not show up."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:343
+msgid "Font CDN"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:347
+msgid "Bunny Fonts is an EU-based alternative with the same fonts. Hosting fonts on your own server is the most private option."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:348
+msgid "Connect to the CDN early"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:348
+msgid "Adds a preconnect hint on pages that use a CDN font, so text appears sooner."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:351
+msgid "Editors"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:353
+msgid "Font menu in the Classic Editor"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:353
+msgid "Adds the font dropdown to the second toolbar row when it is missing."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:356
+msgid "WordPress admin"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:356
+msgid "Use one of your fonts for the dashboard screens and the toolbar. Visitors never see this."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:359
+msgid "When the plugin is deleted"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:359
+msgid "Both options are off by default, so nothing is lost by accident."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:361
+msgid "Delete font files"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:361
+msgid "Removes the folder wp-content/uploads/universal-custom-fonts."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:362
+msgid "Delete the font library and settings"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:362
+msgid "Removes every font entry and these settings from the database."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:365
+msgid "Troubleshooting"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:367
+msgid "Debug mode"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:367
+msgid "Shows the Debug page and records which fonts the last front-end page loaded."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:370
+msgid "Save settings"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:383
+msgid "Admin area font"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:385
+msgid "WordPress default"
+msgstr ""
+
+#. translators: %s: font name.
+#: includes/Admin/AdminPage.php:393
+#, php-format
+msgid "%s (disabled, not applied)"
+msgstr ""
+
+#: includes/Admin/AdminPage.php:396
+msgid "Icons, code fields and the content you edit keep their own fonts. Only enabled fonts are listed."
+msgstr ""
+
+#: includes/Admin/AdminPage.php:398
+msgid "This font loads from a CDN on every admin screen; host it on this server to avoid that request."
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:28
+msgid "Technical details for troubleshooting. Server paths are never shown."
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:30
+msgid "Turn on debug mode under Settings to use this page."
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:36
+msgid "Environment"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:54
+msgid "no hooks needed"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:55
+msgid "not detected"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:57
+msgid "Registered hooks"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:70
+msgid "Font registry"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:71
+msgid "Generated @font-face CSS"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:72
+msgid "CDN stylesheet URLs"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:74
+msgid "Last front-end page with fonts"
+msgstr ""
+
+#: includes/Admin/DebugPanel.php:74
+msgid "Nothing recorded yet. Visit a page that uses a font."
+msgstr ""
+
+#: includes/Admin/FontForm.php:50
+#: includes/Admin/FontView.php:92
+msgid "Font not found"
+msgstr ""
+
+#: includes/Admin/FontForm.php:50
+#: includes/Admin/FontView.php:92
+msgid "It may have been deleted."
+msgstr ""
+
+#. translators: %s: font name.
+#: includes/Admin/FontForm.php:77
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: includes/Admin/FontForm.php:78
+msgid "Changes apply everywhere this font is used."
+msgstr ""
+
+#: includes/Admin/FontForm.php:78
+msgid "Choose a Google font or upload your own files."
+msgstr ""
+
+#: includes/Admin/FontForm.php:87
+msgid "Save"
+msgstr ""
+
+#: includes/Admin/FontForm.php:89
+#: includes/Admin/FontView.php:334
+msgid "Source"
+msgstr ""
+
+#: includes/Admin/FontForm.php:91
+msgid "Google Fonts"
+msgstr ""
+
+#: includes/Admin/FontForm.php:91
+msgid "Pick a Google font. You can host it on this server later with one click."
+msgstr ""
+
+#: includes/Admin/FontForm.php:92
+msgid "Upload custom font"
+msgstr ""
+
+#: includes/Admin/FontForm.php:92
+msgid "Use your own WOFF2, WOFF, TTF or OTF files."
+msgstr ""
+
+#: includes/Admin/FontForm.php:95
+msgid "Font"
+msgstr ""
+
+#: includes/Admin/FontForm.php:96
+msgid "Google font"
+msgstr ""
+
+#: includes/Admin/FontForm.php:96
+msgid "Another Google font (type its exact name below)"
+msgstr ""
+
+#: includes/Admin/FontForm.php:108
+msgid "Display name"
+msgstr ""
+
+#: includes/Admin/FontForm.php:108
+msgid "Shown in font menus."
+msgstr ""
+
+#: includes/Admin/FontForm.php:109
+msgid "CSS font family"
+msgstr ""
+
+#: includes/Admin/FontForm.php:109
+msgid "The exact name written into CSS. For your own copy of a font that Elementor or Astra already list, use an alias such as “Vazirmatn Local”."
+msgstr ""
+
+#: includes/Admin/FontForm.php:110
+msgid "Fallback"
+msgstr ""
+
+#: includes/Admin/FontForm.php:110
+msgid "Shown while the font loads, for example “Tahoma, sans-serif”."
+msgstr ""
+
+#: includes/Admin/FontForm.php:111
+msgid "Custom stylesheet URL"
+msgstr ""
+
+#: includes/Admin/FontForm.php:111
+msgid "Optional. Only for fonts from another CDN (https)."
+msgstr ""
+
+#: includes/Admin/FontForm.php:115
+msgid "Weights and styles"
+msgstr ""
+
+#: includes/Admin/FontForm.php:115
+msgid "For variable fonts, two or more weights download the same file as the full range. Unsupported combinations are rejected when you save."
+msgstr ""
+
+#: includes/Admin/FontForm.php:116
+#: includes/Admin/FontView.php:335
+msgid "Weights"
+msgstr ""
+
+#: includes/Admin/FontForm.php:120
+#: includes/Admin/FontView.php:181
+#: includes/Admin/FontView.php:336
+msgid "Styles"
+msgstr ""
+
+#: includes/Admin/FontForm.php:126
+#: includes/Admin/FontForm.php:280
+#: includes/Admin/FontView.php:201
+#: includes/Admin/FontView.php:235
+#: includes/Admin/FontView.php:330
+msgid "Italic"
+msgstr ""
+
+#: includes/Admin/FontForm.php:126
+#: includes/Admin/FontForm.php:279
+#: includes/Admin/FontView.php:330
+msgid "Normal"
+msgstr ""
+
+#: includes/Admin/FontForm.php:132
+#: includes/Admin/FontForm.php:226
+#: includes/Admin/FontView.php:338
+msgid "Files"
+msgstr ""
+
+#. translators: %s: size limit.
+#: includes/Admin/FontForm.php:134
+#, php-format
+msgid "One row per weight and style. WOFF2 is best; the real format is read from the file contents, not the name. Limit: %s per file."
+msgstr ""
+
+#: includes/Admin/FontForm.php:144
+#: includes/Admin/FontView.php:386
+msgid "Where it appears"
+msgstr ""
+
+#: includes/Admin/FontForm.php:144
+msgid "Turn a place off to keep this font out of its font menus."
+msgstr ""
+
+#: includes/Admin/FontForm.php:151
+msgid "Not detected on this site"
+msgstr ""
+
+#. translators: %s: version number.
+#: includes/Admin/FontForm.php:154
+#, php-format
+msgid "Detected, version %s"
+msgstr ""
+
+#: includes/Admin/FontForm.php:156
+msgid "Detected"
+msgstr ""
+
+#: includes/Admin/FontForm.php:172
+msgid "Text while the font loads"
+msgstr ""
+
+#: includes/Admin/FontForm.php:176
+msgid "“swap” shows text at once in the fallback font, then switches to this font."
+msgstr ""
+
+#: includes/Admin/FontForm.php:177
+#: includes/Admin/FontView.php:155
+msgid "Enabled"
+msgstr ""
+
+#: includes/Admin/FontForm.php:177
+msgid "Turn off to hide the font everywhere without deleting it."
+msgstr ""
+
+#: includes/Admin/FontForm.php:181
+msgid "Cancel"
+msgstr ""
+
+#: includes/Admin/FontForm.php:182
+#: includes/Admin/FontList.php:211
+msgid "Save changes"
+msgstr ""
+
+#: includes/Admin/FontForm.php:182
+msgid "Add font"
+msgstr ""
+
+#: includes/Admin/FontForm.php:193
+msgid "Hosting"
+msgstr ""
+
+#: includes/Admin/FontForm.php:199
+#: includes/Admin/FontList.php:75
+msgid "Hosted on this server"
+msgstr ""
+
+#. translators: %s: date.
+#: includes/Admin/FontForm.php:201
+#, php-format
+msgid "Downloaded %s. Visitors never contact the font service."
+msgstr ""
+
+#: includes/Admin/FontForm.php:202
+msgid "Switch back to the CDN"
+msgstr ""
+
+#: includes/Admin/FontForm.php:207
+msgid "Loaded from the CDN"
+msgstr ""
+
+#: includes/Admin/FontForm.php:208
+msgid "Hosting it here removes third-party requests (GDPR) and allows an alias name."
+msgstr ""
+
+#: includes/Admin/FontForm.php:209
+#: includes/Admin/FontList.php:155
+msgid "Host on this server"
+msgstr ""
+
+#: includes/Admin/FontForm.php:224
+#: includes/Admin/FontForm.php:271
+#: includes/Admin/FontView.php:183
+msgid "Weight"
+msgstr ""
+
+#: includes/Admin/FontForm.php:225
+#: includes/Admin/FontForm.php:278
+msgid "Style"
+msgstr ""
+
+#: includes/Admin/FontForm.php:227
+msgid "Replace or add formats"
+msgstr ""
+
+#: includes/Admin/FontForm.php:228
+#: includes/Admin/FontList.php:255
+msgid "Delete"
+msgstr ""
+
+#: includes/Admin/FontForm.php:245
+msgid "remove"
+msgstr ""
+
+#. translators: %s: weight-style key.
+#: includes/Admin/FontForm.php:252
+#, php-format
+msgid "Delete %s"
+msgstr ""
+
+#: includes/Admin/FontForm.php:258
+msgid "Add weights"
+msgstr ""
+
+#: includes/Admin/FontForm.php:262
+msgid "Add another weight"
+msgstr ""
+
+#: includes/Admin/FontForm.php:281
+msgid "Remove row"
+msgstr ""
+
+#: includes/Admin/FontList.php:28
+msgid "Classic Editor"
+msgstr ""
+
+#: includes/Admin/FontList.php:29
+msgid "Block Editor"
+msgstr ""
+
+#. translators: %s: theme name.
+#: includes/Admin/FontList.php:32
+#: includes/Integrations/CustomizerAdapter.php:49
+msgid "Theme Customizer"
+msgstr ""
+
+#: includes/Admin/FontList.php:43
+msgid "تمام افراد بشر آزاد به دنیا می‌آیند و از لحاظ حیثیت و حقوق با هم برابرند."
+msgstr ""
+
+#: includes/Admin/FontList.php:44
+msgid "All human beings are born free and equal in dignity and rights."
+msgstr ""
+
+#: includes/Admin/FontList.php:69
+msgid "Uploaded files"
+msgstr ""
+
+#: includes/Admin/FontList.php:72
+msgid "Custom CDN"
+msgstr ""
+
+#. translators: %s: font service name.
+#: includes/Admin/FontList.php:78
+#, php-format
+msgid "%s (CDN)"
+msgstr ""
+
+#. translators: 1: lightest weight, 2: boldest weight.
+#: includes/Admin/FontList.php:92
+#, php-format
+msgid "Variable %1$d–%2$d"
+msgstr ""
+
+#. translators: %s: comma-separated weights.
+#: includes/Admin/FontList.php:95
+#, php-format
+msgid "Weight %s"
+msgid_plural "Weights %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Admin/FontList.php:118
+msgid "Font library"
+msgstr ""
+
+#: includes/Admin/FontList.php:118
+msgid "Fonts here appear in the editors and builders you choose. Each page loads only the fonts it uses."
+msgstr ""
+
+#: includes/Admin/FontList.php:150
+msgid "Privacy"
+msgstr ""
+
+#. translators: %d: number of fonts.
+#: includes/Admin/FontList.php:152
+#, php-format
+msgid "%d font loads from a third-party CDN, which receives your visitors’ IP addresses."
+msgid_plural "%d fonts load from a third-party CDN, which receives your visitors’ IP addresses."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Admin/FontList.php:178
+#: includes/Admin/FontList.php:180
+msgid "Search fonts"
+msgstr ""
+
+#: includes/Admin/FontList.php:181
+#: includes/Admin/FontView.php:108
+msgid "Preview text"
+msgstr ""
+
+#: includes/Admin/FontList.php:181
+msgid "Type your own preview text"
+msgstr ""
+
+#: includes/Admin/FontList.php:184
+msgid "Writing system"
+msgstr ""
+
+#: includes/Admin/FontList.php:185
+msgid "Automatic script"
+msgstr ""
+
+#: includes/Admin/FontList.php:186
+#: includes/Admin/FontView.php:110
+msgid "Persian"
+msgstr ""
+
+#: includes/Admin/FontList.php:187
+#: includes/Admin/FontView.php:112
+msgid "Latin"
+msgstr ""
+
+#: includes/Admin/FontList.php:189
+msgid "Preview size"
+msgstr ""
+
+#. translators: 1: fonts shown, 2: fonts in the library.
+#: includes/Admin/FontList.php:196
+#: includes/Admin/FontList.php:203
+#, php-format
+msgid "%1$s of %2$s font"
+msgid_plural "%1$s of %2$s fonts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: fonts shown, 2: fonts in the library.
+#: includes/Admin/FontList.php:198
+#, php-format
+msgid "%1$s of %2$s fonts"
+msgstr ""
+
+#: includes/Admin/FontList.php:206
+msgid "How loading works"
+msgstr ""
+
+#: includes/Admin/FontList.php:210
+msgid "No fonts match your search."
+msgstr ""
+
+#: includes/Admin/FontList.php:235
+#: includes/Admin/FontView.php:155
+msgid "Disabled"
+msgstr ""
+
+#. translators: %s: font name.
+#: includes/Admin/FontList.php:241
+#, php-format
+msgid "Enable %s"
+msgstr ""
+
+#: includes/Admin/FontList.php:250
+#: includes/Admin/FontView.php:158
+msgid "Edit settings"
+msgstr ""
+
+#. translators: %s: font name.
+#: includes/Admin/FontList.php:257
+#, php-format
+msgid "Delete “%s” and its files?"
+msgstr ""
+
+#: includes/Admin/FontList.php:280
+msgid "Add a Persian font above, or upload your own WOFF2, WOFF, TTF or OTF files."
+msgstr ""
+
+#: includes/Admin/FontList.php:281
+msgid "Upload your own WOFF2, WOFF, TTF or OTF files."
+msgstr ""
+
+#: includes/Admin/FontList.php:282
+msgid "Your library is empty"
+msgstr ""
+
+#: includes/Admin/FontList.php:283
+msgid "Upload a font"
+msgstr ""
+
+#: includes/Admin/FontList.php:298
+msgid "Persian and Arabic fonts"
+msgstr ""
+
+#. translators: %s: font service name.
+#: includes/Admin/FontList.php:300
+#, php-format
+msgid "Free Google Fonts under the SIL Open Font License. These previews load from %s; nothing is added to your site until you select a font."
+msgstr ""
+
+#: includes/Admin/FontList.php:306
+msgid "Serif"
+msgstr ""
+
+#: includes/Admin/FontList.php:307
+msgid "Sans-serif"
+msgstr ""
+
+#: includes/Admin/FontList.php:315
+msgid "خوش آمدید"
+msgstr ""
+
+#. translators: 1: font category, 2: weight range.
+#: includes/Admin/FontList.php:318
+#, php-format
+msgid "%1$s | weights %2$s"
+msgstr ""
+
+#: includes/Admin/FontList.php:321
+msgid "Add selected fonts"
+msgstr ""
+
+#: includes/Admin/FontView.php:29
+msgid "تمام افراد بشر آزاد به دنیا می‌آیند"
+msgstr ""
+
+#: includes/Admin/FontView.php:30
+msgid "تمام افراد بشر آزاد به دنیا می‌آیند و از لحاظ حیثیت و حقوق با هم برابرند. همه دارای عقل و وجدان هستند و باید نسبت به یکدیگر با روح برادری رفتار کنند."
+msgstr ""
+
+#: includes/Admin/FontView.php:31
+msgid "اعداد: ۰۱۲۳۴۵۶۷۸۹ | قیمت: ۲٬۴۵۰٬۰۰۰ تومان | تخفیف ۳۰٪"
+msgstr ""
+
+#: includes/Admin/FontView.php:32
+msgid "زیبایی در سادگی است"
+msgstr ""
+
+#: includes/Admin/FontView.php:35
+msgid "Sphinx of black quartz, judge my vow"
+msgstr ""
+
+#: includes/Admin/FontView.php:36
+msgid "All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood."
+msgstr ""
+
+#: includes/Admin/FontView.php:37
+msgid "Numbers: 0123456789 | Price: $1,249.00 | Save 30 percent"
+msgstr ""
+
+#: includes/Admin/FontView.php:38
+msgid "Beauty lives in simplicity"
+msgstr ""
+
+#: includes/Admin/FontView.php:50
+msgid "Thin"
+msgstr ""
+
+#: includes/Admin/FontView.php:51
+msgid "Extra Light"
+msgstr ""
+
+#: includes/Admin/FontView.php:52
+msgid "Light"
+msgstr ""
+
+#: includes/Admin/FontView.php:53
+msgid "Regular"
+msgstr ""
+
+#: includes/Admin/FontView.php:54
+msgid "Medium"
+msgstr ""
+
+#: includes/Admin/FontView.php:55
+msgid "Semibold"
+msgstr ""
+
+#: includes/Admin/FontView.php:56
+msgid "Bold"
+msgstr ""
+
+#: includes/Admin/FontView.php:57
+msgid "Extra Bold"
+msgstr ""
+
+#: includes/Admin/FontView.php:58
+msgid "Black"
+msgstr ""
+
+#: includes/Admin/FontView.php:119
+msgid "Sizes"
+msgstr ""
+
+#: includes/Admin/FontView.php:129
+msgid "Characters"
+msgstr ""
+
+#: includes/Admin/FontView.php:181
+msgid "Style controls"
+msgstr ""
+
+#: includes/Admin/FontView.php:181
+msgid "Reset styles"
+msgstr ""
+
+#: includes/Admin/FontView.php:183
+msgid "Named weight"
+msgstr ""
+
+#: includes/Admin/FontView.php:199
+msgid "This font has a single weight."
+msgstr ""
+
+#: includes/Admin/FontView.php:203
+msgid "No italic files are included, so browsers would only slant the letters."
+msgstr ""
+
+#: includes/Admin/FontView.php:207
+msgid "Size"
+msgstr ""
+
+#: includes/Admin/FontView.php:208
+msgid "Line height"
+msgstr ""
+
+#: includes/Admin/FontView.php:223
+msgid "Type tester"
+msgstr ""
+
+#: includes/Admin/FontView.php:223
+msgid "Preview formatting"
+msgstr ""
+
+#: includes/Admin/FontView.php:224
+msgid "Smaller"
+msgstr ""
+
+#: includes/Admin/FontView.php:226
+msgid "Larger"
+msgstr ""
+
+#: includes/Admin/FontView.php:239
+msgid "Align to start"
+msgstr ""
+
+#: includes/Admin/FontView.php:240
+msgid "Center"
+msgstr ""
+
+#: includes/Admin/FontView.php:241
+msgid "Align to end"
+msgstr ""
+
+#: includes/Admin/FontView.php:242
+msgid "Justify"
+msgstr ""
+
+#: includes/Admin/FontView.php:261
+msgid "Right to left"
+msgstr ""
+
+#: includes/Admin/FontView.php:273
+msgid "Editable preview text"
+msgstr ""
+
+#: includes/Admin/FontView.php:281
+msgid "Copied"
+msgstr ""
+
+#: includes/Admin/FontView.php:282
+msgid "Copy"
+msgstr ""
+
+#: includes/Admin/FontView.php:333
+msgid "CSS family"
+msgstr ""
+
+#: includes/Admin/FontView.php:337
+msgid "Text while loading"
+msgstr ""
+
+#: includes/Admin/FontView.php:341
+msgid "Scripts"
+msgstr ""
+
+#: includes/Admin/FontView.php:343
+msgid "Details"
+msgstr ""
+
+#. translators: 1: number of files, 2: date.
+#: includes/Admin/FontView.php:375
+#, php-format
+msgid "%1$d WOFF2 files, downloaded %2$s"
+msgstr ""
+
+#: includes/Admin/FontView.php:377
+msgid "Served by the CDN"
+msgstr ""
+
+#: includes/Admin/FontView.php:392
+msgid "Not on this site"
+msgstr ""
+
+#: includes/Admin/FontView.php:394
+msgid "In the font menus"
+msgstr ""
+
+#: includes/Admin/FontView.php:396
+msgid "Turned off"
+msgstr ""
+
+#: includes/Admin/FontView.php:411
+msgid "Change where it appears"
+msgstr ""
+
+#: includes/Admin/HelpView.php:21
+msgid "Short answers to common questions."
+msgstr ""
+
+#: includes/Admin/HelpView.php:25
+msgid "How are fonts loaded?"
+msgstr ""
+
+#: includes/Admin/HelpView.php:27
+msgid "Each page loads only the fonts it uses. Elementor and Astra report exactly which fonts a page needs; for the Classic Editor, Block Editor and theme settings, the font name is found in the page content and saved settings."
+msgstr ""
+
+#: includes/Admin/HelpView.php:28
+msgid "Fonts on your server are added as one small inline style. CDN fonts add one stylesheet, only on pages that use them."
+msgstr ""
+
+#: includes/Admin/HelpView.php:31
+msgid "Which file format should I upload?"
+msgstr ""
+
+#: includes/Admin/HelpView.php:31
+msgid "WOFF2. It is the smallest format and every current browser supports it."
+msgstr ""
+
+#: includes/Admin/HelpView.php:34
+msgid "Where do I choose a font in my editor or builder?"
+msgstr ""
+
+#: includes/Admin/HelpView.php:36
+msgid "Classic Editor: the Font Family menu in the toolbar."
+msgstr ""
+
+#: includes/Admin/HelpView.php:37
+msgid "Block Editor: Typography → Font in the block settings, or Styles → Typography in the Site Editor."
+msgstr ""
+
+#: includes/Admin/HelpView.php:38
+msgid "Elementor: Style → Typography → Family, in the “PFont” group."
+msgstr ""
+
+#: includes/Admin/HelpView.php:39
+msgid "Astra: Customizer → Global → Typography."
+msgstr ""
+
+#: includes/Admin/HelpView.php:43
+msgid "Why host Google Fonts on my own server?"
+msgstr ""
+
+#: includes/Admin/HelpView.php:43
+msgid "A font loaded from a CDN sends each visitor’s IP address to that service. A German court (LG München I, 20 January 2022, 3 O 17493/20) awarded damages for embedding Google Fonts without consent. Hosting the files on your server avoids that request. This is not legal advice."
+msgstr ""
+
+#: includes/Admin/HelpView.php:46
+msgid "What about Divi, WoodMart and other themes with their own font upload?"
+msgstr ""
+
+#: includes/Admin/HelpView.php:48
+msgid "Divi and WoodMart already include a custom font uploader, so this plugin does not integrate with them. Upload the font in the builder or theme itself: in Divi, open any font menu and choose Upload; in WoodMart, go to Theme Settings → Typography → Custom fonts."
+msgstr ""
+
+#: includes/Admin/HelpView.php:53
+msgid "Can I change the font of the WordPress admin area?"
+msgstr ""
+
+#: includes/Admin/HelpView.php:55
+msgid "Yes. Under Settings → WordPress admin, choose any enabled font from your library. It is applied to the dashboard screens and the toolbar. Icons, code fields and the content you edit keep their own fonts."
+msgstr ""
+
+#: includes/Admin/HelpView.php:60
+msgid "A font does not appear. What should I check?"
+msgstr ""
+
+#: includes/Admin/HelpView.php:62
+msgid "The font is enabled and turned on for that editor under “Where it appears”."
+msgstr ""
+
+#: includes/Admin/HelpView.php:63
+msgid "Caching and CSS optimization plugins are cleared, then the page is reloaded."
+msgstr ""
+
+#: includes/Admin/HelpView.php:64
+msgid "Debug mode (under Settings) shows which fonts the last page loaded."
+msgstr ""
+
+#: includes/Admin/HelpView.php:69
+msgid "Testing checklist"
+msgstr ""
+
+#: includes/Admin/HelpView.php:70
+msgid "Developer guide"
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:24
+msgid "Where your fonts can appear, and what was found on this site."
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:52
+msgid "font"
+msgid_plural "fonts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Admin/IntegrationsView.php:68
+msgid "Active"
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:69
+msgid "Limited"
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:70
+msgid "Unsupported"
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:71
+msgid "Not detected"
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:72
+msgid "Not needed"
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:85
+msgid "Theme Customizer fonts"
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:85
+msgid "Fonts offered to supported theme Customizers. Kadence lists them; GeneratePress loads them by name."
+msgstr ""
+
+#: includes/Admin/IntegrationsView.php:97
+msgid "Save Customizer fonts"
+msgstr ""
+
+#: includes/Core/FontValidator.php:93
+msgid "Enter a CSS font family name."
+msgstr ""
+
+#: includes/Core/FontValidator.php:96
+msgid "The font family name must be 80 characters or fewer."
+msgstr ""
+
+#: includes/Core/FontValidator.php:99
+msgid "Use only letters, numbers, spaces, hyphens and underscores in the font family name, starting with a letter."
+msgstr ""
+
+#: includes/Core/FontValidator.php:103
+msgid "Each word of the font family name must start with a letter (for example \"Font 2\" is not a valid unquoted CSS name)."
+msgstr ""
+
+#: includes/Core/FontValidator.php:108
+msgid "That name is reserved by CSS. Choose a real font name."
+msgstr ""
+
+#. translators: 1: family name, 2: suggested alias.
+#: includes/Core/FontValidator.php:174
+#, php-format
+msgid "Another font in your library already uses the CSS family “%1$s”. Use a different alias, for example “%2$s”."
+msgstr ""
+
+#: includes/Core/FontValidator.php:200
+msgid "The stylesheet URL must be a valid https:// address."
+msgstr ""
+
+#. translators: 1: Google family name.
+#: includes/Core/FontValidator.php:210
+#, php-format
+msgid "Fonts loaded from the CDN must keep their original name (“%1$s”). To use an alias, save with the original name first, then click “Host on this server”."
+msgstr ""
+
+#: includes/Core/FontValidator.php:286
+msgid "The file is larger than the server allows."
+msgstr ""
+
+#: includes/Core/FontValidator.php:287
+msgid "The file is larger than the form allows."
+msgstr ""
+
+#: includes/Core/FontValidator.php:288
+msgid "The file was only partially uploaded."
+msgstr ""
+
+#: includes/Core/FontValidator.php:289
+msgid "No file was uploaded."
+msgstr ""
+
+#: includes/Core/FontValidator.php:290
+msgid "The server has no temporary folder."
+msgstr ""
+
+#: includes/Core/FontValidator.php:291
+msgid "The server could not write the file."
+msgstr ""
+
+#: includes/Core/FontValidator.php:292
+msgid "A PHP extension stopped the upload."
+msgstr ""
+
+#: includes/Core/FontValidator.php:294
+msgid "Upload failed."
+msgstr ""
+
+#: includes/Core/FontValidator.php:299
+msgid "The uploaded file could not be verified."
+msgstr ""
+
+#: includes/Core/FontValidator.php:304
+msgid "The file is empty."
+msgstr ""
+
+#. translators: %s: size limit, e.g. "10 MB".
+#: includes/Core/FontValidator.php:311
+#, php-format
+msgid "The file is too large. The limit is %s."
+msgstr ""
+
+#: includes/Core/FontValidator.php:320
+msgid "Only .woff2, .woff, .ttf and .otf files are accepted."
+msgstr ""
+
+#: includes/Core/FontValidator.php:325
+msgid "This file is not a valid font: its contents do not match any supported font format."
+msgstr ""
+
+#. translators: 1: file extension, 2: detected format.
+#: includes/Core/FontValidator.php:333
+#, php-format
+msgid "The file is named .%1$s but its contents are %2$s. Rename or re-export it."
+msgstr ""
+
+#. translators: %s: MIME type reported by the server.
+#: includes/Core/FontValidator.php:351
+#, php-format
+msgid "The server identified this file as %s, which is not a font."
+msgstr ""
+
+#: includes/Fonts/FontStorage.php:144
+msgid "The file could not be saved."
+msgstr ""
+
+#: includes/Fonts/FontStorage.php:169
+msgid "The file could not be written."
+msgstr ""
+
+#: includes/Fonts/FontStorage.php:263
+msgid "The file was saved outside the fonts folder."
+msgstr ""
+
+#: includes/Fonts/GoogleFontsDownloader.php:32
+msgid "Only Google/Bunny fonts can be hosted locally. Custom stylesheet URLs are loaded as they are."
+msgstr ""
+
+#. translators: %d: HTTP status code.
+#: includes/Fonts/GoogleFontsDownloader.php:56
+#, php-format
+msgid "The font service answered with HTTP %d. Check the family name and the selected weights."
+msgstr ""
+
+#: includes/Fonts/GoogleFontsDownloader.php:64
+msgid "The font service returned no font files."
+msgstr ""
+
+#: includes/Fonts/GoogleFontsDownloader.php:103
+msgid "A font file could not be downloaded or failed verification. Nothing was changed."
+msgstr ""
+
+#: includes/Fonts/GoogleFontsDownloader.php:134
+msgid "No usable WOFF2/WOFF files were found."
+msgstr ""
+
+#: includes/Fonts/UploadedFonts.php:100
+msgid "A new row had an invalid weight and was skipped."
+msgstr ""
+
+#. translators: 1: file name, 2: error.
+#: includes/Fonts/UploadedFonts.php:144
+#: includes/Fonts/UploadedFonts.php:152
+#, php-format
+msgid "%1$s: %2$s"
+msgstr ""
+
+#: includes/Integrations/AbstractAdapter.php:80
+msgid "Not detected on this site."
+msgstr ""
+
+#: includes/Integrations/AbstractAdapter.php:85
+msgid "Detected. Enabled fonts appear in its native font list."
+msgstr ""
+
+#. translators: %s: family.
+#: includes/Integrations/AstraAdapter.php:202
+#, php-format
+msgid "Astra lists “%s” under Google Fonts. Pick it there: PFont serves your local copy and Astra makes no Google request."
+msgstr ""
+
+#. translators: %s: family.
+#: includes/Integrations/AstraAdapter.php:204
+#, php-format
+msgid "Astra already offers “%s” under Google Fonts and loads it itself."
+msgstr ""
+
+#: includes/Integrations/BlockEditorAdapter.php:34
+msgid "Block Editor (Gutenberg)"
+msgstr ""
+
+#: includes/Integrations/Customizer/GeneratePressProvider.php:45
+msgid "GeneratePress 3 has no font-list hook. Add the font in Customizer → Typography → Font Manager by typing its exact CSS family name; PFont then loads it wherever it is used."
+msgstr ""
+
+#: includes/Integrations/Customizer/ThemeProvider.php:59
+msgid "Fonts appear in the theme’s Customizer typography controls."
+msgstr ""
+
+#. translators: %s: theme name.
+#: includes/Integrations/CustomizerAdapter.php:49
+#, php-format
+msgid "Customizer (%s)"
+msgstr ""
+
+#. translators: %s: theme name.
+#: includes/Integrations/CustomizerAdapter.php:150
+#, php-format
+msgid "%s has its own integration above, so this entry is not needed."
+msgstr ""
+
+#. translators: %s: theme name.
+#: includes/Integrations/CustomizerAdapter.php:159
+#, php-format
+msgid "Your theme (%s) has no supported public font hook, so nothing is added to its Customizer. If the theme has its own custom font upload (Divi and WoodMart do), add the font there. Your fonts still work in the editors and builders listed above."
+msgstr ""
+
+#: includes/Integrations/ElementorAdapter.php:112
+msgid "another plugin already registers this family in Elementor"
+msgstr ""
+
+#: includes/Integrations/ElementorAdapter.php:116
+msgid "Elementor already ships this CDN font; Elementor loads it"
+msgstr ""
+
+#. translators: %s: family.
+#: includes/Integrations/ElementorAdapter.php:181
+#, php-format
+msgid "Elementor also ships “%s” from Google. Your local copy replaces it in Elementor, so no Google request is made."
+msgstr ""
+
+#. translators: %s: family.
+#: includes/Integrations/ElementorAdapter.php:183
+#, php-format
+msgid "Elementor already ships “%s”, so PFont leaves it in Elementor’s own list. Host it locally to serve it from your server instead."
+msgstr ""
+
+#. translators: %s: group name.
+#: includes/Integrations/ElementorAdapter.php:203
+#, php-format
+msgid "Fonts appear in the typography font list under “%s” and load only on pages that use them."
+msgstr ""
+
+#: includes/Integrations/TinyMceAdapter.php:38
+msgid "Classic Editor (TinyMCE)"
+msgstr ""
+
+#. translators: 1: minimum PHP version, 2: minimum WordPress version.
+#: universal-custom-fonts.php:51
+#, php-format
+msgid "PFont needs PHP %1$s or newer and WordPress %2$s or newer. It stays inactive until the server is updated."
+msgstr ""
