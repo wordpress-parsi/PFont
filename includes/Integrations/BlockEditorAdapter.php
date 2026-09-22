@@ -2,16 +2,16 @@
 /**
  * Block Editor (Gutenberg) via theme.json data.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Fonts\FontStorage;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Core\Font;
+use PFont\Core\FontLoader;
+use PFont\Core\FontRegistry;
+use PFont\Fonts\FontStorage;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +31,7 @@ final class BlockEditorAdapter extends AbstractAdapter {
 	 * {@inheritDoc}
 	 */
 	public function label(): string {
-		return __( 'Block Editor (Gutenberg)', 'universal-custom-fonts' );
+		return __( 'Block Editor (Gutenberg)', 'pfont' );
 	}
 
 	/**

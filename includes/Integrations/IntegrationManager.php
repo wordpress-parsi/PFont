@@ -2,12 +2,12 @@
 /**
  * Creates adapters, registers the available ones and coordinates front-end loading.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
-use UniversalCustomFonts\Core\FontRegistry;
+use PFont\Core\FontRegistry;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -117,7 +117,7 @@ final class IntegrationManager {
 		if ( ! FontRegistry::has_enabled_fonts() ) {
 			return;
 		}
-		$always = 'always' === \UniversalCustomFonts\Core\Settings::get( 'remote_strategy' );
+		$always = 'always' === \PFont\Core\Settings::get( 'remote_strategy' );
 		foreach ( self::available() as $adapter ) {
 			if ( $always ) {
 				$adapter->enqueue_all();

@@ -1,13 +1,13 @@
 <?php
 /**
- * Files on disk: wp-content/uploads/universal-custom-fonts/.
+ * Files on disk: wp-content/uploads/pfont/.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Fonts;
+namespace PFont\Fonts;
 
-use UniversalCustomFonts\Core\FontValidator;
+use PFont\Core\FontValidator;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class FontStorage {
 
-	public const DIR = 'universal-custom-fonts';
+	public const DIR = 'pfont';
 
 	/**
 	 * Uploads info without creating the dated folder.
@@ -141,7 +141,7 @@ final class FontStorage {
 		);
 
 		if ( ! is_array( $result ) || ! empty( $result['error'] ) ) {
-			return new WP_Error( 'ucf_store_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be saved.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_store_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be saved.', 'pfont' ) );
 		}
 		return self::relative_from_path( (string) $result['file'] );
 	}
@@ -166,7 +166,7 @@ final class FontStorage {
 			}
 		);
 		if ( ! is_array( $result ) || ! empty( $result['error'] ) ) {
-			return new WP_Error( 'ucf_write_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be written.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_write_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be written.', 'pfont' ) );
 		}
 		return self::relative_from_path( (string) $result['file'] );
 	}
@@ -260,7 +260,7 @@ final class FontStorage {
 		$base = wp_normalize_path( self::base_dir() ) . '/';
 		$path = wp_normalize_path( $path );
 		if ( ! str_starts_with( $path, $base ) ) {
-			return new WP_Error( 'ucf_path', __( 'The file was saved outside the fonts folder.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_path', __( 'The file was saved outside the fonts folder.', 'pfont' ) );
 		}
 		return substr( $path, strlen( $base ) );
 	}

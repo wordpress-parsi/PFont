@@ -2,22 +2,22 @@
 /**
  * Form handlers (admin-post.php). Every handler checks capability and nonce first.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Core\FontRepository;
-use UniversalCustomFonts\Core\FontValidator;
-use UniversalCustomFonts\Core\Settings;
-use UniversalCustomFonts\Fonts\CdnFonts;
-use UniversalCustomFonts\Fonts\FontStorage;
-use UniversalCustomFonts\Fonts\GoogleFontsDownloader;
-use UniversalCustomFonts\Fonts\UploadedFonts;
-use UniversalCustomFonts\Helpers\FontHelper;
-use UniversalCustomFonts\Integrations\IntegrationManager;
+use PFont\Core\Font;
+use PFont\Core\FontRegistry;
+use PFont\Core\FontRepository;
+use PFont\Core\FontValidator;
+use PFont\Core\Settings;
+use PFont\Fonts\CdnFonts;
+use PFont\Fonts\FontStorage;
+use PFont\Fonts\GoogleFontsDownloader;
+use PFont\Fonts\UploadedFonts;
+use PFont\Helpers\FontHelper;
+use PFont\Integrations\IntegrationManager;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -41,7 +41,7 @@ final class Actions {
 	 */
 	private static function require_capability(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You are not allowed to manage fonts.', 'universal-custom-fonts' ), '', array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You are not allowed to manage fonts.', 'pfont' ), '', array( 'response' => 403 ) );
 		}
 	}
 
@@ -85,7 +85,7 @@ final class Actions {
 				AdminPage::notice( 'error', $message );
 			}
 			if ( ! $record['files'] ) {
-				self::fail( new WP_Error( 'ucf_no_files', __( 'Upload at least one font file (WOFF2 is recommended).', 'universal-custom-fonts' ) ), $input, $id );
+				self::fail( new WP_Error( 'ucf_no_files', __( 'Upload at least one font file (WOFF2 is recommended).', 'pfont' ) ), $input, $id );
 			}
 		} else {
 			$candidate = new Font( $record );
@@ -113,7 +113,7 @@ final class Actions {
 		}
 
 		/* translators: %s: font name. */
-		AdminPage::notice( 'success', sprintf( __( '“%s” was saved.', 'universal-custom-fonts' ), $record['name'] ) );
+		AdminPage::notice( 'success', sprintf( __( '“%s” was saved.', 'pfont' ), $record['name'] ) );
 		$font = FontRegistry::get_font( $record['id'] );
 		if ( $font ) {
 			foreach ( IntegrationManager::available() as $adapter ) {
@@ -146,7 +146,7 @@ final class Actions {
 				Settings::update( array( 'admin_font' => '' ) );
 			}
 			/* translators: %s: font name. */
-			$message = sprintf( __( '“%s” was deleted.', 'universal-custom-fonts' ), $font->name() );
+			$message = sprintf( __( '“%s” was deleted.', 'pfont' ), $font->name() );
 			AdminPage::notice( 'success', $message );
 		}
 		self::redirect();
@@ -182,9 +182,9 @@ final class Actions {
 		}
 		if ( $added ) {
 			/* translators: %s: comma-separated font names. */
-			AdminPage::notice( 'success', sprintf( __( 'Added: %s. They load from the CDN until you open a font and choose “Host on this server”.', 'universal-custom-fonts' ), implode( ', ', $added ) ) );
+			AdminPage::notice( 'success', sprintf( __( 'Added: %s. They load from the CDN until you open a font and choose “Host on this server”.', 'pfont' ), implode( ', ', $added ) ) );
 		} else {
-			AdminPage::notice( 'info', __( 'Nothing was added.', 'universal-custom-fonts' ) );
+			AdminPage::notice( 'info', __( 'Nothing was added.', 'pfont' ) );
 		}
 		self::redirect();
 	}
@@ -216,7 +216,7 @@ final class Actions {
 			}
 			FontRepository::save( array_merge( $font->to_array(), $changes ) );
 		}
-		AdminPage::notice( 'success', __( 'Changes saved.', 'universal-custom-fonts' ) );
+		AdminPage::notice( 'success', __( 'Changes saved.', 'pfont' ) );
 		self::redirect( 'customizer' === $scope ? array( 'tab' => 'integrations' ) : array() );
 	}
 
@@ -251,7 +251,7 @@ final class Actions {
 			}
 		}
 		/* translators: 1: font name, 2: number of files. */
-		AdminPage::notice( 'success', sprintf( __( '“%1$s” is now served from your server (%2$d files, no third-party requests).', 'universal-custom-fonts' ), $font->name(), count( $files ) ) );
+		AdminPage::notice( 'success', sprintf( __( '“%1$s” is now served from your server (%2$d files, no third-party requests).', 'pfont' ), $font->name(), count( $files ) ) );
 	}
 
 	/**
@@ -263,7 +263,7 @@ final class Actions {
 		$preset = $font->preset_data();
 		if ( $preset && ! FontHelper::same_family( $font->family(), $preset['family'] ) ) {
 			/* translators: %s: Google family name. */
-			AdminPage::notice( 'error', sprintf( __( 'Rename the CSS family back to “%s” before switching to the CDN.', 'universal-custom-fonts' ), $preset['family'] ) );
+			AdminPage::notice( 'error', sprintf( __( 'Rename the CSS family back to “%s” before switching to the CDN.', 'pfont' ), $preset['family'] ) );
 			return;
 		}
 		$old = (array) $font->get( 'local' );
@@ -279,7 +279,7 @@ final class Actions {
 		if ( ! empty( $old['dir'] ) ) {
 			FontStorage::delete_dir( (string) $old['dir'] );
 		}
-		AdminPage::notice( 'success', __( 'Switched back to the CDN and removed the local copies.', 'universal-custom-fonts' ) );
+		AdminPage::notice( 'success', __( 'Switched back to the CDN and removed the local copies.', 'pfont' ) );
 	}
 
 	/**
@@ -292,12 +292,12 @@ final class Actions {
 		if ( '' !== $font->cdn_url() ) {
 			$response = wp_safe_remote_get( $font->cdn_url(), array( 'timeout' => 10 ) );
 			if ( is_wp_error( $response ) ) {
-				return new WP_Error( 'ucf_remote_unreachable', __( 'The stylesheet could not be checked right now. It was saved anyway.', 'universal-custom-fonts' ) );
+				return new WP_Error( 'ucf_remote_unreachable', __( 'The stylesheet could not be checked right now. It was saved anyway.', 'pfont' ) );
 			}
 			$code = (int) wp_remote_retrieve_response_code( $response );
 			if ( 200 !== $code ) {
 				/* translators: %d: HTTP status. */
-				return new WP_Error( 'ucf_remote_http', sprintf( __( 'The stylesheet URL answered with HTTP %d.', 'universal-custom-fonts' ), $code ) );
+				return new WP_Error( 'ucf_remote_http', sprintf( __( 'The stylesheet URL answered with HTTP %d.', 'pfont' ), $code ) );
 			}
 			preg_match_all( '/font-family\s*:\s*[\'"]?([^;\'"}]+)/i', (string) wp_remote_retrieve_body( $response ), $matches );
 			$declared = array_values( array_unique( array_map( 'trim', $matches[1] ?? array() ) ) );
@@ -308,7 +308,7 @@ final class Actions {
 			}
 			if ( $declared ) {
 				/* translators: 1: declared names, 2: entered family. */
-				return new WP_Error( 'ucf_remote_family', sprintf( __( 'That stylesheet declares %1$s, not “%2$s”. Use the exact family name it declares.', 'universal-custom-fonts' ), '“' . implode( '”, “', array_slice( $declared, 0, 3 ) ) . '”', $font->family() ) );
+				return new WP_Error( 'ucf_remote_family', sprintf( __( 'That stylesheet declares %1$s, not “%2$s”. Use the exact family name it declares.', 'pfont' ), '“' . implode( '”, “', array_slice( $declared, 0, 3 ) ) . '”', $font->family() ) );
 			}
 			return true;
 		}
@@ -317,16 +317,16 @@ final class Actions {
 		$url      = CdnFonts::css2_url( array( CdnFonts::css2_family( $font->remote_family(), $font->weights(), $preset['range'] ?? null, $font->styles() ) ), $font->display() );
 		$response = wp_safe_remote_get( $url, array( 'timeout' => 10 ) );
 		if ( is_wp_error( $response ) ) {
-			return new WP_Error( 'ucf_remote_unreachable', __( 'The font service could not be reached to verify this font. It was saved anyway.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_remote_unreachable', __( 'The font service could not be reached to verify this font. It was saved anyway.', 'pfont' ) );
 		}
 		$code = (int) wp_remote_retrieve_response_code( $response );
 		if ( 400 === $code ) {
 			/* translators: %s: family. */
-			return new WP_Error( 'ucf_remote_invalid', sprintf( __( 'The font service rejected “%s” with the selected weights or styles. Check the exact name and the available weights on fonts.google.com.', 'universal-custom-fonts' ), $font->remote_family() ) );
+			return new WP_Error( 'ucf_remote_invalid', sprintf( __( 'The font service rejected “%s” with the selected weights or styles. Check the exact name and the available weights on fonts.google.com.', 'pfont' ), $font->remote_family() ) );
 		}
 		if ( 200 !== $code ) {
 			/* translators: %d: HTTP status. */
-			return new WP_Error( 'ucf_remote_unreachable', sprintf( __( 'The font service answered with HTTP %d, so the font could not be verified. It was saved anyway.', 'universal-custom-fonts' ), $code ) );
+			return new WP_Error( 'ucf_remote_unreachable', sprintf( __( 'The font service answered with HTTP %d, so the font could not be verified. It was saved anyway.', 'pfont' ), $code ) );
 		}
 		return true;
 	}

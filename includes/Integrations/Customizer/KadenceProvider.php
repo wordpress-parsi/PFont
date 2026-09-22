@@ -2,13 +2,13 @@
 /**
  * Kadence theme.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations\Customizer;
+namespace PFont\Integrations\Customizer;
 
-use UniversalCustomFonts\Integrations\CustomizerAdapter;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Integrations\CustomizerAdapter;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 

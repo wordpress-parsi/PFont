@@ -2,14 +2,14 @@
 /**
  * Elementor.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Core\Font;
+use PFont\Core\FontLoader;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -109,11 +109,11 @@ final class ElementorAdapter extends AbstractAdapter {
 		foreach ( $this->fonts() as $font ) {
 			$key = FontHelper::normalize_family_name( $font->family() );
 			if ( isset( $taken[ $key ] ) ) {
-				$this->skipped[ $font->id() ] = __( 'another plugin already registers this family in Elementor', 'universal-custom-fonts' );
+				$this->skipped[ $font->id() ] = __( 'another plugin already registers this family in Elementor', 'pfont' );
 				continue;
 			}
 			if ( isset( $native[ $key ] ) && ! $font->is_local() ) {
-				$this->skipped[ $font->id() ] = __( 'Elementor already ships this CDN font; Elementor loads it', 'universal-custom-fonts' );
+				$this->skipped[ $font->id() ] = __( 'Elementor already ships this CDN font; Elementor loads it', 'pfont' );
 				continue;
 			}
 			$fonts[ $font->family() ] = self::TYPE;
@@ -178,9 +178,9 @@ final class ElementorAdapter extends AbstractAdapter {
 		}
 		return $font->is_local()
 			/* translators: %s: family. */
-			? sprintf( __( 'Elementor also ships “%s” from Google. Your local copy replaces it in Elementor, so no Google request is made.', 'universal-custom-fonts' ), $font->family() )
+			? sprintf( __( 'Elementor also ships “%s” from Google. Your local copy replaces it in Elementor, so no Google request is made.', 'pfont' ), $font->family() )
 			/* translators: %s: family. */
-			: sprintf( __( 'Elementor already ships “%s”, so PFont leaves it in Elementor’s own list. Host it locally to serve it from your server instead.', 'universal-custom-fonts' ), $font->family() );
+			: sprintf( __( 'Elementor already ships “%s”, so PFont leaves it in Elementor’s own list. Host it locally to serve it from your server instead.', 'pfont' ), $font->family() );
 	}
 
 	/**
@@ -200,7 +200,7 @@ final class ElementorAdapter extends AbstractAdapter {
 		if ( $this->is_available() ) {
 			$status['message'] = sprintf(
 				/* translators: %s: group name. */
-				__( 'Fonts appear in the typography font list under “%s” and load only on pages that use them.', 'universal-custom-fonts' ),
+				__( 'Fonts appear in the typography font list under “%s” and load only on pages that use them.', 'pfont' ),
 				'PFont'
 			);
 		}

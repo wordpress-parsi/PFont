@@ -2,12 +2,12 @@
 /**
  * Builds @font-face CSS for fonts served from this site.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Fonts;
+namespace PFont\Fonts;
 
-use UniversalCustomFonts\Core\Font;
+use PFont\Core\Font;
 
 defined( 'ABSPATH' ) || exit;
 

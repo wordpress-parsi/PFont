@@ -2,15 +2,15 @@
 /**
  * Astra theme.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Core\Font;
+use PFont\Core\FontLoader;
+use PFont\Core\FontRegistry;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -199,8 +199,8 @@ final class AstraAdapter extends AbstractAdapter {
 		}
 		return $font->is_local()
 			/* translators: %s: family. */
-			? sprintf( __( 'Astra lists “%s” under Google Fonts. Pick it there: PFont serves your local copy and Astra makes no Google request.', 'universal-custom-fonts' ), $font->family() )
+			? sprintf( __( 'Astra lists “%s” under Google Fonts. Pick it there: PFont serves your local copy and Astra makes no Google request.', 'pfont' ), $font->family() )
 			/* translators: %s: family. */
-			: sprintf( __( 'Astra already offers “%s” under Google Fonts and loads it itself.', 'universal-custom-fonts' ), $font->family() );
+			: sprintf( __( 'Astra already offers “%s” under Google Fonts and loads it itself.', 'pfont' ), $font->family() );
 	}
 }

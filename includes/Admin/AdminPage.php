@@ -2,14 +2,14 @@
 /**
  * Admin screen shell: menu, sidebar, notices, shared components and the Settings view.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Core\Settings;
-use UniversalCustomFonts\Fonts\CdnFonts;
+use PFont\Core\FontRegistry;
+use PFont\Core\Settings;
+use PFont\Fonts\CdnFonts;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class AdminPage {
 
-	public const SLUG = 'universal-custom-fonts';
+	public const SLUG = 'pfont';
 
 	/**
 	 * Screen hook suffix.
@@ -94,7 +94,7 @@ final class AdminPage {
 	 */
 	public static function action_links( mixed $links ): array {
 		$links = is_array( $links ) ? $links : array();
-		array_unshift( $links, sprintf( '<a href="%s">%s</a>', esc_url( self::url() ), esc_html__( 'Fonts', 'universal-custom-fonts' ) ) );
+		array_unshift( $links, sprintf( '<a href="%s">%s</a>', esc_url( self::url() ), esc_html__( 'Fonts', 'pfont' ) ) );
 		return $links;
 	}
 
@@ -190,25 +190,25 @@ final class AdminPage {
 	 */
 	private static function render_sidebar( string $current ): void {
 		$items = array(
-			'fonts'        => array( __( 'Library', 'universal-custom-fonts' ), 'fonts', count( FontRegistry::all() ) ),
-			'edit'         => array( __( 'Add new font', 'universal-custom-fonts' ), 'plus', null ),
-			'integrations' => array( __( 'Integrations', 'universal-custom-fonts' ), 'plug', null ),
-			'settings'     => array( __( 'Settings', 'universal-custom-fonts' ), 'sliders', null ),
+			'fonts'        => array( __( 'Library', 'pfont' ), 'fonts', count( FontRegistry::all() ) ),
+			'edit'         => array( __( 'Add new font', 'pfont' ), 'plus', null ),
+			'integrations' => array( __( 'Integrations', 'pfont' ), 'plug', null ),
+			'settings'     => array( __( 'Settings', 'pfont' ), 'sliders', null ),
 		);
 		if ( Settings::get( 'debug' ) ) {
-			$items['debug'] = array( __( 'Debug', 'universal-custom-fonts' ), 'terminal', null );
+			$items['debug'] = array( __( 'Debug', 'pfont' ), 'terminal', null );
 		}
 		echo '<aside class="ucf-sidebar">';
 		printf( '<p class="ucf-sidebar__title">%s</p>', esc_html( 'PFont' ) );
-		printf( '<nav class="ucf-nav" aria-label="%s">', esc_attr__( 'PFont sections', 'universal-custom-fonts' ) );
+		printf( '<nav class="ucf-nav" aria-label="%s">', esc_attr__( 'PFont sections', 'pfont' ) );
 		foreach ( $items as $key => $item ) {
 			self::nav_link( $key, $item[0], $item[1], $key === $current, $item[2] );
 		}
 		echo '<hr class="ucf-nav__sep">';
-		self::nav_link( 'help', __( 'Help', 'universal-custom-fonts' ), 'help', 'help' === $current, null );
+		self::nav_link( 'help', __( 'Help', 'pfont' ), 'help', 'help' === $current, null );
 		echo '</nav>';
 		/* translators: %s: plugin version. */
-		printf( '<p class="ucf-sidebar__foot">%s</p>', esc_html( sprintf( __( 'Version %s', 'universal-custom-fonts' ), PFONT_VERSION ) ) );
+		printf( '<p class="ucf-sidebar__foot">%s</p>', esc_html( sprintf( __( 'Version %s', 'pfont' ), PFONT_VERSION ) ) );
 		echo '</aside>';
 	}
 
@@ -332,42 +332,42 @@ final class AdminPage {
 	private static function render_settings(): void {
 		$settings = Settings::all();
 		$option   = Settings::OPTION;
-		self::page_header( __( 'Settings', 'universal-custom-fonts' ), __( 'How fonts load on your site, and what happens when the plugin is deleted.', 'universal-custom-fonts' ) );
+		self::page_header( __( 'Settings', 'pfont' ), __( 'How fonts load on your site, and what happens when the plugin is deleted.', 'pfont' ) );
 		echo '<form method="post" action="options.php">';
 		settings_fields( 'ucf_settings' );
 
-		self::section_title( __( 'Loading', 'universal-custom-fonts' ) );
-		printf( '<div class="ucf-card"><p class="ucf-field__label" id="ucf-strategy-label">%s</p><div class="ucf-radio-list" role="radiogroup" aria-labelledby="ucf-strategy-label">', esc_html__( 'Load CDN fonts', 'universal-custom-fonts' ) );
-		self::radio_row( $option . '[remote_strategy]', 'smart', __( 'Only on pages that use them', 'universal-custom-fonts' ), __( 'Recommended. Elementor and Astra report exactly which fonts a page uses; for other editors the font name is found in the page content and settings.', 'universal-custom-fonts' ), (string) $settings['remote_strategy'] );
-		self::radio_row( $option . '[remote_strategy]', 'always', __( 'On every page', 'universal-custom-fonts' ), __( 'Only for troubleshooting a font that does not show up.', 'universal-custom-fonts' ), (string) $settings['remote_strategy'] );
-		printf( '</div><hr class="ucf-divider"><div class="ucf-grid-2"><div class="ucf-field"><label for="ucf-provider">%1$s</label><select id="ucf-provider" class="ucf-select" name="%2$s[cdn_provider]">', esc_html__( 'Font CDN', 'universal-custom-fonts' ), esc_attr( $option ) );
+		self::section_title( __( 'Loading', 'pfont' ) );
+		printf( '<div class="ucf-card"><p class="ucf-field__label" id="ucf-strategy-label">%s</p><div class="ucf-radio-list" role="radiogroup" aria-labelledby="ucf-strategy-label">', esc_html__( 'Load CDN fonts', 'pfont' ) );
+		self::radio_row( $option . '[remote_strategy]', 'smart', __( 'Only on pages that use them', 'pfont' ), __( 'Recommended. Elementor and Astra report exactly which fonts a page uses; for other editors the font name is found in the page content and settings.', 'pfont' ), (string) $settings['remote_strategy'] );
+		self::radio_row( $option . '[remote_strategy]', 'always', __( 'On every page', 'pfont' ), __( 'Only for troubleshooting a font that does not show up.', 'pfont' ), (string) $settings['remote_strategy'] );
+		printf( '</div><hr class="ucf-divider"><div class="ucf-grid-2"><div class="ucf-field"><label for="ucf-provider">%1$s</label><select id="ucf-provider" class="ucf-select" name="%2$s[cdn_provider]">', esc_html__( 'Font CDN', 'pfont' ), esc_attr( $option ) );
 		foreach ( CdnFonts::providers() as $id => $provider ) {
 			printf( '<option value="%1$s"%2$s>%3$s</option>', esc_attr( $id ), selected( $settings['cdn_provider'], $id, false ), esc_html( $provider['label'] ) );
 		}
-		printf( '</select><p class="ucf-field__help">%s</p></div></div><div class="ucf-toggle-list ucf-mt">', esc_html__( 'Bunny Fonts is an EU-based alternative with the same fonts. Hosting fonts on your own server is the most private option.', 'universal-custom-fonts' ) );
-		self::toggle_row( $option . '[preconnect]', 'zap', __( 'Connect to the CDN early', 'universal-custom-fonts' ), __( 'Adds a preconnect hint on pages that use a CDN font, so text appears sooner.', 'universal-custom-fonts' ), ! empty( $settings['preconnect'] ) );
+		printf( '</select><p class="ucf-field__help">%s</p></div></div><div class="ucf-toggle-list ucf-mt">', esc_html__( 'Bunny Fonts is an EU-based alternative with the same fonts. Hosting fonts on your own server is the most private option.', 'pfont' ) );
+		self::toggle_row( $option . '[preconnect]', 'zap', __( 'Connect to the CDN early', 'pfont' ), __( 'Adds a preconnect hint on pages that use a CDN font, so text appears sooner.', 'pfont' ), ! empty( $settings['preconnect'] ) );
 		echo '</div></div>';
 
-		self::section_title( __( 'Editors', 'universal-custom-fonts' ) );
+		self::section_title( __( 'Editors', 'pfont' ) );
 		echo '<div class="ucf-card"><div class="ucf-toggle-list">';
-		self::toggle_row( $option . '[tinymce_toolbar]', 'editor', __( 'Font menu in the Classic Editor', 'universal-custom-fonts' ), __( 'Adds the font dropdown to the second toolbar row when it is missing.', 'universal-custom-fonts' ), ! empty( $settings['tinymce_toolbar'] ) );
+		self::toggle_row( $option . '[tinymce_toolbar]', 'editor', __( 'Font menu in the Classic Editor', 'pfont' ), __( 'Adds the font dropdown to the second toolbar row when it is missing.', 'pfont' ), ! empty( $settings['tinymce_toolbar'] ) );
 		echo '</div></div>';
 
-		self::section_title( __( 'WordPress admin', 'universal-custom-fonts' ), __( 'Use one of your fonts for the dashboard screens and the toolbar. Visitors never see this.', 'universal-custom-fonts' ) );
+		self::section_title( __( 'WordPress admin', 'pfont' ), __( 'Use one of your fonts for the dashboard screens and the toolbar. Visitors never see this.', 'pfont' ) );
 		self::render_admin_font( (string) $settings['admin_font'], $option );
 
-		self::section_title( __( 'When the plugin is deleted', 'universal-custom-fonts' ), __( 'Both options are off by default, so nothing is lost by accident.', 'universal-custom-fonts' ) );
+		self::section_title( __( 'When the plugin is deleted', 'pfont' ), __( 'Both options are off by default, so nothing is lost by accident.', 'pfont' ) );
 		echo '<div class="ucf-card"><div class="ucf-toggle-list">';
-		self::toggle_row( $option . '[delete_files_on_uninstall]', 'trash', __( 'Delete font files', 'universal-custom-fonts' ), __( 'Removes the folder wp-content/uploads/universal-custom-fonts.', 'universal-custom-fonts' ), ! empty( $settings['delete_files_on_uninstall'] ) );
-		self::toggle_row( $option . '[delete_settings_on_uninstall]', 'trash', __( 'Delete the font library and settings', 'universal-custom-fonts' ), __( 'Removes every font entry and these settings from the database.', 'universal-custom-fonts' ), ! empty( $settings['delete_settings_on_uninstall'] ) );
+		self::toggle_row( $option . '[delete_files_on_uninstall]', 'trash', __( 'Delete font files', 'pfont' ), __( 'Removes the folder wp-content/uploads/pfont.', 'pfont' ), ! empty( $settings['delete_files_on_uninstall'] ) );
+		self::toggle_row( $option . '[delete_settings_on_uninstall]', 'trash', __( 'Delete the font library and settings', 'pfont' ), __( 'Removes every font entry and these settings from the database.', 'pfont' ), ! empty( $settings['delete_settings_on_uninstall'] ) );
 		echo '</div></div>';
 
-		self::section_title( __( 'Troubleshooting', 'universal-custom-fonts' ) );
+		self::section_title( __( 'Troubleshooting', 'pfont' ) );
 		echo '<div class="ucf-card"><div class="ucf-toggle-list">';
-		self::toggle_row( $option . '[debug]', 'terminal', __( 'Debug mode', 'universal-custom-fonts' ), __( 'Shows the Debug page and records which fonts the last front-end page loaded.', 'universal-custom-fonts' ), ! empty( $settings['debug'] ) );
+		self::toggle_row( $option . '[debug]', 'terminal', __( 'Debug mode', 'pfont' ), __( 'Shows the Debug page and records which fonts the last front-end page loaded.', 'pfont' ), ! empty( $settings['debug'] ) );
 		echo '</div></div>';
 
-		printf( '<div class="ucf-savebar"><button type="submit" class="ucf-btn">%s</button></div></form>', esc_html__( 'Save settings', 'universal-custom-fonts' ) );
+		printf( '<div class="ucf-savebar"><button type="submit" class="ucf-btn">%s</button></div></form>', esc_html__( 'Save settings', 'pfont' ) );
 	}
 
 	/**
@@ -380,9 +380,9 @@ final class AdminPage {
 		$selected = '' !== $current ? FontRegistry::get_font( $current ) : null;
 		printf(
 			'<div class="ucf-card"><div class="ucf-grid-2"><div class="ucf-field"><label for="ucf-admin-font">%1$s</label><select id="ucf-admin-font" class="ucf-select" name="%2$s[admin_font]"><option value="">%3$s</option>',
-			esc_html__( 'Admin area font', 'universal-custom-fonts' ),
+			esc_html__( 'Admin area font', 'pfont' ),
 			esc_attr( $option ),
-			esc_html__( 'WordPress default', 'universal-custom-fonts' )
+			esc_html__( 'WordPress default', 'pfont' )
 		);
 		foreach ( FontRegistry::all() as $font ) {
 			// A disabled font is only listed while it is the saved choice, so the state stays visible.
@@ -390,12 +390,12 @@ final class AdminPage {
 				continue;
 			}
 			/* translators: %s: font name. */
-			$label = $font->is_enabled() ? $font->name() : sprintf( __( '%s (disabled, not applied)', 'universal-custom-fonts' ), $font->name() );
+			$label = $font->is_enabled() ? $font->name() : sprintf( __( '%s (disabled, not applied)', 'pfont' ), $font->name() );
 			printf( '<option value="%1$s"%2$s>%3$s</option>', esc_attr( $font->id() ), selected( $current, $font->id(), false ), esc_html( $label ) );
 		}
-		$help = __( 'Icons, code fields and the content you edit keep their own fonts. Only enabled fonts are listed.', 'universal-custom-fonts' );
+		$help = __( 'Icons, code fields and the content you edit keep their own fonts. Only enabled fonts are listed.', 'pfont' );
 		if ( $selected && ! $selected->is_local() ) {
-			$help .= ' ' . __( 'This font loads from a CDN on every admin screen; host it on this server to avoid that request.', 'universal-custom-fonts' );
+			$help .= ' ' . __( 'This font loads from a CDN on every admin screen; host it on this server to avoid that request.', 'pfont' );
 		}
 		printf( '</select><p class="ucf-field__help">%s</p></div></div></div>', esc_html( $help ) );
 	}

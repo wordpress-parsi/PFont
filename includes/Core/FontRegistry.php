@@ -2,12 +2,12 @@
 /**
  * Read API for the central font library. Integrations only talk to this class.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Core;
+namespace PFont\Core;
 
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 

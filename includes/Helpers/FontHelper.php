@@ -2,10 +2,10 @@
 /**
  * Small, dependency-free helpers.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Helpers;
+namespace PFont\Helpers;
 
 defined( 'ABSPATH' ) || exit;
 

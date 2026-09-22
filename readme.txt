@@ -1,5 +1,5 @@
 === PFont ===
-Contributors: your-wordpress-org-username
+Contributors: wordpress-parsi
 Tags: fonts, custom fonts, google fonts, elementor, persian
 Requires at least: 6.4
 Tested up to: 7.1

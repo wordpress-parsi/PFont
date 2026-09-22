@@ -8,10 +8,10 @@
  * Author:            PFont contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       universal-custom-fonts
+ * Text Domain:       pfont
  * Domain Path:       /languages
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -48,7 +48,7 @@ function pfont_requirements_notice() {
 		esc_html(
 			sprintf(
 				/* translators: 1: minimum PHP version, 2: minimum WordPress version. */
-				__( 'PFont needs PHP %1$s or newer and WordPress %2$s or newer. It stays inactive until the server is updated.', 'universal-custom-fonts' ),
+				__( 'PFont needs PHP %1$s or newer and WordPress %2$s or newer. It stays inactive until the server is updated.', 'pfont' ),
 				PFONT_MIN_PHP,
 				PFONT_MIN_WP
 			)
@@ -62,7 +62,7 @@ if ( ! pfont_requirements_met() ) {
 }
 
 require_once PFONT_PATH . 'includes/Autoloader.php';
-\UniversalCustomFonts\Autoloader::register();
+\PFont\Autoloader::register();
 
-register_activation_hook( __FILE__, array( 'UniversalCustomFonts\Core\Migrations', 'activate' ) );
-add_action( 'plugins_loaded', array( 'UniversalCustomFonts\Plugin', 'boot' ), 5 );
+register_activation_hook( __FILE__, array( 'PFont\Core\Migrations', 'activate' ) );
+add_action( 'plugins_loaded', array( 'PFont\Plugin', 'boot' ), 5 );

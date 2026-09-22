@@ -2,14 +2,14 @@
 /**
  * Library: searchable specimen list and the Persian/Arabic presets.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Fonts\CdnFonts;
+use PFont\Core\Font;
+use PFont\Core\FontRegistry;
+use PFont\Fonts\CdnFonts;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,11 +25,11 @@ final class FontList {
 	 */
 	public static function labels(): array {
 		return array(
-			'tinymce'      => __( 'Classic Editor', 'universal-custom-fonts' ),
-			'block_editor' => __( 'Block Editor', 'universal-custom-fonts' ),
+			'tinymce'      => __( 'Classic Editor', 'pfont' ),
+			'block_editor' => __( 'Block Editor', 'pfont' ),
 			'elementor'    => 'Elementor',
 			'astra'        => 'Astra',
-			'customizer'   => __( 'Theme Customizer', 'universal-custom-fonts' ),
+			'customizer'   => __( 'Theme Customizer', 'pfont' ),
 		);
 	}
 
@@ -40,8 +40,8 @@ final class FontList {
 	 */
 	public static function samples(): array {
 		return array(
-			'fa'    => __( 'تمام افراد بشر آزاد به دنیا می‌آیند و از لحاظ حیثیت و حقوق با هم برابرند.', 'universal-custom-fonts' ),
-			'latin' => __( 'All human beings are born free and equal in dignity and rights.', 'universal-custom-fonts' ),
+			'fa'    => __( 'تمام افراد بشر آزاد به دنیا می‌آیند و از لحاظ حیثیت و حقوق با هم برابرند.', 'pfont' ),
+			'latin' => __( 'All human beings are born free and equal in dignity and rights.', 'pfont' ),
 		);
 	}
 
@@ -66,16 +66,16 @@ final class FontList {
 	 */
 	public static function source_label( Font $font ): string {
 		if ( $font->is_upload() ) {
-			return __( 'Uploaded files', 'universal-custom-fonts' );
+			return __( 'Uploaded files', 'pfont' );
 		}
 		if ( '' !== $font->cdn_url() ) {
-			return __( 'Custom CDN', 'universal-custom-fonts' );
+			return __( 'Custom CDN', 'pfont' );
 		}
 		if ( $font->is_self_hosted() ) {
-			return __( 'Hosted on this server', 'universal-custom-fonts' );
+			return __( 'Hosted on this server', 'pfont' );
 		}
 		/* translators: %s: font service name. */
-		return sprintf( __( '%s (CDN)', 'universal-custom-fonts' ), CdnFonts::provider()['label'] );
+		return sprintf( __( '%s (CDN)', 'pfont' ), CdnFonts::provider()['label'] );
 	}
 
 	/**
@@ -89,10 +89,10 @@ final class FontList {
 		$preset  = $font->preset_data();
 		if ( $font->is_cdn() && '' === $font->cdn_url() && is_array( $preset['range'] ?? null ) && count( $weights ) > 1 ) {
 			/* translators: 1: lightest weight, 2: boldest weight. */
-			return sprintf( __( 'Variable %1$d–%2$d', 'universal-custom-fonts' ), min( $weights ), max( $weights ) );
+			return sprintf( __( 'Variable %1$d–%2$d', 'pfont' ), min( $weights ), max( $weights ) );
 		}
 		/* translators: %s: comma-separated weights. */
-		return sprintf( _n( 'Weight %s', 'Weights %s', count( $weights ), 'universal-custom-fonts' ), implode( ', ', $weights ) );
+		return sprintf( _n( 'Weight %s', 'Weights %s', count( $weights ), 'pfont' ), implode( ', ', $weights ) );
 	}
 
 	/**
@@ -115,7 +115,7 @@ final class FontList {
 	 */
 	public static function render(): void {
 		$fonts = FontRegistry::all();
-		AdminPage::page_header( __( 'Font library', 'universal-custom-fonts' ), __( 'Fonts here appear in the editors and builders you choose. Each page loads only the fonts it uses.', 'universal-custom-fonts' ) );
+		AdminPage::page_header( __( 'Font library', 'pfont' ), __( 'Fonts here appear in the editors and builders you choose. Each page loads only the fonts it uses.', 'pfont' ) );
 		self::privacy_callout( $fonts );
 		if ( $fonts ) {
 			self::render_list( $fonts );
@@ -147,12 +147,12 @@ final class FontList {
 		Icons::render( 'shield' );
 		printf(
 			'<div class="ucf-callout__text"><span class="ucf-callout__label">%1$s</span><span class="ucf-callout__msg">%2$s</span></div>',
-			esc_html__( 'Privacy', 'universal-custom-fonts' ),
+			esc_html__( 'Privacy', 'pfont' ),
 			/* translators: %d: number of fonts. */
-			esc_html( sprintf( _n( '%d font loads from a third-party CDN, which receives your visitors’ IP addresses.', '%d fonts load from a third-party CDN, which receives your visitors’ IP addresses.', count( $remote ), 'universal-custom-fonts' ), count( $remote ) ) )
+			esc_html( sprintf( _n( '%d font loads from a third-party CDN, which receives your visitors’ IP addresses.', '%d fonts load from a third-party CDN, which receives your visitors’ IP addresses.', count( $remote ), 'pfont' ), count( $remote ) ) )
 		);
 		AdminPage::button_link(
-			__( 'Host on this server', 'universal-custom-fonts' ),
+			__( 'Host on this server', 'pfont' ),
 			AdminPage::url(
 				array(
 					'tab'  => 'edit',
@@ -175,40 +175,40 @@ final class FontList {
 		$total   = count( $fonts );
 
 		echo '<div class="ucf-toolbar" data-ucf-toolbar hidden>';
-		printf( '<label class="ucf-search"><span class="screen-reader-text">%s</span>', esc_html__( 'Search fonts', 'universal-custom-fonts' ) );
+		printf( '<label class="ucf-search"><span class="screen-reader-text">%s</span>', esc_html__( 'Search fonts', 'pfont' ) );
 		Icons::render( 'search' );
-		printf( '<input type="search" class="ucf-input" data-ucf-filter placeholder="%s"></label>', esc_attr__( 'Search fonts', 'universal-custom-fonts' ) );
-		printf( '<label><span class="screen-reader-text">%1$s</span><input type="text" class="ucf-input" data-ucf-preview-text placeholder="%2$s"></label>', esc_html__( 'Preview text', 'universal-custom-fonts' ), esc_attr__( 'Type your own preview text', 'universal-custom-fonts' ) );
+		printf( '<input type="search" class="ucf-input" data-ucf-filter placeholder="%s"></label>', esc_attr__( 'Search fonts', 'pfont' ) );
+		printf( '<label><span class="screen-reader-text">%1$s</span><input type="text" class="ucf-input" data-ucf-preview-text placeholder="%2$s"></label>', esc_html__( 'Preview text', 'pfont' ), esc_attr__( 'Type your own preview text', 'pfont' ) );
 		printf(
 			'<label><span class="screen-reader-text">%1$s</span><select class="ucf-select ucf-select--pill" data-ucf-script><option value="auto">%2$s</option><option value="fa">%3$s</option><option value="latin">%4$s</option></select></label>',
-			esc_html__( 'Writing system', 'universal-custom-fonts' ),
-			esc_html__( 'Automatic script', 'universal-custom-fonts' ),
-			esc_html__( 'Persian', 'universal-custom-fonts' ),
-			esc_html__( 'Latin', 'universal-custom-fonts' )
+			esc_html__( 'Writing system', 'pfont' ),
+			esc_html__( 'Automatic script', 'pfont' ),
+			esc_html__( 'Persian', 'pfont' ),
+			esc_html__( 'Latin', 'pfont' )
 		);
-		printf( '<label class="ucf-size"><span class="screen-reader-text">%s</span><input type="range" min="16" max="80" value="40" data-ucf-size><output data-ucf-size-out>40px</output></label></div>', esc_html__( 'Preview size', 'universal-custom-fonts' ) );
+		printf( '<label class="ucf-size"><span class="screen-reader-text">%s</span><input type="range" min="16" max="80" value="40" data-ucf-size><output data-ucf-size-out>40px</output></label></div>', esc_html__( 'Preview size', 'pfont' ) );
 
 		printf(
 			'<form method="post" action="%1$s" class="ucf-font-list" data-ucf-list data-samples="%2$s" data-one="%3$s" data-many="%4$s">',
 			esc_url( admin_url( 'admin-post.php' ) ),
 			esc_attr( (string) wp_json_encode( $samples ) ),
 			/* translators: 1: fonts shown, 2: fonts in the library. */
-			esc_attr__( '%1$s of %2$s font', 'universal-custom-fonts' ),
+			esc_attr__( '%1$s of %2$s font', 'pfont' ),
 			/* translators: 1: fonts shown, 2: fonts in the library. */
-			esc_attr__( '%1$s of %2$s fonts', 'universal-custom-fonts' )
+			esc_attr__( '%1$s of %2$s fonts', 'pfont' )
 		);
 		wp_nonce_field( 'ucf_bulk_update' );
 		echo '<input type="hidden" name="action" value="ucf_bulk_update"><input type="hidden" name="ucf_scope" value="enabled"><div class="ucf-list-head">';
 		/* translators: 1: fonts shown, 2: fonts in the library. */
-		printf( '<span data-ucf-count>%s</span>', esc_html( sprintf( _n( '%1$s of %2$s font', '%1$s of %2$s fonts', $total, 'universal-custom-fonts' ), number_format_i18n( $total ), number_format_i18n( $total ) ) ) );
+		printf( '<span data-ucf-count>%s</span>', esc_html( sprintf( _n( '%1$s of %2$s font', '%1$s of %2$s fonts', $total, 'pfont' ), number_format_i18n( $total ), number_format_i18n( $total ) ) ) );
 		printf( '<a href="%s">', esc_url( AdminPage::url( array( 'tab' => 'help' ) ) . '#ucf-help-loading' ) );
 		Icons::render( 'info' );
-		printf( '<span>%s</span></a></div>', esc_html__( 'How loading works', 'universal-custom-fonts' ) );
+		printf( '<span>%s</span></a></div>', esc_html__( 'How loading works', 'pfont' ) );
 		foreach ( $fonts as $font ) {
 			self::row( $font, $samples );
 		}
-		printf( '<p class="ucf-list-empty" data-ucf-empty hidden>%s</p>', esc_html__( 'No fonts match your search.', 'universal-custom-fonts' ) );
-		printf( '<div class="ucf-savebar" data-ucf-savebar><button type="submit" class="ucf-btn">%s</button></div></form>', esc_html__( 'Save changes', 'universal-custom-fonts' ) );
+		printf( '<p class="ucf-list-empty" data-ucf-empty hidden>%s</p>', esc_html__( 'No fonts match your search.', 'pfont' ) );
+		printf( '<div class="ucf-savebar" data-ucf-savebar><button type="submit" class="ucf-btn">%s</button></div></form>', esc_html__( 'Save changes', 'pfont' ) );
 	}
 
 	/**
@@ -232,13 +232,13 @@ final class FontList {
 			printf( '<span class="ucf-font-row__sep" aria-hidden="true">|</span><span>%s</span>', esc_html( $part ) );
 		}
 		if ( ! $font->is_enabled() ) {
-			printf( '<span class="ucf-badge">%s</span>', esc_html__( 'Disabled', 'universal-custom-fonts' ) );
+			printf( '<span class="ucf-badge">%s</span>', esc_html__( 'Disabled', 'pfont' ) );
 		}
 		printf(
 			'<span class="ucf-font-row__actions"><input type="hidden" name="ucf_ids[]" value="%1$s"><label><span class="screen-reader-text">%2$s</span><input type="checkbox" class="ucf-switch" role="switch" name="ucf_enabled[%1$s]" value="1"%3$s></label>',
 			esc_attr( $id ),
 			/* translators: %s: font name. */
-			esc_html( sprintf( __( 'Enable %s', 'universal-custom-fonts' ), $font->name() ) ),
+			esc_html( sprintf( __( 'Enable %s', 'pfont' ), $font->name() ) ),
 			checked( $font->is_enabled(), true, false )
 		);
 		$edit = AdminPage::url(
@@ -247,14 +247,14 @@ final class FontList {
 				'font' => $id,
 			)
 		);
-		printf( '<a class="ucf-icon-btn" href="%1$s" title="%2$s"><span class="screen-reader-text">%2$s</span>', esc_url( $edit ), esc_attr__( 'Edit settings', 'universal-custom-fonts' ) );
+		printf( '<a class="ucf-icon-btn" href="%1$s" title="%2$s"><span class="screen-reader-text">%2$s</span>', esc_url( $edit ), esc_attr__( 'Edit settings', 'pfont' ) );
 		Icons::render( 'edit' );
 		printf(
 			'</a><a class="ucf-icon-btn ucf-icon-btn--danger" href="%1$s" title="%2$s" data-ucf-confirm="%3$s"><span class="screen-reader-text">%2$s</span>',
 			esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=ucf_delete_font&font=' . rawurlencode( $id ) ), 'ucf_delete_font_' . $id ) ),
-			esc_attr__( 'Delete', 'universal-custom-fonts' ),
+			esc_attr__( 'Delete', 'pfont' ),
 			/* translators: %s: font name. */
-			esc_attr( sprintf( __( 'Delete “%s” and its files?', 'universal-custom-fonts' ), $font->name() ) )
+			esc_attr( sprintf( __( 'Delete “%s” and its files?', 'pfont' ), $font->name() ) )
 		);
 		Icons::render( 'trash' );
 		printf(
@@ -277,10 +277,10 @@ final class FontList {
 		echo '<div class="ucf-card ucf-empty ucf-mt">';
 		Icons::render( 'fonts' );
 		$text = $presets_above
-			? __( 'Add a Persian font above, or upload your own WOFF2, WOFF, TTF or OTF files.', 'universal-custom-fonts' )
-			: __( 'Upload your own WOFF2, WOFF, TTF or OTF files.', 'universal-custom-fonts' );
-		printf( '<h2>%1$s</h2><p>%2$s</p>', esc_html__( 'Your library is empty', 'universal-custom-fonts' ), esc_html( $text ) );
-		AdminPage::button_link( __( 'Upload a font', 'universal-custom-fonts' ), AdminPage::url( array( 'tab' => 'edit' ) ), 'upload' );
+			? __( 'Add a Persian font above, or upload your own WOFF2, WOFF, TTF or OTF files.', 'pfont' )
+			: __( 'Upload your own WOFF2, WOFF, TTF or OTF files.', 'pfont' );
+		printf( '<h2>%1$s</h2><p>%2$s</p>', esc_html__( 'Your library is empty', 'pfont' ), esc_html( $text ) );
+		AdminPage::button_link( __( 'Upload a font', 'pfont' ), AdminPage::url( array( 'tab' => 'edit' ) ), 'upload' );
 		echo '</div>';
 	}
 
@@ -295,16 +295,16 @@ final class FontList {
 			return false;
 		}
 		AdminPage::section_title(
-			__( 'Persian and Arabic fonts', 'universal-custom-fonts' ),
+			__( 'Persian and Arabic fonts', 'pfont' ),
 			/* translators: %s: font service name. */
-			sprintf( __( 'Free Google Fonts under the SIL Open Font License. These previews load from %s; nothing is added to your site until you select a font.', 'universal-custom-fonts' ), CdnFonts::provider()['label'] )
+			sprintf( __( 'Free Google Fonts under the SIL Open Font License. These previews load from %s; nothing is added to your site until you select a font.', 'pfont' ), CdnFonts::provider()['label'] )
 		);
 		printf( '<form method="post" action="%s">', esc_url( admin_url( 'admin-post.php' ) ) );
 		wp_nonce_field( 'ucf_add_presets' );
 		echo '<input type="hidden" name="action" value="ucf_add_presets"><div class="ucf-preset-grid">';
 		$categories = array(
-			'serif'      => __( 'Serif', 'universal-custom-fonts' ),
-			'sans-serif' => __( 'Sans-serif', 'universal-custom-fonts' ),
+			'serif'      => __( 'Serif', 'pfont' ),
+			'sans-serif' => __( 'Sans-serif', 'pfont' ),
 		);
 		foreach ( $available as $id => $preset ) {
 			$weights = count( $preset['weights'] ) > 1 ? min( $preset['weights'] ) . '–' . max( $preset['weights'] ) : (string) $preset['weights'][0];
@@ -312,13 +312,13 @@ final class FontList {
 				'<label class="ucf-preset"><input type="checkbox" name="ucf_presets[]" value="%1$s"><span class="ucf-preset__sample" style="font-family:%2$s" dir="rtl" lang="fa">%3$s</span><span class="ucf-preset__name">%4$s</span><span class="ucf-preset__meta">%5$s</span></label>',
 				esc_attr( $id ),
 				esc_attr( "'" . $preset['family'] . "', " . $preset['fallback'] ),
-				esc_html__( 'خوش آمدید', 'universal-custom-fonts' ),
+				esc_html__( 'خوش آمدید', 'pfont' ),
 				esc_html( $preset['family'] ),
 				/* translators: 1: font category, 2: weight range. */
-				esc_html( sprintf( __( '%1$s | weights %2$s', 'universal-custom-fonts' ), $categories[ $preset['fallback'] ] ?? $preset['fallback'], $weights ) )
+				esc_html( sprintf( __( '%1$s | weights %2$s', 'pfont' ), $categories[ $preset['fallback'] ] ?? $preset['fallback'], $weights ) )
 			);
 		}
-		printf( '</div><div class="ucf-preset-actions"><button type="submit" class="ucf-btn">%s</button></div></form>', esc_html__( 'Add selected fonts', 'universal-custom-fonts' ) );
+		printf( '</div><div class="ucf-preset-actions"><button type="submit" class="ucf-btn">%s</button></div></form>', esc_html__( 'Add selected fonts', 'pfont' ) );
 		return true;
 	}
 }

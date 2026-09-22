@@ -2,14 +2,14 @@
 /**
  * Font page: live type tester, sizes, characters, details and where the font appears.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Integrations\IntegrationManager;
+use PFont\Core\Font;
+use PFont\Core\FontRegistry;
+use PFont\Integrations\IntegrationManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,16 +26,16 @@ final class FontView {
 	public static function samples(): array {
 		return array(
 			'fa'    => array(
-				'heading' => __( 'تمام افراد بشر آزاد به دنیا می‌آیند', 'universal-custom-fonts' ),
-				'body'    => __( 'تمام افراد بشر آزاد به دنیا می‌آیند و از لحاظ حیثیت و حقوق با هم برابرند. همه دارای عقل و وجدان هستند و باید نسبت به یکدیگر با روح برادری رفتار کنند.', 'universal-custom-fonts' ),
-				'small'   => __( 'اعداد: ۰۱۲۳۴۵۶۷۸۹ | قیمت: ۲٬۴۵۰٬۰۰۰ تومان | تخفیف ۳۰٪', 'universal-custom-fonts' ),
-				'line'    => __( 'زیبایی در سادگی است', 'universal-custom-fonts' ),
+				'heading' => __( 'تمام افراد بشر آزاد به دنیا می‌آیند', 'pfont' ),
+				'body'    => __( 'تمام افراد بشر آزاد به دنیا می‌آیند و از لحاظ حیثیت و حقوق با هم برابرند. همه دارای عقل و وجدان هستند و باید نسبت به یکدیگر با روح برادری رفتار کنند.', 'pfont' ),
+				'small'   => __( 'اعداد: ۰۱۲۳۴۵۶۷۸۹ | قیمت: ۲٬۴۵۰٬۰۰۰ تومان | تخفیف ۳۰٪', 'pfont' ),
+				'line'    => __( 'زیبایی در سادگی است', 'pfont' ),
 			),
 			'latin' => array(
-				'heading' => __( 'Sphinx of black quartz, judge my vow', 'universal-custom-fonts' ),
-				'body'    => __( 'All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.', 'universal-custom-fonts' ),
-				'small'   => __( 'Numbers: 0123456789 | Price: $1,249.00 | Save 30 percent', 'universal-custom-fonts' ),
-				'line'    => __( 'Beauty lives in simplicity', 'universal-custom-fonts' ),
+				'heading' => __( 'Sphinx of black quartz, judge my vow', 'pfont' ),
+				'body'    => __( 'All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.', 'pfont' ),
+				'small'   => __( 'Numbers: 0123456789 | Price: $1,249.00 | Save 30 percent', 'pfont' ),
+				'line'    => __( 'Beauty lives in simplicity', 'pfont' ),
 			),
 		);
 	}
@@ -47,15 +47,15 @@ final class FontView {
 	 */
 	private static function weight_names(): array {
 		return array(
-			100 => __( 'Thin', 'universal-custom-fonts' ),
-			200 => __( 'Extra Light', 'universal-custom-fonts' ),
-			300 => __( 'Light', 'universal-custom-fonts' ),
-			400 => __( 'Regular', 'universal-custom-fonts' ),
-			500 => __( 'Medium', 'universal-custom-fonts' ),
-			600 => __( 'Semibold', 'universal-custom-fonts' ),
-			700 => __( 'Bold', 'universal-custom-fonts' ),
-			800 => __( 'Extra Bold', 'universal-custom-fonts' ),
-			900 => __( 'Black', 'universal-custom-fonts' ),
+			100 => __( 'Thin', 'pfont' ),
+			200 => __( 'Extra Light', 'pfont' ),
+			300 => __( 'Light', 'pfont' ),
+			400 => __( 'Regular', 'pfont' ),
+			500 => __( 'Medium', 'pfont' ),
+			600 => __( 'Semibold', 'pfont' ),
+			700 => __( 'Bold', 'pfont' ),
+			800 => __( 'Extra Bold', 'pfont' ),
+			900 => __( 'Black', 'pfont' ),
 		);
 	}
 
@@ -89,7 +89,7 @@ final class FontView {
 		$id   = isset( $_GET['font'] ) ? sanitize_key( wp_unslash( $_GET['font'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only.
 		$font = '' !== $id ? FontRegistry::get_font( $id ) : null;
 		if ( ! $font ) {
-			AdminPage::page_header( __( 'Font not found', 'universal-custom-fonts' ), __( 'It may have been deleted.', 'universal-custom-fonts' ), array(), AdminPage::url(), __( 'Library', 'universal-custom-fonts' ) );
+			AdminPage::page_header( __( 'Font not found', 'pfont' ), __( 'It may have been deleted.', 'pfont' ), array(), AdminPage::url(), __( 'Library', 'pfont' ) );
 			return;
 		}
 		$stops   = self::weight_stops( $font );
@@ -105,18 +105,18 @@ final class FontView {
 		printf( '<div data-ucf-tester data-family="%1$s" data-samples="%2$s" data-weight="%3$d">', esc_attr( $stack ), esc_attr( (string) wp_json_encode( $samples ) ), (int) $initial );
 		printf(
 			'<div class="ucf-preview-bar"><label for="ucf-t-script">%1$s</label><select id="ucf-t-script" class="ucf-select ucf-select--pill" data-ucf-t-script><option value="fa"%2$s>%3$s</option><option value="latin"%4$s>%5$s</option></select></div>',
-			esc_html__( 'Preview text', 'universal-custom-fonts' ),
+			esc_html__( 'Preview text', 'pfont' ),
 			selected( $script, 'fa', false ),
-			esc_html__( 'Persian', 'universal-custom-fonts' ),
+			esc_html__( 'Persian', 'pfont' ),
 			selected( $script, 'latin', false ),
-			esc_html__( 'Latin', 'universal-custom-fonts' )
+			esc_html__( 'Latin', 'pfont' )
 		);
 		echo '<div class="ucf-tester">';
 		self::render_panel( $stops, self::is_variable( $font ), $initial, $italic );
 		self::render_stage( $samples[ $script ], $stack, $dir, $lang, $italic, $initial );
 		echo '</div><div class="ucf-font-sections">';
 
-		printf( '<section class="ucf-card"><h2 class="ucf-card__title">%1$s</h2><div class="ucf-waterfall" data-ucf-t-apply style="font-family:%2$s">', esc_html__( 'Sizes', 'universal-custom-fonts' ), esc_attr( $stack ) );
+		printf( '<section class="ucf-card"><h2 class="ucf-card__title">%1$s</h2><div class="ucf-waterfall" data-ucf-t-apply style="font-family:%2$s">', esc_html__( 'Sizes', 'pfont' ), esc_attr( $stack ) );
 		foreach ( array( 14, 18, 24, 32, 48, 64 ) as $size ) {
 			printf(
 				'<div class="ucf-waterfall__row"><span class="ucf-waterfall__size">%1$d</span><span class="ucf-waterfall__text" style="font-size:%1$dpx" data-ucf-t-text="line" dir="%2$s" lang="%3$s">%4$s</span></div>',
@@ -126,7 +126,7 @@ final class FontView {
 				esc_html( $samples[ $script ]['line'] )
 			);
 		}
-		printf( '</div></section><section class="ucf-card"><h2 class="ucf-card__title">%1$s</h2><div class="ucf-glyphs" data-ucf-t-apply style="font-family:%2$s">', esc_html__( 'Characters', 'universal-custom-fonts' ), esc_attr( $stack ) );
+		printf( '</div></section><section class="ucf-card"><h2 class="ucf-card__title">%1$s</h2><div class="ucf-glyphs" data-ucf-t-apply style="font-family:%2$s">', esc_html__( 'Characters', 'pfont' ), esc_attr( $stack ) );
 		foreach ( self::glyph_lines() as $line ) {
 			printf( '<p dir="%1$s" lang="%2$s">%3$s</p>', esc_attr( 'fa' === $line[0] ? 'rtl' : 'ltr' ), esc_attr( 'fa' === $line[0] ? 'fa' : 'en' ), esc_html( $line[1] ) );
 		}
@@ -146,16 +146,16 @@ final class FontView {
 		Icons::render( 'arrow-left' );
 		printf(
 			'<span>%1$s</span></a><h1 class="ucf-page-head__title">%2$s</h1><div class="ucf-font-head__meta"><code class="ucf-code">%3$s</code><span>%4$s</span><span class="ucf-font-row__sep" aria-hidden="true">|</span><span>%5$s</span><span class="%6$s">%7$s</span></div></div><div class="ucf-page-head__actions">',
-			esc_html__( 'Library', 'universal-custom-fonts' ),
+			esc_html__( 'Library', 'pfont' ),
 			esc_html( $font->name() ),
 			esc_html( $font->css_stack() ),
 			esc_html( FontList::weight_label( $font ) ),
 			esc_html( FontList::source_label( $font ) ),
 			esc_attr( $font->is_enabled() ? 'ucf-badge ucf-badge--active' : 'ucf-badge' ),
-			esc_html( $font->is_enabled() ? __( 'Enabled', 'universal-custom-fonts' ) : __( 'Disabled', 'universal-custom-fonts' ) )
+			esc_html( $font->is_enabled() ? __( 'Enabled', 'pfont' ) : __( 'Disabled', 'pfont' ) )
 		);
 		AdminPage::button_link(
-			__( 'Edit settings', 'universal-custom-fonts' ),
+			__( 'Edit settings', 'pfont' ),
 			AdminPage::url(
 				array(
 					'tab'  => 'edit',
@@ -178,9 +178,9 @@ final class FontView {
 	 */
 	private static function render_panel( array $stops, bool $variable, int $initial, bool $italic ): void {
 		$names = self::weight_names();
-		printf( '<aside class="ucf-tester__panel" aria-label="%1$s"><div class="ucf-panel-head"><span>%2$s</span><button type="button" class="ucf-icon-btn" data-ucf-t-reset title="%3$s"><span class="screen-reader-text">%3$s</span>', esc_attr__( 'Style controls', 'universal-custom-fonts' ), esc_html__( 'Styles', 'universal-custom-fonts' ), esc_attr__( 'Reset styles', 'universal-custom-fonts' ) );
+		printf( '<aside class="ucf-tester__panel" aria-label="%1$s"><div class="ucf-panel-head"><span>%2$s</span><button type="button" class="ucf-icon-btn" data-ucf-t-reset title="%3$s"><span class="screen-reader-text">%3$s</span>', esc_attr__( 'Style controls', 'pfont' ), esc_html__( 'Styles', 'pfont' ), esc_attr__( 'Reset styles', 'pfont' ) );
 		Icons::render( 'reset' );
-		printf( '</button></div><div class="ucf-control"><div class="ucf-control__head"><span><label for="ucf-t-weight">%1$s</label> <span class="ucf-control__value" data-ucf-t-out="weight">%2$d</span></span><select class="ucf-select ucf-select--mini" data-ucf-t-weight-name aria-label="%3$s">', esc_html__( 'Weight', 'universal-custom-fonts' ), (int) $initial, esc_attr__( 'Named weight', 'universal-custom-fonts' ) );
+		printf( '</button></div><div class="ucf-control"><div class="ucf-control__head"><span><label for="ucf-t-weight">%1$s</label> <span class="ucf-control__value" data-ucf-t-out="weight">%2$d</span></span><select class="ucf-select ucf-select--mini" data-ucf-t-weight-name aria-label="%3$s">', esc_html__( 'Weight', 'pfont' ), (int) $initial, esc_attr__( 'Named weight', 'pfont' ) );
 		foreach ( $stops as $weight ) {
 			if ( isset( $names[ $weight ] ) ) {
 				printf( '<option value="%1$d"%2$s>%3$s</option>', (int) $weight, selected( $initial, $weight, false ), esc_html( $names[ $weight ] ) );
@@ -196,16 +196,16 @@ final class FontView {
 			count( $stops ) > 1 ? '' : ' disabled'
 		);
 		if ( count( $stops ) < 2 ) {
-			printf( '<p class="ucf-control__hint">%s</p>', esc_html__( 'This font has a single weight.', 'universal-custom-fonts' ) );
+			printf( '<p class="ucf-control__hint">%s</p>', esc_html__( 'This font has a single weight.', 'pfont' ) );
 		}
-		printf( '</div><div class="ucf-control"><div class="ucf-control__head"><label for="ucf-t-italic">%1$s</label><input type="checkbox" id="ucf-t-italic" class="ucf-switch" role="switch" data-ucf-t-italic%2$s></div>', esc_html__( 'Italic', 'universal-custom-fonts' ), $italic ? '' : ' disabled' );
+		printf( '</div><div class="ucf-control"><div class="ucf-control__head"><label for="ucf-t-italic">%1$s</label><input type="checkbox" id="ucf-t-italic" class="ucf-switch" role="switch" data-ucf-t-italic%2$s></div>', esc_html__( 'Italic', 'pfont' ), $italic ? '' : ' disabled' );
 		if ( ! $italic ) {
-			printf( '<p class="ucf-control__hint">%s</p>', esc_html__( 'No italic files are included, so browsers would only slant the letters.', 'universal-custom-fonts' ) );
+			printf( '<p class="ucf-control__hint">%s</p>', esc_html__( 'No italic files are included, so browsers would only slant the letters.', 'pfont' ) );
 		}
 		printf(
 			'</div><div class="ucf-control"><div class="ucf-control__head"><label for="ucf-t-size">%1$s</label><span class="ucf-control__value" data-ucf-t-out="size">40px</span></div><input type="range" id="ucf-t-size" class="ucf-range" data-ucf-t-size min="12" max="120" step="1" value="40"></div><div class="ucf-control"><div class="ucf-control__head"><label for="ucf-t-lh">%2$s</label><span class="ucf-control__value" data-ucf-t-out="lh">1.50</span></div><input type="range" id="ucf-t-lh" class="ucf-range" data-ucf-t-lh min="1" max="2.4" step="0.05" value="1.5"></div></aside>',
-			esc_html__( 'Size', 'universal-custom-fonts' ),
-			esc_html__( 'Line height', 'universal-custom-fonts' )
+			esc_html__( 'Size', 'pfont' ),
+			esc_html__( 'Line height', 'pfont' )
 		);
 	}
 
@@ -220,10 +220,10 @@ final class FontView {
 	 * @param int    $initial Starting weight.
 	 */
 	private static function render_stage( array $text, string $stack, string $dir, string $lang, bool $italic, int $initial ): void {
-		printf( '<section class="ucf-stage" aria-label="%1$s"><div class="ucf-stage__toolbar" role="toolbar" aria-label="%2$s"><div class="ucf-stage__group">', esc_attr__( 'Type tester', 'universal-custom-fonts' ), esc_attr__( 'Preview formatting', 'universal-custom-fonts' ) );
-		self::tool_button( array( 'data-ucf-t-step' => '-2' ), 'minus', __( 'Smaller', 'universal-custom-fonts' ) );
+		printf( '<section class="ucf-stage" aria-label="%1$s"><div class="ucf-stage__toolbar" role="toolbar" aria-label="%2$s"><div class="ucf-stage__group">', esc_attr__( 'Type tester', 'pfont' ), esc_attr__( 'Preview formatting', 'pfont' ) );
+		self::tool_button( array( 'data-ucf-t-step' => '-2' ), 'minus', __( 'Smaller', 'pfont' ) );
 		echo '<span class="ucf-stage__size" data-ucf-t-out="size">40px</span>';
-		self::tool_button( array( 'data-ucf-t-step' => '2' ), 'plus', __( 'Larger', 'universal-custom-fonts' ) );
+		self::tool_button( array( 'data-ucf-t-step' => '2' ), 'plus', __( 'Larger', 'pfont' ) );
 		echo '</div><div class="ucf-stage__group">';
 		self::tool_button(
 			array(
@@ -232,14 +232,14 @@ final class FontView {
 				'disabled'              => ! $italic,
 			),
 			'italic',
-			__( 'Italic', 'universal-custom-fonts' )
+			__( 'Italic', 'pfont' )
 		);
 		echo '</div><div class="ucf-stage__group">';
 		$aligns = array(
-			'start'   => __( 'Align to start', 'universal-custom-fonts' ),
-			'center'  => __( 'Center', 'universal-custom-fonts' ),
-			'end'     => __( 'Align to end', 'universal-custom-fonts' ),
-			'justify' => __( 'Justify', 'universal-custom-fonts' ),
+			'start'   => __( 'Align to start', 'pfont' ),
+			'center'  => __( 'Center', 'pfont' ),
+			'end'     => __( 'Align to end', 'pfont' ),
+			'justify' => __( 'Justify', 'pfont' ),
 		);
 		foreach ( $aligns as $align => $label ) {
 			self::tool_button(
@@ -258,7 +258,7 @@ final class FontView {
 				'aria-pressed'   => 'rtl' === $dir ? 'true' : 'false',
 			),
 			'direction',
-			__( 'Right to left', 'universal-custom-fonts' )
+			__( 'Right to left', 'pfont' )
 		);
 		printf( '</div></div><div class="ucf-stage__canvas" data-ucf-t-canvas data-ucf-t-apply style="font-family:%1$s" dir="%2$s" lang="%3$s">', esc_attr( $stack ), esc_attr( $dir ), esc_attr( $lang ) );
 		$blocks = array(
@@ -270,7 +270,7 @@ final class FontView {
 			printf(
 				'<div class="%1$s" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="%2$s" data-ucf-t-text="%3$s">%4$s</div>',
 				esc_attr( $class ),
-				esc_attr__( 'Editable preview text', 'universal-custom-fonts' ),
+				esc_attr__( 'Editable preview text', 'pfont' ),
 				esc_attr( $key ),
 				esc_html( $text[ $key ] )
 			);
@@ -278,8 +278,8 @@ final class FontView {
 		printf(
 			'</div><div class="ucf-stage__css"><span class="ucf-stage__css-label">CSS</span><code id="ucf-t-css" data-ucf-t-css dir="ltr">%1$s</code><button type="button" class="ucf-btn ucf-btn--ghost ucf-btn--sm" data-ucf-copy="#ucf-t-css" data-copied="%2$s"><span data-ucf-copy-label>%3$s</span></button></div></section>',
 			esc_html( sprintf( 'font-family: %1$s; font-weight: %2$d; font-size: 40px; line-height: 1.5;', $stack, $initial ) ),
-			esc_attr__( 'Copied', 'universal-custom-fonts' ),
-			esc_html__( 'Copy', 'universal-custom-fonts' )
+			esc_attr__( 'Copied', 'pfont' ),
+			esc_html__( 'Copy', 'pfont' )
 		);
 	}
 
@@ -327,20 +327,20 @@ final class FontView {
 	private static function render_details( Font $font ): void {
 		$styles = array();
 		foreach ( $font->styles() as $style ) {
-			$styles[] = 'italic' === $style ? __( 'Italic', 'universal-custom-fonts' ) : __( 'Normal', 'universal-custom-fonts' );
+			$styles[] = 'italic' === $style ? __( 'Italic', 'pfont' ) : __( 'Normal', 'pfont' );
 		}
 		$rows = array(
-			__( 'CSS family', 'universal-custom-fonts' ) => $font->css_stack(),
-			__( 'Source', 'universal-custom-fonts' )     => FontList::source_label( $font ),
-			__( 'Weights', 'universal-custom-fonts' )    => implode( ', ', $font->weights() ),
-			__( 'Styles', 'universal-custom-fonts' )     => implode( ', ', $styles ),
-			__( 'Text while loading', 'universal-custom-fonts' ) => 'font-display: ' . $font->display(),
-			__( 'Files', 'universal-custom-fonts' )      => self::files_summary( $font ),
+			__( 'CSS family', 'pfont' ) => $font->css_stack(),
+			__( 'Source', 'pfont' )     => FontList::source_label( $font ),
+			__( 'Weights', 'pfont' )    => implode( ', ', $font->weights() ),
+			__( 'Styles', 'pfont' )     => implode( ', ', $styles ),
+			__( 'Text while loading', 'pfont' ) => 'font-display: ' . $font->display(),
+			__( 'Files', 'pfont' )      => self::files_summary( $font ),
 		);
 		if ( $font->preset_data() ) {
-			$rows[ __( 'Scripts', 'universal-custom-fonts' ) ] = implode( ', ', $font->subsets() );
+			$rows[ __( 'Scripts', 'pfont' ) ] = implode( ', ', $font->subsets() );
 		}
-		printf( '<section class="ucf-card"><h2 class="ucf-card__title">%s</h2><dl class="ucf-dl">', esc_html__( 'Details', 'universal-custom-fonts' ) );
+		printf( '<section class="ucf-card"><h2 class="ucf-card__title">%s</h2><dl class="ucf-dl">', esc_html__( 'Details', 'pfont' ) );
 		foreach ( $rows as $label => $value ) {
 			printf( '<dt>%1$s</dt><dd>%2$s</dd>', esc_html( $label ), esc_html( $value ) );
 		}
@@ -372,9 +372,9 @@ final class FontView {
 		if ( $font->is_self_hosted() ) {
 			$local = (array) $font->get( 'local' );
 			/* translators: 1: number of files, 2: date. */
-			return sprintf( __( '%1$d WOFF2 files, downloaded %2$s', 'universal-custom-fonts' ), count( (array) ( $local['faces'] ?? array() ) ), wp_date( (string) get_option( 'date_format' ), (int) ( $local['downloaded'] ?? 0 ) ) );
+			return sprintf( __( '%1$d WOFF2 files, downloaded %2$s', 'pfont' ), count( (array) ( $local['faces'] ?? array() ) ), wp_date( (string) get_option( 'date_format' ), (int) ( $local['downloaded'] ?? 0 ) ) );
 		}
-		return __( 'Served by the CDN', 'universal-custom-fonts' );
+		return __( 'Served by the CDN', 'pfont' );
 	}
 
 	/**
@@ -383,17 +383,17 @@ final class FontView {
 	 * @param Font $font Font.
 	 */
 	private static function render_usage( Font $font ): void {
-		printf( '<section class="ucf-card"><h2 class="ucf-card__title">%s</h2><ul class="ucf-usage">', esc_html__( 'Where it appears', 'universal-custom-fonts' ) );
+		printf( '<section class="ucf-card"><h2 class="ucf-card__title">%s</h2><ul class="ucf-usage">', esc_html__( 'Where it appears', 'pfont' ) );
 		foreach ( FontList::labels() as $key => $label ) {
 			$adapter  = IntegrationManager::for_key( $key );
 			$detected = $adapter && $adapter->is_available();
 			$on       = $detected && $font->is_enabled() && ! empty( $font->integrations()[ $key ] );
 			if ( ! $detected ) {
-				$state = __( 'Not on this site', 'universal-custom-fonts' );
+				$state = __( 'Not on this site', 'pfont' );
 			} elseif ( $on ) {
-				$state = __( 'In the font menus', 'universal-custom-fonts' );
+				$state = __( 'In the font menus', 'pfont' );
 			} else {
-				$state = __( 'Turned off', 'universal-custom-fonts' );
+				$state = __( 'Turned off', 'pfont' );
 			}
 			printf( '<li class="%s">', esc_attr( $on ? 'is-on' : 'is-off' ) );
 			Icons::render( $on ? 'check' : 'minus' );
@@ -408,7 +408,7 @@ final class FontView {
 		}
 		echo '<div class="ucf-card__foot">';
 		AdminPage::button_link(
-			__( 'Change where it appears', 'universal-custom-fonts' ),
+			__( 'Change where it appears', 'pfont' ),
 			AdminPage::url(
 				array(
 					'tab'  => 'edit',

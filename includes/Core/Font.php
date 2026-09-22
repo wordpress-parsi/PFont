@@ -2,13 +2,13 @@
 /**
  * Immutable font value object.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Core;
+namespace PFont\Core;
 
-use UniversalCustomFonts\Fonts\CdnFonts;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Fonts\CdnFonts;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 

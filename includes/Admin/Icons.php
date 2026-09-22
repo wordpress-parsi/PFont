@@ -2,10 +2,10 @@
 /**
  * Original line icons (24×24, stroke uses currentColor).
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
 defined( 'ABSPATH' ) || exit;
 

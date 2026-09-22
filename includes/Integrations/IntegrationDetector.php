@@ -2,10 +2,10 @@
 /**
  * Environment detection helpers (safe to call after after_setup_theme).
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
 defined( 'ABSPATH' ) || exit;
 

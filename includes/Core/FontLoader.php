@@ -2,13 +2,13 @@
 /**
  * Loads only the fonts a request actually needs.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Core;
+namespace PFont\Core;
 
-use UniversalCustomFonts\Fonts\CdnFonts;
-use UniversalCustomFonts\Fonts\FontFaceGenerator;
+use PFont\Fonts\CdnFonts;
+use PFont\Fonts\FontFaceGenerator;
 
 defined( 'ABSPATH' ) || exit;
 

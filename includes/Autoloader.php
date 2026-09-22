@@ -2,15 +2,15 @@
 /**
  * Lightweight PSR-4 autoloader (no Composer needed).
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts;
+namespace PFont;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Maps UniversalCustomFonts\Foo\Bar to includes/Foo/Bar.php.
+ * Maps PFont\Foo\Bar to includes/Foo/Bar.php.
  */
 final class Autoloader {
 

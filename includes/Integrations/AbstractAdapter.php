@@ -2,16 +2,16 @@
 /**
  * Base class for integrations.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Core\Settings;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Core\Font;
+use PFont\Core\FontLoader;
+use PFont\Core\FontRegistry;
+use PFont\Core\Settings;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -77,12 +77,12 @@ abstract class AbstractAdapter {
 		if ( ! $this->is_available() ) {
 			return array(
 				'state'   => 'missing',
-				'message' => __( 'Not detected on this site.', 'universal-custom-fonts' ),
+				'message' => __( 'Not detected on this site.', 'pfont' ),
 			);
 		}
 		return array(
 			'state'   => 'active',
-			'message' => __( 'Detected. Enabled fonts appear in its native font list.', 'universal-custom-fonts' ),
+			'message' => __( 'Detected. Enabled fonts appear in its native font list.', 'pfont' ),
 		);
 	}
 

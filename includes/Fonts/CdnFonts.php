@@ -2,12 +2,12 @@
 /**
  * Predefined CDN fonts and css2 URL building.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Fonts;
+namespace PFont\Fonts;
 
-use UniversalCustomFonts\Core\Settings;
+use PFont\Core\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

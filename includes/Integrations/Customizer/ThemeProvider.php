@@ -2,12 +2,12 @@
 /**
  * Base class for theme Customizer providers.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations\Customizer;
+namespace PFont\Integrations\Customizer;
 
-use UniversalCustomFonts\Integrations\CustomizerAdapter;
+use PFont\Integrations\CustomizerAdapter;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -56,7 +56,7 @@ abstract class ThemeProvider {
 	public function status(): array {
 		return array(
 			'state'   => 'active',
-			'message' => __( 'Fonts appear in the theme’s Customizer typography controls.', 'universal-custom-fonts' ),
+			'message' => __( 'Fonts appear in the theme’s Customizer typography controls.', 'pfont' ),
 		);
 	}
 }

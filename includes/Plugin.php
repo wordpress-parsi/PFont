@@ -2,16 +2,16 @@
 /**
  * Plugin bootstrap.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts;
+namespace PFont;
 
-use UniversalCustomFonts\Admin\AdminPage;
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\Migrations;
-use UniversalCustomFonts\Core\Settings;
-use UniversalCustomFonts\Integrations\IntegrationManager;
+use PFont\Admin\AdminPage;
+use PFont\Core\FontLoader;
+use PFont\Core\Migrations;
+use PFont\Core\Settings;
+use PFont\Integrations\IntegrationManager;
 
 defined( 'ABSPATH' ) || exit;
 

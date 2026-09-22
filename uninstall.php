@@ -2,7 +2,7 @@
 /**
  * Uninstall routine. Deletes nothing unless the administrator opted in under Settings → Uninstall.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
@@ -16,7 +16,7 @@ function pfont_uninstall_site() {
 
 	if ( ! empty( $settings['delete_files_on_uninstall'] ) ) {
 		$uploads = wp_upload_dir( null, false );
-		$dir     = trailingslashit( $uploads['basedir'] ) . 'universal-custom-fonts';
+		$dir     = trailingslashit( $uploads['basedir'] ) . 'pfont';
 		if ( is_dir( $dir ) ) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 			if ( WP_Filesystem() ) {

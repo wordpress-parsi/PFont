@@ -2,15 +2,15 @@
 /**
  * Classic Editor / TinyMCE (including the Classic block).
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\Settings;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Core\Font;
+use PFont\Core\FontLoader;
+use PFont\Core\Settings;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -35,7 +35,7 @@ final class TinyMceAdapter extends AbstractAdapter {
 	 * {@inheritDoc}
 	 */
 	public function label(): string {
-		return __( 'Classic Editor (TinyMCE)', 'universal-custom-fonts' );
+		return __( 'Classic Editor (TinyMCE)', 'pfont' );
 	}
 
 	/**

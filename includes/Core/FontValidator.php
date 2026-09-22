@@ -2,13 +2,13 @@
 /**
  * Validation for font data and uploaded files.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Core;
+namespace PFont\Core;
 
-use UniversalCustomFonts\Fonts\CdnFonts;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Fonts\CdnFonts;
+use PFont\Helpers\FontHelper;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -90,22 +90,22 @@ final class FontValidator {
 		$family = trim( $family, "'\" " );
 
 		if ( '' === $family ) {
-			return new WP_Error( 'ucf_family_empty', __( 'Enter a CSS font family name.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_family_empty', __( 'Enter a CSS font family name.', 'pfont' ) );
 		}
 		if ( mb_strlen( $family ) > 80 ) {
-			return new WP_Error( 'ucf_family_long', __( 'The font family name must be 80 characters or fewer.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_family_long', __( 'The font family name must be 80 characters or fewer.', 'pfont' ) );
 		}
 		if ( ! preg_match( '/^[\p{L}_][\p{L}\p{N}_ \-]*$/u', $family ) ) {
-			return new WP_Error( 'ucf_family_chars', __( 'Use only letters, numbers, spaces, hyphens and underscores in the font family name, starting with a letter.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_family_chars', __( 'Use only letters, numbers, spaces, hyphens and underscores in the font family name, starting with a letter.', 'pfont' ) );
 		}
 		foreach ( explode( ' ', $family ) as $word ) {
 			if ( preg_match( '/^-?\d/', $word ) ) {
-				return new WP_Error( 'ucf_family_digit', __( 'Each word of the font family name must start with a letter (for example "Font 2" is not a valid unquoted CSS name).', 'universal-custom-fonts' ) );
+				return new WP_Error( 'ucf_family_digit', __( 'Each word of the font family name must start with a letter (for example "Font 2" is not a valid unquoted CSS name).', 'pfont' ) );
 			}
 		}
 		$lower = strtolower( $family );
 		if ( in_array( $lower, self::RESERVED, true ) || in_array( $lower, FontHelper::GENERIC, true ) ) {
-			return new WP_Error( 'ucf_family_reserved', __( 'That name is reserved by CSS. Choose a real font name.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_family_reserved', __( 'That name is reserved by CSS. Choose a real font name.', 'pfont' ) );
 		}
 		return $family;
 	}
@@ -171,7 +171,7 @@ final class FontValidator {
 					'ucf_family_duplicate',
 					sprintf(
 						/* translators: 1: family name, 2: suggested alias. */
-						__( 'Another font in your library already uses the CSS family “%1$s”. Use a different alias, for example “%2$s”.', 'universal-custom-fonts' ),
+						__( 'Another font in your library already uses the CSS family “%1$s”. Use a different alias, for example “%2$s”.', 'pfont' ),
 						$family,
 						$family . ' Local'
 					)
@@ -197,7 +197,7 @@ final class FontValidator {
 			if ( ! empty( $input['cdn_url'] ) ) {
 				$cdn_url = esc_url_raw( trim( (string) $input['cdn_url'] ), array( 'https' ) );
 				if ( '' === $cdn_url ) {
-					$errors->add( 'ucf_cdn_url', __( 'The stylesheet URL must be a valid https:// address.', 'universal-custom-fonts' ) );
+					$errors->add( 'ucf_cdn_url', __( 'The stylesheet URL must be a valid https:// address.', 'pfont' ) );
 				}
 			}
 
@@ -207,7 +207,7 @@ final class FontValidator {
 					'ucf_alias_remote',
 					sprintf(
 						/* translators: 1: Google family name. */
-						__( 'Fonts loaded from the CDN must keep their original name (“%1$s”). To use an alias, save with the original name first, then click “Host on this server”.', 'universal-custom-fonts' ),
+						__( 'Fonts loaded from the CDN must keep their original name (“%1$s”). To use an alias, save with the original name first, then click “Host on this server”.', 'pfont' ),
 						$preset['family']
 					)
 				);
@@ -283,32 +283,32 @@ final class FontValidator {
 		$error = isset( $file['error'] ) && ! is_array( $file['error'] ) ? (int) $file['error'] : UPLOAD_ERR_NO_FILE;
 		if ( UPLOAD_ERR_OK !== $error ) {
 			$messages = array(
-				UPLOAD_ERR_INI_SIZE   => __( 'The file is larger than the server allows.', 'universal-custom-fonts' ),
-				UPLOAD_ERR_FORM_SIZE  => __( 'The file is larger than the form allows.', 'universal-custom-fonts' ),
-				UPLOAD_ERR_PARTIAL    => __( 'The file was only partially uploaded.', 'universal-custom-fonts' ),
-				UPLOAD_ERR_NO_FILE    => __( 'No file was uploaded.', 'universal-custom-fonts' ),
-				UPLOAD_ERR_NO_TMP_DIR => __( 'The server has no temporary folder.', 'universal-custom-fonts' ),
-				UPLOAD_ERR_CANT_WRITE => __( 'The server could not write the file.', 'universal-custom-fonts' ),
-				UPLOAD_ERR_EXTENSION  => __( 'A PHP extension stopped the upload.', 'universal-custom-fonts' ),
+				UPLOAD_ERR_INI_SIZE   => __( 'The file is larger than the server allows.', 'pfont' ),
+				UPLOAD_ERR_FORM_SIZE  => __( 'The file is larger than the form allows.', 'pfont' ),
+				UPLOAD_ERR_PARTIAL    => __( 'The file was only partially uploaded.', 'pfont' ),
+				UPLOAD_ERR_NO_FILE    => __( 'No file was uploaded.', 'pfont' ),
+				UPLOAD_ERR_NO_TMP_DIR => __( 'The server has no temporary folder.', 'pfont' ),
+				UPLOAD_ERR_CANT_WRITE => __( 'The server could not write the file.', 'pfont' ),
+				UPLOAD_ERR_EXTENSION  => __( 'A PHP extension stopped the upload.', 'pfont' ),
 			);
-			return new WP_Error( 'ucf_upload_error', $messages[ $error ] ?? __( 'Upload failed.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_upload_error', $messages[ $error ] ?? __( 'Upload failed.', 'pfont' ) );
 		}
 
 		$tmp = isset( $file['tmp_name'] ) ? (string) $file['tmp_name'] : '';
 		if ( '' === $tmp || ( ! $sideload && ! is_uploaded_file( $tmp ) ) || ! is_file( $tmp ) ) {
-			return new WP_Error( 'ucf_upload_invalid', __( 'The uploaded file could not be verified.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_upload_invalid', __( 'The uploaded file could not be verified.', 'pfont' ) );
 		}
 
 		$size = (int) filesize( $tmp );
 		if ( $size <= 0 ) {
-			return new WP_Error( 'ucf_upload_empty', __( 'The file is empty.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_upload_empty', __( 'The file is empty.', 'pfont' ) );
 		}
 		if ( $size > self::max_upload_size() ) {
 			return new WP_Error(
 				'ucf_upload_size',
 				sprintf(
 					/* translators: %s: size limit, e.g. "10 MB". */
-					__( 'The file is too large. The limit is %s.', 'universal-custom-fonts' ),
+					__( 'The file is too large. The limit is %s.', 'pfont' ),
 					size_format( self::max_upload_size() )
 				)
 			);
@@ -317,12 +317,12 @@ final class FontValidator {
 		$name = sanitize_file_name( isset( $file['name'] ) ? (string) $file['name'] : '' );
 		$ext  = strtolower( pathinfo( $name, PATHINFO_EXTENSION ) );
 		if ( ! isset( self::mime_types()[ $ext ] ) ) {
-			return new WP_Error( 'ucf_upload_ext', __( 'Only .woff2, .woff, .ttf and .otf files are accepted.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_upload_ext', __( 'Only .woff2, .woff, .ttf and .otf files are accepted.', 'pfont' ) );
 		}
 
 		$format = self::detect_format( $tmp );
 		if ( null === $format ) {
-			return new WP_Error( 'ucf_upload_signature', __( 'This file is not a valid font: its contents do not match any supported font format.', 'universal-custom-fonts' ) );
+			return new WP_Error( 'ucf_upload_signature', __( 'This file is not a valid font: its contents do not match any supported font format.', 'pfont' ) );
 		}
 		$sfnt = array( 'ttf', 'otf' );
 		if ( $ext !== $format && ! ( in_array( $ext, $sfnt, true ) && in_array( $format, $sfnt, true ) ) ) {
@@ -330,7 +330,7 @@ final class FontValidator {
 				'ucf_upload_mismatch',
 				sprintf(
 					/* translators: 1: file extension, 2: detected format. */
-					__( 'The file is named .%1$s but its contents are %2$s. Rename or re-export it.', 'universal-custom-fonts' ),
+					__( 'The file is named .%1$s but its contents are %2$s. Rename or re-export it.', 'pfont' ),
 					$ext,
 					strtoupper( $format )
 				)
@@ -348,7 +348,7 @@ final class FontValidator {
 					'ucf_upload_mime',
 					sprintf(
 						/* translators: %s: MIME type reported by the server. */
-						__( 'The server identified this file as %s, which is not a font.', 'universal-custom-fonts' ),
+						__( 'The server identified this file as %s, which is not a font.', 'pfont' ),
 						$real
 					)
 				);

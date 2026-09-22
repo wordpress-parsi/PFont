@@ -2,12 +2,12 @@
 /**
  * Plugin-level settings (ucf_settings option).
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Core;
+namespace PFont\Core;
 
-use UniversalCustomFonts\Fonts\CdnFonts;
+use PFont\Fonts\CdnFonts;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,14 +2,14 @@
 /**
  * Theme Customizer font lists for themes without a dedicated adapter.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations;
+namespace PFont\Integrations;
 
-use UniversalCustomFonts\Integrations\Customizer\GeneratePressProvider;
-use UniversalCustomFonts\Integrations\Customizer\KadenceProvider;
-use UniversalCustomFonts\Integrations\Customizer\ThemeProvider;
+use PFont\Integrations\Customizer\GeneratePressProvider;
+use PFont\Integrations\Customizer\KadenceProvider;
+use PFont\Integrations\Customizer\ThemeProvider;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -46,7 +46,7 @@ final class CustomizerAdapter extends AbstractAdapter {
 	public function label(): string {
 		$provider = $this->provider();
 		/* translators: %s: theme name. */
-		return $provider ? sprintf( __( 'Customizer (%s)', 'universal-custom-fonts' ), $provider->label() ) : __( 'Theme Customizer', 'universal-custom-fonts' );
+		return $provider ? sprintf( __( 'Customizer (%s)', 'pfont' ), $provider->label() ) : __( 'Theme Customizer', 'pfont' );
 	}
 
 	/**
@@ -147,7 +147,7 @@ final class CustomizerAdapter extends AbstractAdapter {
 				'state'   => 'covered',
 				'message' => sprintf(
 					/* translators: %s: theme name. */
-					__( '%s has its own integration above, so this entry is not needed.', 'universal-custom-fonts' ),
+					__( '%s has its own integration above, so this entry is not needed.', 'pfont' ),
 					(string) wp_get_theme()->get( 'Name' )
 				),
 			);
@@ -156,7 +156,7 @@ final class CustomizerAdapter extends AbstractAdapter {
 			'state'   => 'unsupported',
 			'message' => sprintf(
 				/* translators: %s: theme name. */
-				__( 'Your theme (%s) has no supported public font hook, so nothing is added to its Customizer. If the theme has its own custom font upload (Divi and WoodMart do), add the font there. Your fonts still work in the editors and builders listed above.', 'universal-custom-fonts' ),
+				__( 'Your theme (%s) has no supported public font hook, so nothing is added to its Customizer. If the theme has its own custom font upload (Divi and WoodMart do), add the font there. Your fonts still work in the editors and builders listed above.', 'pfont' ),
 				(string) wp_get_theme()->get( 'Name' )
 			),
 		);

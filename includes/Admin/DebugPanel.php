@@ -2,17 +2,17 @@
 /**
  * Debug tab (only when debug mode is on). Shows URLs, never server paths.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Core\Settings;
-use UniversalCustomFonts\Fonts\CdnFonts;
-use UniversalCustomFonts\Fonts\FontStorage;
-use UniversalCustomFonts\Integrations\IntegrationManager;
+use PFont\Core\FontLoader;
+use PFont\Core\FontRegistry;
+use PFont\Core\Settings;
+use PFont\Fonts\CdnFonts;
+use PFont\Fonts\FontStorage;
+use PFont\Integrations\IntegrationManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,15 +25,15 @@ final class DebugPanel {
 	 * Render.
 	 */
 	public static function render(): void {
-		AdminPage::page_header( __( 'Debug', 'universal-custom-fonts' ), __( 'Technical details for troubleshooting. Server paths are never shown.', 'universal-custom-fonts' ) );
+		AdminPage::page_header( __( 'Debug', 'pfont' ), __( 'Technical details for troubleshooting. Server paths are never shown.', 'pfont' ) );
 		if ( ! Settings::get( 'debug' ) ) {
-			printf( '<div class="ucf-card"><p>%s</p></div>', esc_html__( 'Turn on debug mode under Settings to use this page.', 'universal-custom-fonts' ) );
+			printf( '<div class="ucf-card"><p>%s</p></div>', esc_html__( 'Turn on debug mode under Settings to use this page.', 'pfont' ) );
 			return;
 		}
 		global $wp_version;
 		$theme = wp_get_theme();
 		self::table(
-			__( 'Environment', 'universal-custom-fonts' ),
+			__( 'Environment', 'pfont' ),
 			array(
 				'WordPress' => (string) $wp_version,
 				'PHP'       => PHP_VERSION,
@@ -51,10 +51,10 @@ final class DebugPanel {
 				$lines[] = $hook['type'] . ': ' . $hook['hook'] . ' @' . $hook['priority'];
 			}
 			$hooks[ $adapter->label() ] = $adapter->is_available()
-				? ( $lines ? implode( "\n", $lines ) : __( 'no hooks needed', 'universal-custom-fonts' ) )
-				: __( 'not detected', 'universal-custom-fonts' );
+				? ( $lines ? implode( "\n", $lines ) : __( 'no hooks needed', 'pfont' ) )
+				: __( 'not detected', 'pfont' );
 		}
-		self::table( __( 'Registered hooks', 'universal-custom-fonts' ), $hooks );
+		self::table( __( 'Registered hooks', 'pfont' ), $hooks );
 
 		$registry = array();
 		$css      = array();
@@ -67,11 +67,11 @@ final class DebugPanel {
 				$urls[ $font->id() ] = FontLoader::get_remote_urls( array( $font ) );
 			}
 		}
-		self::dump( __( 'Font registry', 'universal-custom-fonts' ), $registry );
-		self::dump( __( 'Generated @font-face CSS', 'universal-custom-fonts' ), $css );
-		self::dump( __( 'CDN stylesheet URLs', 'universal-custom-fonts' ), $urls );
+		self::dump( __( 'Font registry', 'pfont' ), $registry );
+		self::dump( __( 'Generated @font-face CSS', 'pfont' ), $css );
+		self::dump( __( 'CDN stylesheet URLs', 'pfont' ), $urls );
 		$last = get_transient( 'ucf_debug_last_load' );
-		self::dump( __( 'Last front-end page with fonts', 'universal-custom-fonts' ), is_array( $last ) ? $last : __( 'Nothing recorded yet. Visit a page that uses a font.', 'universal-custom-fonts' ) );
+		self::dump( __( 'Last front-end page with fonts', 'pfont' ), is_array( $last ) ? $last : __( 'Nothing recorded yet. Visit a page that uses a font.', 'pfont' ) );
 	}
 
 	/**

@@ -2,13 +2,13 @@
 /**
  * Integrations: honest status per platform and the Customizer selection.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Integrations\IntegrationManager;
+use PFont\Core\FontRegistry;
+use PFont\Integrations\IntegrationManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +21,7 @@ final class IntegrationsView {
 	 * Render.
 	 */
 	public static function render(): void {
-		AdminPage::page_header( __( 'Integrations', 'universal-custom-fonts' ), __( 'Where your fonts can appear, and what was found on this site.', 'universal-custom-fonts' ) );
+		AdminPage::page_header( __( 'Integrations', 'pfont' ), __( 'Where your fonts can appear, and what was found on this site.', 'pfont' ) );
 		echo '<div class="ucf-int-list">';
 		$shown = array();
 		foreach ( IntegrationManager::adapters() as $candidate ) {
@@ -45,11 +45,11 @@ final class IntegrationsView {
 			);
 			if ( preg_match( '/^\d+(\.\d+)+/', $version ) ) {
 				/* translators: %s: version number. */
-				printf( '<span class="ucf-int__version">%s</span>', esc_html( sprintf( __( 'Version %s', 'universal-custom-fonts' ), $version ) ) );
+				printf( '<span class="ucf-int__version">%s</span>', esc_html( sprintf( __( 'Version %s', 'pfont' ), $version ) ) );
 			}
 			printf( '</div><p>%s</p></div>', esc_html( (string) $status['message'] ) );
 			if ( in_array( $state, array( 'active', 'limited' ), true ) ) {
-				printf( '<div class="ucf-int__count"><strong>%1$d</strong>%2$s</div>', (int) $count, esc_html( _n( 'font', 'fonts', $count, 'universal-custom-fonts' ) ) );
+				printf( '<div class="ucf-int__count"><strong>%1$d</strong>%2$s</div>', (int) $count, esc_html( _n( 'font', 'fonts', $count, 'pfont' ) ) );
 			}
 			echo '</div>';
 		}
@@ -65,11 +65,11 @@ final class IntegrationsView {
 	 */
 	private static function state_label( string $state ): string {
 		$labels = array(
-			'active'      => __( 'Active', 'universal-custom-fonts' ),
-			'limited'     => __( 'Limited', 'universal-custom-fonts' ),
-			'unsupported' => __( 'Unsupported', 'universal-custom-fonts' ),
-			'missing'     => __( 'Not detected', 'universal-custom-fonts' ),
-			'covered'     => __( 'Not needed', 'universal-custom-fonts' ),
+			'active'      => __( 'Active', 'pfont' ),
+			'limited'     => __( 'Limited', 'pfont' ),
+			'unsupported' => __( 'Unsupported', 'pfont' ),
+			'missing'     => __( 'Not detected', 'pfont' ),
+			'covered'     => __( 'Not needed', 'pfont' ),
 		);
 		return $labels[ $state ] ?? $state;
 	}
@@ -82,7 +82,7 @@ final class IntegrationsView {
 		if ( ! $fonts ) {
 			return;
 		}
-		AdminPage::section_title( __( 'Theme Customizer fonts', 'universal-custom-fonts' ), __( 'Fonts offered to supported theme Customizers. Kadence lists them; GeneratePress loads them by name.', 'universal-custom-fonts' ) );
+		AdminPage::section_title( __( 'Theme Customizer fonts', 'pfont' ), __( 'Fonts offered to supported theme Customizers. Kadence lists them; GeneratePress loads them by name.', 'pfont' ) );
 		printf( '<form method="post" action="%s">', esc_url( admin_url( 'admin-post.php' ) ) );
 		wp_nonce_field( 'ucf_bulk_update' );
 		echo '<input type="hidden" name="action" value="ucf_bulk_update"><input type="hidden" name="ucf_scope" value="customizer"><div class="ucf-card"><div class="ucf-chips">';
@@ -94,6 +94,6 @@ final class IntegrationsView {
 				esc_html( $font->name() )
 			);
 		}
-		printf( '</div><div class="ucf-card__foot"><button type="submit" class="ucf-btn">%s</button></div></div></form>', esc_html__( 'Save Customizer fonts', 'universal-custom-fonts' ) );
+		printf( '</div><div class="ucf-card__foot"><button type="submit" class="ucf-btn">%s</button></div></div></form>', esc_html__( 'Save Customizer fonts', 'pfont' ) );
 	}
 }

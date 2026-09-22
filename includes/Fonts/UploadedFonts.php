@@ -2,14 +2,14 @@
 /**
  * Processes the upload part of the add/edit form.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Fonts;
+namespace PFont\Fonts;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontValidator;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Core\Font;
+use PFont\Core\FontValidator;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -97,7 +97,7 @@ final class UploadedFonts {
 			$weight = FontHelper::parse_weight( $meta['weight'] ?? 400 );
 			$style  = ( isset( $meta['style'] ) && 'italic' === $meta['style'] ) ? 'italic' : 'normal';
 			if ( ! in_array( $weight, FontHelper::WEIGHTS, true ) ) {
-				$errors[] = __( 'A new row had an invalid weight and was skipped.', 'universal-custom-fonts' );
+				$errors[] = __( 'A new row had an invalid weight and was skipped.', 'pfont' );
 				continue;
 			}
 			$stored += self::store_all( $font_id, $files, $weight, $style, $uploads, $errors, $sideload );
@@ -141,7 +141,7 @@ final class UploadedFonts {
 			$validated = FontValidator::validate_upload( (array) $file, $sideload );
 			if ( is_wp_error( $validated ) ) {
 				/* translators: 1: file name, 2: error. */
-				$errors[] = sprintf( __( '%1$s: %2$s', 'universal-custom-fonts' ), $label, $validated->get_error_message() );
+				$errors[] = sprintf( __( '%1$s: %2$s', 'pfont' ), $label, $validated->get_error_message() );
 				continue;
 			}
 			$format   = $validated['format'];
@@ -149,7 +149,7 @@ final class UploadedFonts {
 			$relative = FontStorage::store_upload( $validated, $font_id, $weight, $style, $sideload );
 			if ( is_wp_error( $relative ) ) {
 				/* translators: 1: file name, 2: error. */
-				$errors[] = sprintf( __( '%1$s: %2$s', 'universal-custom-fonts' ), $label, $relative->get_error_message() );
+				$errors[] = sprintf( __( '%1$s: %2$s', 'pfont' ), $label, $relative->get_error_message() );
 				continue;
 			}
 			if ( '' !== $previous && $previous !== $relative ) {

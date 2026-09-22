@@ -2,12 +2,12 @@
 /**
  * Activation and versioned data migrations.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Core;
+namespace PFont\Core;
 
-use UniversalCustomFonts\Fonts\FontStorage;
+use PFont\Fonts\FontStorage;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,16 +2,16 @@
 /**
  * Optional: use a library font for the WordPress admin area.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\Font;
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Core\Settings;
-use UniversalCustomFonts\Helpers\FontHelper;
+use PFont\Core\Font;
+use PFont\Core\FontLoader;
+use PFont\Core\FontRegistry;
+use PFont\Core\Settings;
+use PFont\Helpers\FontHelper;
 
 defined( 'ABSPATH' ) || exit;
 

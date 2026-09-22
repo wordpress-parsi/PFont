@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PFont 1.4.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/universal-custom-fonts\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pfont\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,20 +12,20 @@ msgstr ""
 "POT-Creation-Date: 2026-09-19T19:48:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: universal-custom-fonts\n"
+"X-Domain: pfont\n"
 
 #. Plugin Name of the plugin
-#: universal-custom-fonts.php
+#: pfont.php
 msgid "PFont"
 msgstr ""
 
 #. Description of the plugin
-#: universal-custom-fonts.php
+#: pfont.php
 msgid "One font library for WordPress. Upload fonts or add Google Fonts once, then pick them from the native font dropdowns of the Classic Editor, Block Editor, Elementor, Astra and supported themes."
 msgstr ""
 
 #. Author of the plugin
-#: universal-custom-fonts.php
+#: pfont.php
 msgid "PFont contributors"
 msgstr ""
 
@@ -239,7 +239,7 @@ msgid "Delete font files"
 msgstr ""
 
 #: includes/Admin/AdminPage.php:361
-msgid "Removes the folder wp-content/uploads/universal-custom-fonts."
+msgid "Removes the folder wp-content/uploads/pfont."
 msgstr ""
 
 #: includes/Admin/AdminPage.php:362
@@ -1074,14 +1074,6 @@ msgstr ""
 msgid "Debug mode (under Settings) shows which fonts the last page loaded."
 msgstr ""
 
-#: includes/Admin/HelpView.php:69
-msgid "Testing checklist"
-msgstr ""
-
-#: includes/Admin/HelpView.php:70
-msgid "Developer guide"
-msgstr ""
-
 #: includes/Admin/IntegrationsView.php:24
 msgid "Where your fonts can appear, and what was found on this site."
 msgstr ""
@@ -1352,7 +1344,7 @@ msgid "Classic Editor (TinyMCE)"
 msgstr ""
 
 #. translators: 1: minimum PHP version, 2: minimum WordPress version.
-#: universal-custom-fonts.php:51
+#: pfont.php:51
 #, php-format
 msgid "PFont needs PHP %1$s or newer and WordPress %2$s or newer. It stays inactive until the server is updated."
 msgstr ""

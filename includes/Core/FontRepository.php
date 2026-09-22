@@ -2,10 +2,10 @@
 /**
  * Persistence for the font library (ucf_fonts option).
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Core;
+namespace PFont\Core;
 
 defined( 'ABSPATH' ) || exit;
 

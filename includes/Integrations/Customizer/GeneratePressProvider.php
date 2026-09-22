@@ -2,10 +2,10 @@
 /**
  * GeneratePress.
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Integrations\Customizer;
+namespace PFont\Integrations\Customizer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -42,7 +42,7 @@ final class GeneratePressProvider extends ThemeProvider {
 	public function status(): array {
 		return array(
 			'state'   => 'limited',
-			'message' => __( 'GeneratePress 3 has no font-list hook. Add the font in Customizer → Typography → Font Manager by typing its exact CSS family name; PFont then loads it wherever it is used.', 'universal-custom-fonts' ),
+			'message' => __( 'GeneratePress 3 has no font-list hook. Add the font in Customizer → Typography → Font Manager by typing its exact CSS family name; PFont then loads it wherever it is used.', 'pfont' ),
 		);
 	}
 }

@@ -2,14 +2,14 @@
 /**
  * Admin assets (loaded only on the plugin screen).
  *
- * @package UniversalCustomFonts
+ * @package PFont
  */
 
-namespace UniversalCustomFonts\Admin;
+namespace PFont\Admin;
 
-use UniversalCustomFonts\Core\FontLoader;
-use UniversalCustomFonts\Core\FontRegistry;
-use UniversalCustomFonts\Fonts\CdnFonts;
+use PFont\Core\FontLoader;
+use PFont\Core\FontRegistry;
+use PFont\Fonts\CdnFonts;
 
 defined( 'ABSPATH' ) || exit;
 
