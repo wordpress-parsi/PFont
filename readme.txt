@@ -68,6 +68,13 @@ This plugin can connect to one of two font services. Which one is used depends o
 3. Add one of the available fonts on the Library screen, or upload your own under "Add new font".
 4. Choose where each font should appear in the library table, then pick the font in your editor or builder.
 
+== Screenshots ==
+
+1. Font library page
+2. Add new font page
+3. Integrations page
+4. Settings page
+
 == Frequently Asked Questions ==
 
 = Why is a font I added from Google not in Elementor's "PFont" group? =
