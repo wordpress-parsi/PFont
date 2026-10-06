@@ -32,7 +32,7 @@ final class Actions {
 	 */
 	public static function register_hooks(): void {
 		foreach ( array( 'save_font', 'delete_font', 'add_presets', 'bulk_update' ) as $action ) {
-			add_action( 'admin_post_ucf_' . $action, array( self::class, $action ) );
+			add_action( 'admin_post_pfont_' . $action, array( self::class, $action ) );
 		}
 	}
 
@@ -50,11 +50,12 @@ final class Actions {
 	 */
 	public static function save_font(): void {
 		self::require_capability();
-		check_admin_referer( 'ucf_save_font' );
-		$input    = isset( $_POST['ucf'] ) && is_array( $_POST['ucf'] ) ? wp_unslash( $_POST['ucf'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized field by field in FontValidator and UploadedFonts.
-		$id       = isset( $input['id'] ) ? sanitize_key( (string) $input['id'] ) : '';
+		check_admin_referer( 'pfont_save_font' );
+		// Sanitized key by key the moment it is read; nothing raw is kept or stored after this line.
+		$input    = FontValidator::sanitize_raw_input( isset( $_POST['pfont'] ) && is_array( $_POST['pfont'] ) ? wp_unslash( $_POST['pfont'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- The array is sanitized in full by sanitize_raw_input().
+		$id       = $input['id'] ?? '';
 		$existing = '' !== $id ? FontRegistry::get_font( $id ) : null;
-		$after    = isset( $input['after'] ) ? sanitize_key( (string) $input['after'] ) : '';
+		$after    = $input['after'] ?? '';
 
 		$data = FontValidator::sanitize_font_input( $input, $existing );
 		if ( is_wp_error( $data ) ) {
@@ -77,15 +78,15 @@ final class Actions {
 				$record['id'],
 				(array) ( $record['files'] ?? array() ), // A new font has no files yet.
 				$input,
-				UploadedFonts::normalize_files_field( self::files_field( 'ucf_existing' ) ),
-				UploadedFonts::normalize_files_field( self::files_field( 'ucf_new' ) )
+				UploadedFonts::normalize_files_field( self::files_field( 'pfont_existing' ) ),
+				UploadedFonts::normalize_files_field( self::files_field( 'pfont_new' ) )
 			);
 			$record['files'] = $result['files'];
 			foreach ( $result['errors'] as $message ) {
 				AdminPage::notice( 'error', $message );
 			}
 			if ( ! $record['files'] ) {
-				self::fail( new WP_Error( 'ucf_no_files', __( 'Upload at least one font file (WOFF2 is recommended).', 'pfont' ) ), $input, $id );
+				self::fail( new WP_Error( 'pfont_no_files', __( 'Upload at least one font file (WOFF2 is recommended).', 'pfont' ) ), $input, $id );
 			}
 		} else {
 			$candidate = new Font( $record );
@@ -93,7 +94,7 @@ final class Actions {
 			if ( $changed ) {
 				$check = self::verify_remote( $candidate );
 				if ( is_wp_error( $check ) ) {
-					if ( 'ucf_remote_unreachable' !== $check->get_error_code() ) {
+					if ( 'pfont_remote_unreachable' !== $check->get_error_code() ) {
 						self::fail( $check, $input, $id );
 					}
 					AdminPage::notice( 'warning', $check->get_error_message() );
@@ -137,7 +138,7 @@ final class Actions {
 	public static function delete_font(): void {
 		$id = isset( $_GET['font'] ) ? sanitize_key( wp_unslash( $_GET['font'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- The nonce below includes this ID.
 		self::require_capability();
-		check_admin_referer( 'ucf_delete_font_' . $id );
+		check_admin_referer( 'pfont_delete_font_' . $id );
 		$font = FontRegistry::get_font( $id );
 		if ( $font ) {
 			self::remove_files( $font );
@@ -157,8 +158,8 @@ final class Actions {
 	 */
 	public static function add_presets(): void {
 		self::require_capability();
-		check_admin_referer( 'ucf_add_presets' );
-		$ids   = isset( $_POST['ucf_presets'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['ucf_presets'] ) ) : array();
+		check_admin_referer( 'pfont_add_presets' );
+		$ids   = isset( $_POST['pfont_presets'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['pfont_presets'] ) ) : array();
 		$added = array();
 		foreach ( $ids as $preset_id ) {
 			$preset = CdnFonts::preset( $preset_id );
@@ -194,11 +195,12 @@ final class Actions {
 	 */
 	public static function bulk_update(): void {
 		self::require_capability();
-		check_admin_referer( 'ucf_bulk_update' );
-		$ids     = isset( $_POST['ucf_ids'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['ucf_ids'] ) ) : array();
-		$matrix  = isset( $_POST['ucf_matrix'] ) && is_array( $_POST['ucf_matrix'] ) ? wp_unslash( $_POST['ucf_matrix'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Values are only tested with empty().
-		$enabled = isset( $_POST['ucf_enabled'] ) && is_array( $_POST['ucf_enabled'] ) ? wp_unslash( $_POST['ucf_enabled'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Values are only tested with empty().
-		$scope   = isset( $_POST['ucf_scope'] ) ? sanitize_key( wp_unslash( $_POST['ucf_scope'] ) ) : 'all';
+		check_admin_referer( 'pfont_bulk_update' );
+		// sanitize_key() returns '' for anything that is not a scalar, so the filter drops those.
+		$ids     = isset( $_POST['pfont_ids'] ) ? array_filter( array_map( 'sanitize_key', (array) wp_unslash( $_POST['pfont_ids'] ) ) ) : array();
+		$matrix  = isset( $_POST['pfont_matrix'] ) && is_array( $_POST['pfont_matrix'] ) ? self::sanitize_matrix( wp_unslash( $_POST['pfont_matrix'] ) ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized in full by sanitize_matrix().
+		$enabled = isset( $_POST['pfont_enabled'] ) && is_array( $_POST['pfont_enabled'] ) ? self::sanitize_flags( wp_unslash( $_POST['pfont_enabled'] ) ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized in full by sanitize_flags().
+		$scope   = isset( $_POST['pfont_scope'] ) ? sanitize_key( wp_unslash( $_POST['pfont_scope'] ) ) : 'all';
 		$keys    = 'customizer' === $scope ? array( 'customizer' ) : ( 'enabled' === $scope ? array() : Font::INTEGRATIONS );
 
 		foreach ( array_unique( $ids ) as $id ) {
@@ -289,44 +291,20 @@ final class Actions {
 	 * @return bool|WP_Error
 	 */
 	private static function verify_remote( Font $font ): bool|WP_Error {
-		if ( '' !== $font->cdn_url() ) {
-			$response = wp_safe_remote_get( $font->cdn_url(), array( 'timeout' => 10 ) );
-			if ( is_wp_error( $response ) ) {
-				return new WP_Error( 'ucf_remote_unreachable', __( 'The stylesheet could not be checked right now. It was saved anyway.', 'pfont' ) );
-			}
-			$code = (int) wp_remote_retrieve_response_code( $response );
-			if ( 200 !== $code ) {
-				/* translators: %d: HTTP status. */
-				return new WP_Error( 'ucf_remote_http', sprintf( __( 'The stylesheet URL answered with HTTP %d.', 'pfont' ), $code ) );
-			}
-			preg_match_all( '/font-family\s*:\s*[\'"]?([^;\'"}]+)/i', (string) wp_remote_retrieve_body( $response ), $matches );
-			$declared = array_values( array_unique( array_map( 'trim', $matches[1] ?? array() ) ) );
-			foreach ( $declared as $name ) {
-				if ( FontHelper::same_family( $name, $font->family() ) ) {
-					return true;
-				}
-			}
-			if ( $declared ) {
-				/* translators: 1: declared names, 2: entered family. */
-				return new WP_Error( 'ucf_remote_family', sprintf( __( 'That stylesheet declares %1$s, not “%2$s”. Use the exact family name it declares.', 'pfont' ), '“' . implode( '”, “', array_slice( $declared, 0, 3 ) ) . '”', $font->family() ) );
-			}
-			return true;
-		}
-
 		$preset   = $font->preset_data();
 		$url      = CdnFonts::css2_url( array( CdnFonts::css2_family( $font->remote_family(), $font->weights(), $preset['range'] ?? null, $font->styles() ) ), $font->display() );
 		$response = wp_safe_remote_get( $url, array( 'timeout' => 10 ) );
 		if ( is_wp_error( $response ) ) {
-			return new WP_Error( 'ucf_remote_unreachable', __( 'The font service could not be reached to verify this font. It was saved anyway.', 'pfont' ) );
+			return new WP_Error( 'pfont_remote_unreachable', __( 'The font service could not be reached to verify this font. It was saved anyway.', 'pfont' ) );
 		}
 		$code = (int) wp_remote_retrieve_response_code( $response );
 		if ( 400 === $code ) {
 			/* translators: %s: family. */
-			return new WP_Error( 'ucf_remote_invalid', sprintf( __( 'The font service rejected “%s” with the selected weights or styles. Check the exact name and the available weights on fonts.google.com.', 'pfont' ), $font->remote_family() ) );
+			return new WP_Error( 'pfont_remote_invalid', sprintf( __( 'The font service rejected “%s” with the selected weights or styles. Check the exact name and the available weights on fonts.google.com.', 'pfont' ), $font->remote_family() ) );
 		}
 		if ( 200 !== $code ) {
 			/* translators: %d: HTTP status. */
-			return new WP_Error( 'ucf_remote_unreachable', sprintf( __( 'The font service answered with HTTP %d, so the font could not be verified. It was saved anyway.', 'pfont' ), $code ) );
+			return new WP_Error( 'pfont_remote_unreachable', sprintf( __( 'The font service answered with HTTP %d, so the font could not be verified. It was saved anyway.', 'pfont' ), $code ) );
 		}
 		return true;
 	}
@@ -338,7 +316,7 @@ final class Actions {
 	 * @return string
 	 */
 	private static function remote_signature( Font $font ): string {
-		return md5( (string) wp_json_encode( array( $font->family(), $font->preset(), $font->cdn_url(), $font->weights(), $font->styles(), $font->source() ) ) );
+		return md5( (string) wp_json_encode( array( $font->family(), $font->preset(), $font->weights(), $font->styles(), $font->source() ) ) );
 	}
 
 	/**
@@ -361,14 +339,55 @@ final class Actions {
 	 * @return array
 	 */
 	private static function files_field( string $name ): array {
-		return isset( $_FILES[ $name ] ) && is_array( $_FILES[ $name ] ) ? $_FILES[ $name ] : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput -- Nonce checked in authorize(); every file is validated by FontValidator.
+		return isset( $_FILES[ $name ] ) && is_array( $_FILES[ $name ] ) ? $_FILES[ $name ] : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput -- The nonce was checked by the caller; UploadedFonts::normalize_files_field() sanitizes every entry and FontValidator verifies each file.
 	}
 
 	/**
-	 * Report errors and return to the form with the input kept.
+	 * Sanitize the library matrix: [font id][integration] => bool.
+	 *
+	 * @param array $raw Unslashed input.
+	 * @return array<string,array<string,bool>>
+	 */
+	private static function sanitize_matrix( array $raw ): array {
+		$clean = array();
+		foreach ( $raw as $id => $columns ) {
+			$id = sanitize_key( (string) $id );
+			if ( '' === $id || ! is_array( $columns ) ) {
+				continue;
+			}
+			$clean[ $id ] = array();
+			foreach ( $columns as $key => $value ) {
+				$key = sanitize_key( (string) $key );
+				if ( in_array( $key, Font::INTEGRATIONS, true ) ) {
+					$clean[ $id ][ $key ] = is_scalar( $value ) && ! empty( $value );
+				}
+			}
+		}
+		return $clean;
+	}
+
+	/**
+	 * Sanitize a list of checkboxes keyed by font ID: [font id] => bool.
+	 *
+	 * @param array $raw Unslashed input.
+	 * @return array<string,bool>
+	 */
+	private static function sanitize_flags( array $raw ): array {
+		$clean = array();
+		foreach ( $raw as $id => $value ) {
+			$id = sanitize_key( (string) $id );
+			if ( '' !== $id ) {
+				$clean[ $id ] = is_scalar( $value ) && ! empty( $value );
+			}
+		}
+		return $clean;
+	}
+
+	/**
+	 * Report errors and return to the form with the (already sanitized) input kept for ten minutes.
 	 *
 	 * @param WP_Error $error Error.
-	 * @param array    $input Input.
+	 * @param array    $input Output of FontValidator::sanitize_raw_input().
 	 * @param string   $id    Font ID.
 	 * @return never
 	 */
@@ -376,7 +395,7 @@ final class Actions {
 		foreach ( $error->get_error_messages() as $message ) {
 			AdminPage::notice( 'error', $message );
 		}
-		set_transient( 'ucf_form_' . get_current_user_id(), $input, 10 * MINUTE_IN_SECONDS );
+		set_transient( 'pfont_form_' . get_current_user_id(), $input, 10 * MINUTE_IN_SECONDS );
 		self::redirect(
 			array(
 				'tab'  => 'edit',

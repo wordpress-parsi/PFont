@@ -28,8 +28,8 @@ final class GoogleFontsDownloader {
 	 * @return array|WP_Error
 	 */
 	public static function download( Font $font ): array|WP_Error {
-		if ( ! $font->is_cdn() || '' !== $font->cdn_url() ) {
-			return new WP_Error( 'ucf_selfhost_type', __( 'Only Google/Bunny fonts can be hosted locally. Custom stylesheet URLs are loaded as they are.', 'pfont' ) );
+		if ( ! $font->is_cdn() ) {
+			return new WP_Error( 'pfont_selfhost_type', __( 'Only fonts added from Google Fonts or Bunny Fonts can be hosted locally.', 'pfont' ) );
 		}
 		$provider = CdnFonts::provider();
 		$preset   = $font->preset_data();
@@ -50,7 +50,7 @@ final class GoogleFontsDownloader {
 		$code = (int) wp_remote_retrieve_response_code( $response );
 		if ( 200 !== $code ) {
 			return new WP_Error(
-				'ucf_selfhost_http',
+				'pfont_selfhost_http',
 				sprintf(
 					/* translators: %d: HTTP status code. */
 					__( 'The font service answered with HTTP %d. Check the family name and the selected weights.', 'pfont' ),
@@ -61,7 +61,7 @@ final class GoogleFontsDownloader {
 
 		$faces = self::parse_css( (string) wp_remote_retrieve_body( $response ) );
 		if ( ! $faces ) {
-			return new WP_Error( 'ucf_selfhost_empty', __( 'The font service returned no font files.', 'pfont' ) );
+			return new WP_Error( 'pfont_selfhost_empty', __( 'The font service returned no font files.', 'pfont' ) );
 		}
 
 		$dir        = 'google/' . $font->id() . '-' . substr( md5( $css_url . wp_rand() ), 0, 8 );
@@ -100,7 +100,7 @@ final class GoogleFontsDownloader {
 				$body = is_wp_error( $file ) ? '' : (string) wp_remote_retrieve_body( $file );
 				if ( is_wp_error( $file ) || 200 !== (int) wp_remote_retrieve_response_code( $file ) || FontValidator::detect_format_from_bytes( $body ) !== $src['format'] ) {
 					FontStorage::delete_dir( $dir );
-					return new WP_Error( 'ucf_selfhost_file', __( 'A font file could not be downloaded or failed verification. Nothing was changed.', 'pfont' ) );
+					return new WP_Error( 'pfont_selfhost_file', __( 'A font file could not be downloaded or failed verification. Nothing was changed.', 'pfont' ) );
 				}
 				$name = sanitize_file_name( (string) basename( (string) wp_parse_url( $src['url'], PHP_URL_PATH ) ) );
 				if ( ! str_ends_with( strtolower( $name ), '.' . $src['format'] ) ) {
@@ -131,7 +131,7 @@ final class GoogleFontsDownloader {
 
 		if ( ! $local ) {
 			FontStorage::delete_dir( $dir );
-			return new WP_Error( 'ucf_selfhost_none', __( 'No usable WOFF2/WOFF files were found.', 'pfont' ) );
+			return new WP_Error( 'pfont_selfhost_none', __( 'No usable WOFF2/WOFF files were found.', 'pfont' ) );
 		}
 
 		return array(

@@ -74,8 +74,7 @@ final class CdnFonts {
 		 *
 		 * @param array $presets Presets keyed by ID.
 		 */
-		$presets = apply_filters( 'pfont_cdn_presets', $presets );
-		return (array) apply_filters_deprecated( 'ucf_cdn_presets', array( $presets ), '1.4.0', 'pfont_cdn_presets' );
+		return (array) apply_filters( 'pfont_cdn_presets', $presets );
 	}
 
 	/**

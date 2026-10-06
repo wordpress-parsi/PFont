@@ -51,7 +51,6 @@ final class IntegrationManager {
 			 * @param AbstractAdapter[] $adapters Adapters.
 			 */
 			$adapters       = apply_filters( 'pfont_integrations', $adapters );
-			$adapters       = apply_filters_deprecated( 'ucf_integrations', array( $adapters ), '1.4.0', 'pfont_integrations' );
 			self::$adapters = array_values(
 				array_filter(
 					(array) $adapters,

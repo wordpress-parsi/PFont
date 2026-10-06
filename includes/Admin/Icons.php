@@ -54,7 +54,7 @@ final class Icons {
 	 * @return string
 	 */
 	public static function get( string $name ): string {
-		return '<svg class="ucf-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . ( self::PATHS[ $name ] ?? '' ) . '</svg>';
+		return '<svg class="pfont-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . ( self::PATHS[ $name ] ?? '' ) . '</svg>';
 	}
 
 	/**

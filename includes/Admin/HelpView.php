@@ -19,7 +19,7 @@ final class HelpView {
 	 */
 	public static function render(): void {
 		AdminPage::page_header( __( 'Help', 'pfont' ), __( 'Short answers to common questions.', 'pfont' ) );
-		echo '<div class="ucf-card ucf-faq">';
+		echo '<div class="pfont-card pfont-faq">';
 		self::item(
 			'loading',
 			__( 'How are fonts loaded?', 'pfont' ),
@@ -65,9 +65,6 @@ final class HelpView {
 			),
 			'ul'
 		);
-		echo '</div><div class="ucf-help-links">';
-		//AdminPage::button_link( __( 'Testing checklist', 'pfont' ), PFONT_URL . 'docs/TESTING.md', '', 'ghost' );
-		//AdminPage::button_link( __( 'Developer guide', 'pfont' ), PFONT_URL . 'docs/DEVELOPER.md', '', 'ghost' );
 		echo '</div>';
 	}
 
@@ -80,7 +77,7 @@ final class HelpView {
 	 * @param string $format   '' for paragraphs, ul or ol.
 	 */
 	private static function item( string $id, string $question, array $lines, string $format = '' ): void {
-		printf( '<details id="ucf-help-%1$s"><summary>%2$s</summary>', esc_attr( $id ), esc_html( $question ) );
+		printf( '<details id="pfont-help-%1$s"><summary>%2$s</summary>', esc_attr( $id ), esc_html( $question ) );
 		if ( '' !== $format ) {
 			echo 'ol' === $format ? '<ol>' : '<ul>';
 		}

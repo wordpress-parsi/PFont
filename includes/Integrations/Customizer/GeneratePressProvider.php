@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * GeneratePress 3.x replaced its font-list filter with a Font Manager where any family name can
- * be typed, so there is nothing to inject; UCF loads fonts named in its saved settings.
+ * be typed, so there is nothing to inject; PFont loads fonts named in its saved settings.
  */
 final class GeneratePressProvider extends ThemeProvider {
 

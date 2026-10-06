@@ -38,12 +38,16 @@ final class UploadedFonts {
 				if ( UPLOAD_ERR_NO_FILE === $error ) {
 					continue;
 				}
-				$out[ (string) $row ][ (string) $format ] = array(
-					'name'     => (string) ( $field['name'][ $row ][ $format ] ?? '' ),
-					'type'     => (string) ( $field['type'][ $row ][ $format ] ?? '' ),
-					'tmp_name' => (string) ( $field['tmp_name'][ $row ][ $format ] ?? '' ),
+				$name = $field['name'][ $row ][ $format ] ?? '';
+				$type = $field['type'][ $row ][ $format ] ?? '';
+				$tmp  = $field['tmp_name'][ $row ][ $format ] ?? '';
+				// tmp_name stays as PHP wrote it: FontValidator::validate_upload() rejects anything is_uploaded_file() does not know.
+				$out[ sanitize_key( (string) $row ) ][ sanitize_key( (string) $format ) ] = array(
+					'name'     => sanitize_file_name( is_scalar( $name ) ? (string) $name : '' ),
+					'type'     => sanitize_mime_type( is_scalar( $type ) ? (string) $type : '' ),
+					'tmp_name' => is_scalar( $tmp ) ? (string) $tmp : '',
 					'error'    => $error,
-					'size'     => (int) ( $field['size'][ $row ][ $format ] ?? 0 ),
+					'size'     => absint( $field['size'][ $row ][ $format ] ?? 0 ),
 				);
 			}
 		}

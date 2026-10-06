@@ -23,6 +23,7 @@ final class Font {
 	public const STYLES        = array( 'normal', 'italic' );
 	public const FORMATS       = array( 'woff2', 'woff', 'ttf', 'otf' );
 	public const DISPLAYS      = array( 'swap', 'fallback', 'optional', 'block', 'auto' );
+	public const SLUG_PREFIX   = 'pfont-';
 
 	/**
 	 * Normalized data.
@@ -53,7 +54,6 @@ final class Font {
 			'fallback'     => 'sans-serif',
 			'source'       => self::SOURCE_CDN,
 			'preset'       => '',
-			'cdn_url'      => '',
 			'hosting'      => 'remote',
 			'local'        => array(),
 			'weights'      => array( 400 ),
@@ -82,7 +82,6 @@ final class Font {
 		$font['fallback'] = '' !== (string) $font['fallback'] ? (string) $font['fallback'] : 'sans-serif';
 		$font['source']   = self::SOURCE_UPLOAD === $font['source'] ? self::SOURCE_UPLOAD : self::SOURCE_CDN;
 		$font['preset']   = sanitize_key( (string) $font['preset'] );
-		$font['cdn_url']  = (string) $font['cdn_url'];
 		$font['hosting']  = 'local' === $font['hosting'] ? 'local' : 'remote';
 		$font['weights']  = FontHelper::sanitize_weights( (array) $font['weights'] );
 		$font['styles']   = array_values( array_intersect( self::STYLES, (array) $font['styles'] ) );
@@ -348,15 +347,6 @@ final class Font {
 	}
 
 	/**
-	 * Custom stylesheet URL.
-	 *
-	 * @return string
-	 */
-	public function cdn_url(): string {
-		return $this->data['cdn_url'];
-	}
-
-	/**
 	 * The font-display value.
 	 *
 	 * @return string
@@ -381,7 +371,7 @@ final class Font {
 	 * @return string
 	 */
 	public function slug(): string {
-		return 'ucf-' . $this->id();
+		return self::SLUG_PREFIX . $this->id();
 	}
 
 	/**

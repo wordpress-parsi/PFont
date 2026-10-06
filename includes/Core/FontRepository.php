@@ -1,6 +1,6 @@
 <?php
 /**
- * Persistence for the font library (ucf_fonts option).
+ * Persistence for the font library (pfont_fonts option).
  *
  * @package PFont
  */
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class FontRepository {
 
-	public const OPTION = 'ucf_fonts';
+	public const OPTION = 'pfont_fonts';
 
 	/**
 	 * Request cache.
@@ -132,7 +132,6 @@ final class FontRepository {
 		 * Fires after the font library changed.
 		 */
 		do_action( 'pfont_fonts_changed' );
-		do_action_deprecated( 'ucf_fonts_changed', array(), '1.4.0', 'pfont_fonts_changed' );
 		return true;
 	}
 }

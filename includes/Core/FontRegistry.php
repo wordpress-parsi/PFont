@@ -36,7 +36,6 @@ final class FontRegistry {
 			 * @param array $fonts Raw records keyed by ID.
 			 */
 			$raw   = apply_filters( 'pfont_registered_fonts', FontRepository::all() );
-			$raw   = apply_filters_deprecated( 'ucf_registered_fonts', array( $raw ), '1.4.0', 'pfont_registered_fonts' );
 			$fonts = array();
 			foreach ( (array) $raw as $id => $data ) {
 				if ( ! is_array( $data ) ) {

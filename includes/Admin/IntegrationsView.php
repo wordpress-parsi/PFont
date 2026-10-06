@@ -22,7 +22,7 @@ final class IntegrationsView {
 	 */
 	public static function render(): void {
 		AdminPage::page_header( __( 'Integrations', 'pfont' ), __( 'Where your fonts can appear, and what was found on this site.', 'pfont' ) );
-		echo '<div class="ucf-int-list">';
+		echo '<div class="pfont-int-list">';
 		$shown = array();
 		foreach ( IntegrationManager::adapters() as $candidate ) {
 			$key = $candidate->id();
@@ -35,21 +35,21 @@ final class IntegrationsView {
 			$state         = (string) $status['state'];
 			$version       = $adapter->is_available() ? $adapter->version() : '';
 			$count         = count( $adapter->fonts() );
-			printf( '<div class="%s"><span class="ucf-int__mark">', esc_attr( 'missing' === $state ? 'ucf-int is-missing' : 'ucf-int' ) );
+			printf( '<div class="%s"><span class="pfont-int__mark">', esc_attr( 'missing' === $state ? 'pfont-int is-missing' : 'pfont-int' ) );
 			Icons::render( FontForm::icon_for( $key ) );
 			printf(
-				'</span><div class="ucf-int__body"><div class="ucf-int__title"><strong>%1$s</strong><span class="ucf-badge ucf-badge--%2$s">%3$s</span>',
+				'</span><div class="pfont-int__body"><div class="pfont-int__title"><strong>%1$s</strong><span class="pfont-badge pfont-badge--%2$s">%3$s</span>',
 				esc_html( $adapter->label() ),
 				esc_attr( $state ),
 				esc_html( self::state_label( $state ) )
 			);
 			if ( preg_match( '/^\d+(\.\d+)+/', $version ) ) {
 				/* translators: %s: version number. */
-				printf( '<span class="ucf-int__version">%s</span>', esc_html( sprintf( __( 'Version %s', 'pfont' ), $version ) ) );
+				printf( '<span class="pfont-int__version">%s</span>', esc_html( sprintf( __( 'Version %s', 'pfont' ), $version ) ) );
 			}
 			printf( '</div><p>%s</p></div>', esc_html( (string) $status['message'] ) );
 			if ( in_array( $state, array( 'active', 'limited' ), true ) ) {
-				printf( '<div class="ucf-int__count"><strong>%1$d</strong>%2$s</div>', (int) $count, esc_html( _n( 'font', 'fonts', $count, 'pfont' ) ) );
+				printf( '<div class="pfont-int__count"><strong>%1$d</strong>%2$s</div>', (int) $count, esc_html( _n( 'font', 'fonts', $count, 'pfont' ) ) );
 			}
 			echo '</div>';
 		}
@@ -84,16 +84,16 @@ final class IntegrationsView {
 		}
 		AdminPage::section_title( __( 'Theme Customizer fonts', 'pfont' ), __( 'Fonts offered to supported theme Customizers. Kadence lists them; GeneratePress loads them by name.', 'pfont' ) );
 		printf( '<form method="post" action="%s">', esc_url( admin_url( 'admin-post.php' ) ) );
-		wp_nonce_field( 'ucf_bulk_update' );
-		echo '<input type="hidden" name="action" value="ucf_bulk_update"><input type="hidden" name="ucf_scope" value="customizer"><div class="ucf-card"><div class="ucf-chips">';
+		wp_nonce_field( 'pfont_bulk_update' );
+		echo '<input type="hidden" name="action" value="pfont_bulk_update"><input type="hidden" name="pfont_scope" value="customizer"><div class="pfont-card"><div class="pfont-chips">';
 		foreach ( $fonts as $font ) {
 			printf(
-				'<label class="ucf-chip"><input type="hidden" name="ucf_ids[]" value="%1$s"><input type="checkbox" name="ucf_matrix[%1$s][customizer]" value="1"%2$s><span>%3$s</span></label>',
+				'<label class="pfont-chip"><input type="hidden" name="pfont_ids[]" value="%1$s"><input type="checkbox" name="pfont_matrix[%1$s][customizer]" value="1"%2$s><span>%3$s</span></label>',
 				esc_attr( $font->id() ),
 				checked( ! empty( $font->integrations()['customizer'] ), true, false ),
 				esc_html( $font->name() )
 			);
 		}
-		printf( '</div><div class="ucf-card__foot"><button type="submit" class="ucf-btn">%s</button></div></div></form>', esc_html__( 'Save Customizer fonts', 'pfont' ) );
+		printf( '</div><div class="pfont-card__foot"><button type="submit" class="pfont-btn">%s</button></div></div></form>', esc_html__( 'Save Customizer fonts', 'pfont' ) );
 	}
 }

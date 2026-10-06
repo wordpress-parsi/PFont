@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  * Verified against Astra 4.13.12:
  * - astra_system_fonts feeds the Customizer dropdown ("Other System Fonts");
  * - astra_render_fonts receives every font the page uses; Astra sends anything that is not a
- *   system font to Google, so local fonts are removed here and served by UCF instead.
+ *   system font to Google, so local fonts are removed here and served by PFont instead.
  */
 final class AstraAdapter extends AbstractAdapter {
 
@@ -94,7 +94,7 @@ final class AstraAdapter extends AbstractAdapter {
 	}
 
 	/**
-	 * Route fonts a page uses: local ones are served by UCF (never Google).
+	 * Route fonts a page uses: local ones are served by PFont (never Google).
 	 *
 	 * @param mixed $fonts name => ['variants' => [...]].
 	 * @return mixed
@@ -152,7 +152,7 @@ final class AstraAdapter extends AbstractAdapter {
 			}
 			sort( $ours );
 			$key    = md5( $this->version() . '|' . implode( ',', $ours ) );
-			$cache  = get_transient( 'ucf_native_index' );
+			$cache  = get_transient( 'pfont_native_index' );
 			$cache  = is_array( $cache ) ? $cache : array();
 			$cached = $cache['astra'] ?? null;
 			if ( is_array( $cached ) && ( $cached['key'] ?? '' ) === $key ) {
@@ -181,7 +181,7 @@ final class AstraAdapter extends AbstractAdapter {
 					'key'   => $key,
 					'names' => $this->google,
 				);
-				set_transient( 'ucf_native_index', $cache, WEEK_IN_SECONDS );
+				set_transient( 'pfont_native_index', $cache, WEEK_IN_SECONDS );
 			}
 		}
 		return isset( $this->google[ FontHelper::normalize_family_name( $font->family() ) ] );

@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class ElementorAdapter extends AbstractAdapter {
 
-	public const TYPE = 'ucf';
+	public const TYPE = 'pfont';
 
 	/**
 	 * Why fonts were skipped (debug panel).

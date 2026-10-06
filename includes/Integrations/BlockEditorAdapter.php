@@ -235,11 +235,11 @@ final class BlockEditorAdapter extends AbstractAdapter {
 			return $content;
 		}
 		$slug = (string) ( $block['attrs']['fontFamily'] ?? '' );
-		if ( '' === $slug && isset( $block['attrs']['style']['typography']['fontFamily'] ) && preg_match( '/font-family[|-]{1,2}(ucf-[a-z0-9_\-]+)/', (string) $block['attrs']['style']['typography']['fontFamily'], $m ) ) {
+		if ( '' === $slug && isset( $block['attrs']['style']['typography']['fontFamily'] ) && preg_match( '/font-family[|-]{1,2}(' . preg_quote( Font::SLUG_PREFIX, '/' ) . '[a-z0-9_\-]+)/', (string) $block['attrs']['style']['typography']['fontFamily'], $m ) ) {
 			$slug = $m[1];
 		}
-		if ( str_starts_with( $slug, 'ucf-' ) ) {
-			$font = FontRegistry::get_font( substr( $slug, 4 ) );
+		if ( str_starts_with( $slug, Font::SLUG_PREFIX ) ) {
+			$font = FontRegistry::get_font( substr( $slug, strlen( Font::SLUG_PREFIX ) ) );
 			if ( $font && $font->enabled_for( $this->id() ) ) {
 				FontLoader::enqueue( $font->id() );
 			}

@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * An adapter translates the central registry into one platform's native API.
- * To add a platform: extend this class and return it from the ucf_integrations filter.
+ * To add a platform: extend this class and return it from the pfont_integrations filter.
  */
 abstract class AbstractAdapter {
 

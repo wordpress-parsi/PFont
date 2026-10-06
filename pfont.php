@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       PFont
  * Description:       One font library for WordPress. Upload fonts or add Google Fonts once, then pick them from the native font dropdowns of the Classic Editor, Block Editor, Elementor, Astra and supported themes.
- * Version:           1.4.0
+ * Version:           1.5.0
  * Requires at least: 6.4
  * Requires PHP:      8.1
  * Author:            PFont contributors
@@ -16,8 +16,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'PFONT_VERSION', '1.4.0' );
-define( 'PFONT_DB_VERSION', '1.0.0' );
+define( 'PFONT_VERSION', '1.5.0' );
+define( 'PFONT_DB_VERSION', '1.1.0' );
 define( 'PFONT_FILE', __FILE__ );
 define( 'PFONT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PFONT_URL', plugin_dir_url( __FILE__ ) );

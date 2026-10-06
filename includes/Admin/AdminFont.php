@@ -75,10 +75,10 @@ final class AdminFont {
 		'.editor-styles-wrapper',
 		'.editor-styles-wrapper *',
 		// This plugin's own font previews.
-		'[data-ucf-t-apply]',
-		'[data-ucf-t-apply] *',
-		'[data-ucf-sample]',
-		'.ucf-preset__sample',
+		'[data-pfont-t-apply]',
+		'[data-pfont-t-apply] *',
+		'[data-pfont-sample]',
+		'.pfont-preset__sample',
 	);
 
 	/**
@@ -106,7 +106,6 @@ final class AdminFont {
 		 * @param Font|null $font Font.
 		 */
 		$font = apply_filters( 'pfont_admin_font', ( $font && $font->is_enabled() ) ? $font : null );
-		$font = apply_filters_deprecated( 'ucf_admin_font', array( $font ), '1.4.0', 'pfont_admin_font' );
 		return $font instanceof Font ? $font : null;
 	}
 
@@ -119,9 +118,9 @@ final class AdminFont {
 			return;
 		}
 		FontLoader::enqueue_for_editor( $font->id() );
-		wp_register_style( 'ucf-admin-font', false, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Inline-only handle.
-		wp_add_inline_style( 'ucf-admin-font', self::css( $font ) );
-		wp_enqueue_style( 'ucf-admin-font' );
+		wp_register_style( 'pfont-admin-font', false, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Inline-only handle.
+		wp_add_inline_style( 'pfont-admin-font', self::css( $font ) );
+		wp_enqueue_style( 'pfont-admin-font' );
 	}
 
 	/**
@@ -137,7 +136,6 @@ final class AdminFont {
 		 * @param string[] $selectors Selectors.
 		 */
 		$keep = (array) apply_filters( 'pfont_admin_font_keep', self::KEEP );
-		$keep = (array) apply_filters_deprecated( 'ucf_admin_font_keep', array( $keep ), '1.4.0', 'pfont_admin_font_keep' );
 		$keep = array_filter( array_map( 'strval', $keep ) );
 		$keep = str_replace( array( '{', '}', '<', '>', ';' ), '', implode( ',', $keep ) );
 		$not  = '' !== $keep ? ':not(' . $keep . ')' : '';

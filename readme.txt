@@ -4,7 +4,7 @@ Tags: fonts, custom fonts, google fonts, elementor, persian
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,6 @@ This plugin can connect to one of two font services. Which one is used depends o
 * Terms: https://bunny.net/tos/
 * Privacy policy: https://bunny.net/privacy/
 
-A custom stylesheet URL that you enter yourself is requested from the address you typed, under that provider's terms.
 
 == Installation ==
 
@@ -97,13 +96,20 @@ Nothing, unless you enabled the uninstall options under Settings. Font files and
 
 = Can I add fonts from code? =
 
-Yes. See docs/DEVELOPER.md for the `pfont_registered_fonts`, `pfont_cdn_presets`, `pfont_integrations` and other filters.
+Yes. Use the `pfont_registered_fonts` filter to add font records, `pfont_cdn_presets` to change the preset list and `pfont_integrations` to add or replace an integration adapter. Every hook is documented in the source with a docblock.
 
 == Changelog ==
 
+= 1.5.0 =
+* Removed the "Custom stylesheet URL" field. Loading a stylesheet from an arbitrary address is not allowed in the plugin directory. Fonts come from Google Fonts or Bunny Fonts, are hosted on your server, or are uploaded. A font that was saved with a custom URL is kept but disabled; open it and choose a Google font or upload its files.
+* Security: every form value is sanitized the moment it is read, before validation, and only the sanitized copy is kept when a save fails.
+* Every option, transient, form field, nonce, action, CSS class and script handle now uses the `pfont` prefix. Saved fonts and settings are moved to the new option names automatically on the first request after the update.
+* Removed the deprecated `ucf_*` hook names that 1.4.0 still fired next to the `pfont_*` ones. Only the `pfont_*` hooks remain.
+* Block Editor: the font preset slug is now `pfont-{id}` instead of `ucf-{id}`. Fonts picked in the Block Editor before this update must be picked again in the block or in Styles.
+
 = 1.4.0 =
 * Plugin Check: all reported errors and warnings fixed.
-* Developers: hooks, global functions and constants now use the `pfont_` / `PFONT_` prefix, because WordPress.org asks for a prefix of at least four characters. The old `ucf_*` hooks still work and show a deprecation notice that names the new hook.
+* Developers: hooks, global functions and constants now use the `pfont_` / `PFONT_` prefix, because WordPress.org asks for a prefix of at least four characters. The old hook names still worked in this version and showed a deprecation notice.
 * Removed the `load_plugin_textdomain()` call. WordPress loads the translations by itself.
 * Replaced `array_is_list()` with an own helper, so the plugin keeps working with "Requires at least: 6.4".
 * The development file `phpcs.xml.dist` is now `phpcs.xml` (".dist" files are not allowed in the plugin directory).
@@ -139,8 +145,11 @@ Yes. See docs/DEVELOPER.md for the `pfont_registered_fonts`, `pfont_cdn_presets`
 
 == Upgrade Notice ==
 
+= 1.5.0 =
+The custom stylesheet URL field is gone and all stored data moves to prefixed option names (done automatically). Fonts chosen in the Block Editor must be picked again. Old `ucf_*` hook names no longer fire.
+
 = 1.4.0 =
-Passes Plugin Check. If you hook into the plugin from your own code, rename `ucf_` hooks to `pfont_` (the old names still work for now).
+Passes Plugin Check. If you hook into the plugin from your own code, rename `ucf_` hooks to `pfont_` (the old names still work in this version).
 
 = 1.3.0 =
 Renamed to PFont (nothing to migrate). The interface now follows your WordPress admin colour scheme.

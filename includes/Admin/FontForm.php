@@ -50,11 +50,12 @@ final class FontForm {
 			AdminPage::page_header( __( 'Font not found', 'pfont' ), __( 'It may have been deleted.', 'pfont' ), array(), AdminPage::url(), __( 'Library', 'pfont' ) );
 			return;
 		}
-		$v     = $font ? $font->to_array() : Font::defaults();
-		$state = get_transient( 'ucf_form_' . get_current_user_id() );
+		$v = $font ? $font->to_array() : Font::defaults();
+		// Written by Actions::fail() after FontValidator::sanitize_raw_input(), so every value is already clean.
+		$state = get_transient( 'pfont_form_' . get_current_user_id() );
 		if ( is_array( $state ) ) {
-			delete_transient( 'ucf_form_' . get_current_user_id() );
-			foreach ( array( 'name', 'family', 'fallback', 'source', 'preset', 'cdn_url', 'display' ) as $key ) {
+			delete_transient( 'pfont_form_' . get_current_user_id() );
+			foreach ( array( 'name', 'family', 'fallback', 'source', 'preset', 'display' ) as $key ) {
 				if ( isset( $state[ $key ] ) ) {
 					$v[ $key ] = (string) $state[ $key ];
 				}
@@ -81,19 +82,19 @@ final class FontForm {
 			$font ? $font->name() : __( 'Library', 'pfont' )
 		);
 
-		printf( '<form method="post" action="%s" enctype="multipart/form-data" data-ucf-form>', esc_url( admin_url( 'admin-post.php' ) ) );
-		wp_nonce_field( 'ucf_save_font' );
+		printf( '<form method="post" action="%s" enctype="multipart/form-data" data-pfont-form>', esc_url( admin_url( 'admin-post.php' ) ) );
+		wp_nonce_field( 'pfont_save_font' );
 		// The hidden first button makes Enter save the form instead of triggering a hosting button.
-		printf( '<input type="hidden" name="action" value="ucf_save_font"><input type="hidden" name="ucf[id]" value="%1$s"><button type="submit" class="screen-reader-text" tabindex="-1" aria-hidden="true">%2$s</button>', esc_attr( $id ), esc_html__( 'Save', 'pfont' ) );
+		printf( '<input type="hidden" name="action" value="pfont_save_font"><input type="hidden" name="pfont[id]" value="%1$s"><button type="submit" class="screen-reader-text" tabindex="-1" aria-hidden="true">%2$s</button>', esc_attr( $id ), esc_html__( 'Save', 'pfont' ) );
 
 		AdminPage::section_title( __( 'Source', 'pfont' ) );
-		echo '<div class="ucf-choice-grid">';
+		echo '<div class="pfont-choice-grid">';
 		self::choice( 'cdn', 'cloud', __( 'Google Fonts', 'pfont' ), __( 'Pick a Google font. You can host it on this server later with one click.', 'pfont' ), (string) $v['source'] );
 		self::choice( 'upload', 'upload', __( 'Upload custom font', 'pfont' ), __( 'Use your own WOFF2, WOFF, TTF or OTF files.', 'pfont' ), (string) $v['source'] );
 		echo '</div>';
 
 		AdminPage::section_title( __( 'Font', 'pfont' ) );
-		printf( '<div class="ucf-card"><div class="ucf-grid-2"><div class="ucf-field ucf-field--wide" data-ucf-source="cdn"><label for="ucf-preset">%1$s</label><select id="ucf-preset" class="ucf-select" name="ucf[preset]"><option value="" data-weights="">%2$s</option>', esc_html__( 'Google font', 'pfont' ), esc_html__( 'Another Google font (type its exact name below)', 'pfont' ) );
+		printf( '<div class="pfont-card"><div class="pfont-grid-2"><div class="pfont-field pfont-field--wide" data-pfont-source="cdn"><label for="pfont-preset">%1$s</label><select id="pfont-preset" class="pfont-select" name="pfont[preset]"><option value="" data-weights="">%2$s</option>', esc_html__( 'Google font', 'pfont' ), esc_html__( 'Another Google font (type its exact name below)', 'pfont' ) );
 		foreach ( CdnFonts::presets() as $preset_id => $preset ) {
 			printf(
 				'<option value="%1$s" data-family="%2$s" data-fallback="%3$s" data-weights="%4$s"%5$s>%2$s</option>',
@@ -105,28 +106,27 @@ final class FontForm {
 			);
 		}
 		echo '</select></div>';
-		self::input_field( 'ucf-name', 'ucf[name]', __( 'Display name', 'pfont' ), (string) $v['name'], __( 'Shown in font menus.', 'pfont' ) );
-		self::input_field( 'ucf-family', 'ucf[family]', __( 'CSS font family', 'pfont' ), (string) $v['family'], __( 'The exact name written into CSS. For your own copy of a font that Elementor or Astra already list, use an alias such as “Vazirmatn Local”.', 'pfont' ) );
-		self::input_field( 'ucf-fallback', 'ucf[fallback]', __( 'Fallback', 'pfont' ), (string) $v['fallback'], __( 'Shown while the font loads, for example “Tahoma, sans-serif”.', 'pfont' ) );
-		self::input_field( 'ucf-cdn-url', 'ucf[cdn_url]', __( 'Custom stylesheet URL', 'pfont' ), (string) $v['cdn_url'], __( 'Optional. Only for fonts from another CDN (https).', 'pfont' ), 'cdn', 'url' );
+		self::input_field( 'pfont-name', 'pfont[name]', __( 'Display name', 'pfont' ), (string) $v['name'], __( 'Shown in font menus.', 'pfont' ) );
+		self::input_field( 'pfont-family', 'pfont[family]', __( 'CSS font family', 'pfont' ), (string) $v['family'], __( 'The exact name written into CSS. For your own copy of a font that Elementor or Astra already list, use an alias such as “Vazirmatn Local”.', 'pfont' ) );
+		self::input_field( 'pfont-fallback', 'pfont[fallback]', __( 'Fallback', 'pfont' ), (string) $v['fallback'], __( 'Shown while the font loads, for example “Tahoma, sans-serif”.', 'pfont' ) );
 		// One "Font" section: the fields, then the part that belongs to the chosen source.
-		echo '</div><div data-ucf-source="cdn">';
+		echo '</div><div data-pfont-source="cdn">';
 
 		AdminPage::card_subtitle( __( 'Weights and styles', 'pfont' ), __( 'For variable fonts, two or more weights download the same file as the full range. Unsupported combinations are rejected when you save.', 'pfont' ) );
-		printf( '<div class="ucf-chips" role="group" aria-label="%s">', esc_attr__( 'Weights', 'pfont' ) );
+		printf( '<div class="pfont-chips" role="group" aria-label="%s">', esc_attr__( 'Weights', 'pfont' ) );
 		foreach ( FontHelper::WEIGHTS as $weight ) {
-			printf( '<label class="ucf-chip"><input type="checkbox" name="ucf[weights][]" value="%1$d"%2$s><span>%1$d</span></label>', (int) $weight, checked( in_array( $weight, $weights, true ), true, false ) );
+			printf( '<label class="pfont-chip"><input type="checkbox" name="pfont[weights][]" value="%1$d"%2$s><span>%1$d</span></label>', (int) $weight, checked( in_array( $weight, $weights, true ), true, false ) );
 		}
-		printf( '</div><div class="ucf-chips" role="group" aria-label="%s">', esc_attr__( 'Styles', 'pfont' ) );
+		printf( '</div><div class="pfont-chips" role="group" aria-label="%s">', esc_attr__( 'Styles', 'pfont' ) );
 		foreach ( Font::STYLES as $style ) {
 			printf(
-				'<label class="ucf-chip"><input type="checkbox" name="ucf[styles][]" value="%1$s"%2$s><span>%3$s</span></label>',
+				'<label class="pfont-chip"><input type="checkbox" name="pfont[styles][]" value="%1$s"%2$s><span>%3$s</span></label>',
 				esc_attr( $style ),
 				checked( in_array( $style, (array) $v['styles'], true ), true, false ),
 				esc_html( 'italic' === $style ? __( 'Italic', 'pfont' ) : __( 'Normal', 'pfont' ) )
 			);
 		}
-		echo '</div></div><div data-ucf-source="upload">';
+		echo '</div></div><div data-pfont-source="upload">';
 
 		AdminPage::card_subtitle(
 			__( 'Files', 'pfont' ),
@@ -136,13 +136,13 @@ final class FontForm {
 		self::render_files( $font );
 		echo '</div></div>';
 
-		if ( $font && $font->is_cdn() && '' === $font->cdn_url() ) {
+		if ( $font && $font->is_cdn() ) {
 			self::render_hosting( $font );
 		}
 
-		echo '<div id="ucf-usage">';
+		echo '<div id="pfont-usage">';
 		AdminPage::section_title( __( 'Where it appears', 'pfont' ), __( 'Turn a place off to keep this font out of its font menus.', 'pfont' ) );
-		echo '<div class="ucf-card"><div class="ucf-toggle-list">';
+		echo '<div class="pfont-card"><div class="pfont-toggle-list">';
 		foreach ( FontList::labels() as $key => $label ) {
 			$adapter  = IntegrationManager::for_key( $key );
 			$detected = $adapter && $adapter->is_available();
@@ -155,28 +155,28 @@ final class FontForm {
 			} else {
 				$desc = __( 'Detected', 'pfont' );
 			}
-			AdminPage::toggle_row( 'ucf[integrations][' . $key . ']', self::icon_for( $key ), $label, $desc, ! empty( $v['integrations'][ $key ] ), ! $detected );
+			AdminPage::toggle_row( 'pfont[integrations][' . $key . ']', self::icon_for( $key ), $label, $desc, ! empty( $v['integrations'][ $key ] ), ! $detected );
 		}
 		echo '</div>';
 		if ( $font ) {
 			foreach ( IntegrationManager::available() as $adapter ) {
 				$note = $adapter->native_conflict( $font );
 				if ( '' !== $note ) {
-					printf( '<p class="ucf-card__note">%s</p>', esc_html( $note ) );
+					printf( '<p class="pfont-card__note">%s</p>', esc_html( $note ) );
 				}
 			}
 		}
 		echo '</div></div>';
 
 		AdminPage::section_title( __( 'Loading', 'pfont' ) );
-		printf( '<div class="ucf-card"><div class="ucf-grid-2"><div class="ucf-field"><label for="ucf-display">%s</label><select id="ucf-display" class="ucf-select" name="ucf[display]">', esc_html__( 'Text while the font loads', 'pfont' ) );
+		printf( '<div class="pfont-card"><div class="pfont-grid-2"><div class="pfont-field"><label for="pfont-display">%s</label><select id="pfont-display" class="pfont-select" name="pfont[display]">', esc_html__( 'Text while the font loads', 'pfont' ) );
 		foreach ( Font::DISPLAYS as $display ) {
 			printf( '<option value="%1$s"%2$s>%1$s</option>', esc_attr( $display ), selected( $v['display'], $display, false ) );
 		}
-		printf( '</select><p class="ucf-field__help">%s</p></div></div><div class="ucf-toggle-list ucf-mt">', esc_html__( '“swap” shows text at once in the fallback font, then switches to this font.', 'pfont' ) );
-		AdminPage::toggle_row( 'ucf[enabled]', 'check', __( 'Enabled', 'pfont' ), __( 'Turn off to hide the font everywhere without deleting it.', 'pfont' ), ! empty( $v['enabled'] ) );
+		printf( '</select><p class="pfont-field__help">%s</p></div></div><div class="pfont-toggle-list pfont-mt">', esc_html__( '“swap” shows text at once in the fallback font, then switches to this font.', 'pfont' ) );
+		AdminPage::toggle_row( 'pfont[enabled]', 'check', __( 'Enabled', 'pfont' ), __( 'Turn off to hide the font everywhere without deleting it.', 'pfont' ), ! empty( $v['enabled'] ) );
 		printf(
-			'</div></div><div class="ucf-savebar"><a class="ucf-btn ucf-btn--ghost" href="%1$s">%2$s</a><button type="submit" class="ucf-btn">%3$s</button></div></form>',
+			'</div></div><div class="pfont-savebar"><a class="pfont-btn pfont-btn--ghost" href="%1$s">%2$s</a><button type="submit" class="pfont-btn">%3$s</button></div></form>',
 			esc_url( $back ),
 			esc_html__( 'Cancel', 'pfont' ),
 			esc_html( $font ? __( 'Save changes', 'pfont' ) : __( 'Add font', 'pfont' ) )
@@ -189,13 +189,13 @@ final class FontForm {
 	 * @param Font $font Font.
 	 */
 	private static function render_hosting( Font $font ): void {
-		echo '<div data-ucf-source="cdn" id="ucf-hosting">';
+		echo '<div data-pfont-source="cdn" id="pfont-hosting">';
 		AdminPage::section_title( __( 'Hosting', 'pfont' ) );
-		echo '<div class="ucf-card"><div class="ucf-callout ucf-callout--flat">';
+		echo '<div class="pfont-card"><div class="pfont-callout pfont-callout--flat">';
 		Icons::render( $font->is_self_hosted() ? 'server' : 'cloud' );
 		if ( $font->is_self_hosted() ) {
 			printf(
-				'<div class="ucf-callout__text"><span class="ucf-callout__label">%1$s</span><span class="ucf-callout__msg">%2$s</span></div><button type="submit" class="ucf-btn ucf-btn--ghost" name="ucf[after]" value="unhost">%3$s</button>',
+				'<div class="pfont-callout__text"><span class="pfont-callout__label">%1$s</span><span class="pfont-callout__msg">%2$s</span></div><button type="submit" class="pfont-btn pfont-btn--ghost" name="pfont[after]" value="unhost">%3$s</button>',
 				esc_html__( 'Hosted on this server', 'pfont' ),
 				/* translators: %s: date. */
 				esc_html( sprintf( __( 'Downloaded %s. Visitors never contact the font service.', 'pfont' ), wp_date( (string) get_option( 'date_format' ), (int) ( $font->get( 'local' )['downloaded'] ?? 0 ) ) ) ),
@@ -203,7 +203,7 @@ final class FontForm {
 			);
 		} else {
 			printf(
-				'<div class="ucf-callout__text"><span class="ucf-callout__label">%1$s</span><span class="ucf-callout__msg">%2$s</span></div><button type="submit" class="ucf-btn" name="ucf[after]" value="selfhost">%3$s</button>',
+				'<div class="pfont-callout__text"><span class="pfont-callout__label">%1$s</span><span class="pfont-callout__msg">%2$s</span></div><button type="submit" class="pfont-btn" name="pfont[after]" value="selfhost">%3$s</button>',
 				esc_html__( 'Loaded from the CDN', 'pfont' ),
 				esc_html__( 'Hosting it here removes third-party requests (GDPR) and allows an alias name.', 'pfont' ),
 				esc_html__( 'Host on this server', 'pfont' )
@@ -219,7 +219,7 @@ final class FontForm {
 	 */
 	private static function render_files( ?Font $font ): void {
 		if ( $font && $font->is_upload() && $font->files() ) {
-			echo '<div class="ucf-table-wrap"><table class="ucf-table"><thead><tr>';
+			echo '<div class="pfont-table-wrap"><table class="pfont-table"><thead><tr>';
 			$headings = array(
 				__( 'Weight', 'pfont' ),
 				__( 'Style', 'pfont' ),
@@ -237,7 +237,7 @@ final class FontForm {
 					printf( '<tr><td>%1$d</td><td>%2$s</td><td>', (int) $weight, esc_html( (string) $style ) );
 					foreach ( (array) $formats as $format => $relative ) {
 						printf(
-							'<span class="ucf-file"><a href="%1$s" target="_blank" rel="noopener">%2$s</a><label><input type="checkbox" name="ucf[existing][%3$s][remove][%4$s]" value="1"> %5$s</label></span>',
+							'<span class="pfont-file"><a href="%1$s" target="_blank" rel="noopener">%2$s</a><label><input type="checkbox" name="pfont[existing][%3$s][remove][%4$s]" value="1"> %5$s</label></span>',
 							esc_url( FontStorage::url( (string) $relative ) ),
 							esc_html( strtoupper( (string) $format ) ),
 							esc_attr( $key ),
@@ -246,7 +246,7 @@ final class FontForm {
 						);
 					}
 					printf(
-						'</td><td><input type="file" name="ucf_existing[%1$s][]" accept=".woff2,.woff,.ttf,.otf" multiple></td><td><input type="checkbox" name="ucf[existing][%1$s][delete]" value="1" aria-label="%2$s"></td></tr>',
+						'</td><td><input type="file" name="pfont_existing[%1$s][]" accept=".woff2,.woff,.ttf,.otf" multiple></td><td><input type="checkbox" name="pfont[existing][%1$s][delete]" value="1" aria-label="%2$s"></td></tr>',
 						esc_attr( $key ),
 						/* translators: %s: weight-style key. */
 						esc_attr( sprintf( __( 'Delete %s', 'pfont' ), $key ) )
@@ -255,11 +255,11 @@ final class FontForm {
 			}
 			echo '</tbody></table></div>';
 		}
-		printf( '<div class="ucf-files-new"><p class="ucf-field__label">%s</p><div class="ucf-table-wrap"><table class="ucf-table"><tbody data-ucf-rows>', esc_html__( 'Add weights', 'pfont' ) );
+		printf( '<div class="pfont-files-new"><p class="pfont-field__label">%s</p><div class="pfont-table-wrap"><table class="pfont-table"><tbody data-pfont-rows>', esc_html__( 'Add weights', 'pfont' ) );
 		self::new_row( '0' );
-		echo '</tbody></table></div><template id="ucf-row-template">';
+		echo '</tbody></table></div><template id="pfont-row-template">';
 		self::new_row( '__i__' );
-		printf( '</template><p><button type="button" class="ucf-btn ucf-btn--ghost ucf-btn--sm" data-ucf-add-row>%s</button></p></div>', esc_html__( 'Add another weight', 'pfont' ) );
+		printf( '</template><p><button type="button" class="pfont-btn pfont-btn--ghost pfont-btn--sm" data-pfont-add-row>%s</button></p></div>', esc_html__( 'Add another weight', 'pfont' ) );
 	}
 
 	/**
@@ -268,12 +268,12 @@ final class FontForm {
 	 * @param string $index Row index or template token.
 	 */
 	private static function new_row( string $index ): void {
-		printf( '<tr><td><select class="ucf-select ucf-select--mini" name="ucf[new][%1$s][weight]" aria-label="%2$s">', esc_attr( $index ), esc_attr__( 'Weight', 'pfont' ) );
+		printf( '<tr><td><select class="pfont-select pfont-select--mini" name="pfont[new][%1$s][weight]" aria-label="%2$s">', esc_attr( $index ), esc_attr__( 'Weight', 'pfont' ) );
 		foreach ( FontHelper::WEIGHTS as $weight ) {
 			printf( '<option value="%1$d"%2$s>%1$d</option>', (int) $weight, selected( 400, $weight, false ) );
 		}
 		printf(
-			'</select></td><td><select class="ucf-select ucf-select--mini" name="ucf[new][%1$s][style]" aria-label="%2$s"><option value="normal">%3$s</option><option value="italic">%4$s</option></select></td><td><input type="file" name="ucf_new[%1$s][]" accept=".woff2,.woff,.ttf,.otf" multiple></td><td><button type="button" class="ucf-btn ucf-btn--ghost ucf-btn--sm" data-ucf-remove-row>%5$s</button></td></tr>',
+			'</select></td><td><select class="pfont-select pfont-select--mini" name="pfont[new][%1$s][style]" aria-label="%2$s"><option value="normal">%3$s</option><option value="italic">%4$s</option></select></td><td><input type="file" name="pfont_new[%1$s][]" accept=".woff2,.woff,.ttf,.otf" multiple></td><td><button type="button" class="pfont-btn pfont-btn--ghost pfont-btn--sm" data-pfont-remove-row>%5$s</button></td></tr>',
 			esc_attr( $index ),
 			esc_attr__( 'Style', 'pfont' ),
 			esc_html__( 'Normal', 'pfont' ),
@@ -292,9 +292,9 @@ final class FontForm {
 	 * @param string $current Current value.
 	 */
 	private static function choice( string $value, string $icon, string $title, string $desc, string $current ): void {
-		printf( '<label class="ucf-choice"><input type="radio" name="ucf[source]" value="%1$s"%2$s><span class="ucf-choice__icon">', esc_attr( $value ), checked( $current, $value, false ) );
+		printf( '<label class="pfont-choice"><input type="radio" name="pfont[source]" value="%1$s"%2$s><span class="pfont-choice__icon">', esc_attr( $value ), checked( $current, $value, false ) );
 		Icons::render( $icon );
-		printf( '</span><span><span class="ucf-choice__title">%1$s</span><span class="ucf-choice__desc">%2$s</span></span></label>', esc_html( $title ), esc_html( $desc ) );
+		printf( '</span><span><span class="pfont-choice__title">%1$s</span><span class="pfont-choice__desc">%2$s</span></span></label>', esc_html( $title ), esc_html( $desc ) );
 	}
 
 	/**
@@ -310,7 +310,7 @@ final class FontForm {
 	 */
 	private static function input_field( string $id, string $name, string $label, string $value, string $help, string $source = 'all', string $type = 'text' ): void {
 		printf(
-			'<div class="ucf-field" data-ucf-source="%1$s"><label for="%2$s">%3$s</label><input type="%4$s" class="ucf-input" id="%2$s" name="%5$s" value="%6$s"><p class="ucf-field__help">%7$s</p></div>',
+			'<div class="pfont-field" data-pfont-source="%1$s"><label for="%2$s">%3$s</label><input type="%4$s" class="pfont-input" id="%2$s" name="%5$s" value="%6$s"><p class="pfont-field__help">%7$s</p></div>',
 			esc_attr( $source ),
 			esc_attr( $id ),
 			esc_html( $label ),

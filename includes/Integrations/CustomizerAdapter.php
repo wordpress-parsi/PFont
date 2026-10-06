@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Delegates to a provider for the active theme. Themes without a public font hook are reported
- * as unsupported; UCF never hacks their Customizer controls.
+ * as unsupported; PFont never hacks their Customizer controls.
  */
 final class CustomizerAdapter extends AbstractAdapter {
 
@@ -60,8 +60,7 @@ final class CustomizerAdapter extends AbstractAdapter {
 		 *
 		 * @param ThemeProvider[] $providers Providers.
 		 */
-		$providers = apply_filters( 'pfont_customizer_providers', array( new KadenceProvider(), new GeneratePressProvider() ) );
-		return (array) apply_filters_deprecated( 'ucf_customizer_providers', array( $providers ), '1.4.0', 'pfont_customizer_providers' );
+		return (array) apply_filters( 'pfont_customizer_providers', array( new KadenceProvider(), new GeneratePressProvider() ) );
 	}
 
 	/**

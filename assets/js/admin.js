@@ -13,19 +13,19 @@
 	}
 
 	document.addEventListener( 'click', function ( event ) {
-		var link = event.target.closest( '[data-ucf-confirm]' );
-		if ( link && ! window.confirm( link.getAttribute( 'data-ucf-confirm' ) ) ) {
+		var link = event.target.closest( '[data-pfont-confirm]' );
+		if ( link && ! window.confirm( link.getAttribute( 'data-pfont-confirm' ) ) ) {
 			event.preventDefault();
 		}
 	} );
 
 	document.addEventListener( 'click', function ( event ) {
-		var button = event.target.closest( '[data-ucf-copy]' );
+		var button = event.target.closest( '[data-pfont-copy]' );
 		if ( ! button ) {
 			return;
 		}
-		var source = one( button.getAttribute( 'data-ucf-copy' ) );
-		var label = one( '[data-ucf-copy-label]', button );
+		var source = one( button.getAttribute( 'data-pfont-copy' ) );
+		var label = one( '[data-pfont-copy-label]', button );
 		if ( ! source || ! label ) {
 			return;
 		}
@@ -70,16 +70,16 @@
 	initTester();
 
 	function initLibrary() {
-		var list = one( '[data-ucf-list]' );
+		var list = one( '[data-pfont-list]' );
 		if ( ! list ) {
 			return;
 		}
-		var toolbar = one( '[data-ucf-toolbar]' );
+		var toolbar = one( '[data-pfont-toolbar]' );
 		var samples = JSON.parse( list.getAttribute( 'data-samples' ) || '{}' );
-		var rows = all( '[data-ucf-row]', list );
-		var count = one( '[data-ucf-count]', list );
-		var empty = one( '[data-ucf-empty]', list );
-		var savebar = one( '[data-ucf-savebar]', list );
+		var rows = all( '[data-pfont-row]', list );
+		var count = one( '[data-pfont-count]', list );
+		var empty = one( '[data-pfont-empty]', list );
+		var savebar = one( '[data-pfont-savebar]', list );
 		var state = { query: '', text: '', script: 'auto' };
 
 		if ( toolbar ) {
@@ -93,7 +93,7 @@
 			var shown = 0;
 			rows.forEach( function ( row ) {
 				var visible = ! state.query || -1 !== row.getAttribute( 'data-name' ).indexOf( state.query );
-				var sample = one( '[data-ucf-sample]', row );
+				var sample = one( '[data-pfont-sample]', row );
 				var script = 'auto' === state.script ? sample.getAttribute( 'data-script' ) : state.script;
 				var text = state.text || samples[ script ] || '';
 				row.hidden = ! visible;
@@ -112,16 +112,16 @@
 
 		function onToolbar( event ) {
 			var field = event.target;
-			if ( field.matches( '[data-ucf-size]' ) ) {
-				list.style.setProperty( '--ucf-sample-size', field.value + 'px' );
-				one( '[data-ucf-size-out]', toolbar ).textContent = field.value + 'px';
+			if ( field.matches( '[data-pfont-size]' ) ) {
+				list.style.setProperty( '--pfont-sample-size', field.value + 'px' );
+				one( '[data-pfont-size-out]', toolbar ).textContent = field.value + 'px';
 				return;
 			}
-			if ( field.matches( '[data-ucf-filter]' ) ) {
+			if ( field.matches( '[data-pfont-filter]' ) ) {
 				state.query = field.value.trim().toLowerCase();
-			} else if ( field.matches( '[data-ucf-preview-text]' ) ) {
+			} else if ( field.matches( '[data-pfont-preview-text]' ) ) {
 				state.text = field.value;
-			} else if ( field.matches( '[data-ucf-script]' ) ) {
+			} else if ( field.matches( '[data-pfont-script]' ) ) {
 				state.script = field.value;
 			}
 			render();
@@ -132,46 +132,46 @@
 			toolbar.addEventListener( 'change', onToolbar );
 		}
 		list.addEventListener( 'change', function ( event ) {
-			if ( event.target.matches( '.ucf-switch' ) ) {
+			if ( event.target.matches( '.pfont-switch' ) ) {
 				list.submit();
 			}
 		} );
 	}
 
 	function initForm() {
-		var form = one( '[data-ucf-form]' );
+		var form = one( '[data-pfont-form]' );
 		if ( ! form ) {
 			return;
 		}
 
 		function currentSource() {
-			var checked = one( 'input[name="ucf[source]"]:checked', form );
+			var checked = one( 'input[name="pfont[source]"]:checked', form );
 			return checked ? checked.value : 'cdn';
 		}
 
 		function toggleSections() {
 			var source = currentSource();
-			all( '[data-ucf-source]', form ).forEach( function ( section ) {
-				var target = section.getAttribute( 'data-ucf-source' );
+			all( '[data-pfont-source]', form ).forEach( function ( section ) {
+				var target = section.getAttribute( 'data-pfont-source' );
 				section.hidden = 'all' !== target && target !== source;
 			} );
 		}
 
 		function fill( field, value ) {
-			if ( field && value && ( '' === field.value || '1' === field.getAttribute( 'data-ucf-auto' ) ) ) {
+			if ( field && value && ( '' === field.value || '1' === field.getAttribute( 'data-pfont-auto' ) ) ) {
 				field.value = value;
-				field.setAttribute( 'data-ucf-auto', '1' );
+				field.setAttribute( 'data-pfont-auto', '1' );
 			}
 		}
 
 		function applyPreset() {
-			var select = one( '#ucf-preset', form );
+			var select = one( '#pfont-preset', form );
 			if ( ! select || 'cdn' !== currentSource() ) {
 				return;
 			}
 			var option = select.options[ select.selectedIndex ];
 			var allowed = ( option.getAttribute( 'data-weights' ) || '' ).split( ',' ).filter( Boolean );
-			all( 'input[name="ucf[weights][]"]', form ).forEach( function ( box ) {
+			all( 'input[name="pfont[weights][]"]', form ).forEach( function ( box ) {
 				var ok = ! allowed.length || -1 !== allowed.indexOf( box.value );
 				box.disabled = ! ok;
 				if ( ! ok ) {
@@ -179,38 +179,38 @@
 				}
 			} );
 			if ( option.value ) {
-				fill( one( '#ucf-family', form ), option.getAttribute( 'data-family' ) );
-				fill( one( '#ucf-name', form ), option.getAttribute( 'data-family' ) );
-				fill( one( '#ucf-fallback', form ), option.getAttribute( 'data-fallback' ) );
+				fill( one( '#pfont-family', form ), option.getAttribute( 'data-family' ) );
+				fill( one( '#pfont-name', form ), option.getAttribute( 'data-family' ) );
+				fill( one( '#pfont-fallback', form ), option.getAttribute( 'data-fallback' ) );
 			}
 		}
 
 		form.addEventListener( 'change', function ( event ) {
-			if ( 'ucf[source]' === event.target.name ) {
+			if ( 'pfont[source]' === event.target.name ) {
 				toggleSections();
 				applyPreset();
 			}
-			if ( 'ucf-preset' === event.target.id ) {
+			if ( 'pfont-preset' === event.target.id ) {
 				applyPreset();
 			}
 		} );
 
-		all( '#ucf-family, #ucf-name, #ucf-fallback', form ).forEach( function ( field ) {
+		all( '#pfont-family, #pfont-name, #pfont-fallback', form ).forEach( function ( field ) {
 			field.addEventListener( 'input', function () {
-				field.setAttribute( 'data-ucf-auto', '0' );
+				field.setAttribute( 'data-pfont-auto', '0' );
 			} );
 		} );
 
-		var rows = one( '[data-ucf-rows]', form );
-		var template = document.getElementById( 'ucf-row-template' );
+		var rows = one( '[data-pfont-rows]', form );
+		var template = document.getElementById( 'pfont-row-template' );
 		var next = rows ? rows.children.length : 0;
 
 		form.addEventListener( 'click', function ( event ) {
-			if ( event.target.closest( '[data-ucf-add-row]' ) && rows && template ) {
+			if ( event.target.closest( '[data-pfont-add-row]' ) && rows && template ) {
 				event.preventDefault();
 				rows.insertAdjacentHTML( 'beforeend', template.innerHTML.replace( /__i__/g, String( next++ ) ) );
 			}
-			var remove = event.target.closest( '[data-ucf-remove-row]' );
+			var remove = event.target.closest( '[data-pfont-remove-row]' );
 			if ( remove ) {
 				event.preventDefault();
 				remove.closest( 'tr' ).remove();
@@ -222,22 +222,22 @@
 	}
 
 	function initTester() {
-		var tester = one( '[data-ucf-tester]' );
+		var tester = one( '[data-pfont-tester]' );
 		if ( ! tester ) {
 			return;
 		}
 		var samples = JSON.parse( tester.getAttribute( 'data-samples' ) || '{}' );
 		var family = tester.getAttribute( 'data-family' );
-		var weight = one( '[data-ucf-t-weight]', tester );
-		var weightName = one( '[data-ucf-t-weight-name]', tester );
+		var weight = one( '[data-pfont-t-weight]', tester );
+		var weightName = one( '[data-pfont-t-weight-name]', tester );
 		var stops = weight.getAttribute( 'data-stops' ).split( ',' ).map( Number );
 		var variable = '1' === weight.getAttribute( 'data-variable' );
-		var italic = one( '[data-ucf-t-italic]', tester );
-		var size = one( '[data-ucf-t-size]', tester );
-		var lineHeight = one( '[data-ucf-t-lh]', tester );
-		var canvas = one( '[data-ucf-t-canvas]', tester );
-		var css = one( '[data-ucf-t-css]', tester );
-		var script = one( '[data-ucf-t-script]', tester );
+		var italic = one( '[data-pfont-t-italic]', tester );
+		var size = one( '[data-pfont-t-size]', tester );
+		var lineHeight = one( '[data-pfont-t-lh]', tester );
+		var canvas = one( '[data-pfont-t-canvas]', tester );
+		var css = one( '[data-pfont-t-css]', tester );
+		var script = one( '[data-pfont-t-script]', tester );
 		var defaults = {
 			weight: Number( tester.getAttribute( 'data-weight' ) ),
 			italic: false,
@@ -250,8 +250,8 @@
 
 		function fillText() {
 			var texts = samples[ state.script ] || {};
-			all( '[data-ucf-t-text]', tester ).forEach( function ( element ) {
-				element.textContent = texts[ element.getAttribute( 'data-ucf-t-text' ) ] || '';
+			all( '[data-pfont-t-text]', tester ).forEach( function ( element ) {
+				element.textContent = texts[ element.getAttribute( 'data-pfont-t-text' ) ] || '';
 				element.setAttribute( 'lang', 'fa' === state.script ? 'fa' : 'en' );
 				if ( ! canvas.contains( element ) ) {
 					element.setAttribute( 'dir', 'fa' === state.script ? 'rtl' : 'ltr' );
@@ -260,11 +260,11 @@
 		}
 
 		function render() {
-			all( '[data-ucf-t-apply]', tester ).forEach( function ( element ) {
+			all( '[data-pfont-t-apply]', tester ).forEach( function ( element ) {
 				element.style.fontWeight = state.weight;
 				element.style.fontStyle = state.italic ? 'italic' : 'normal';
 			} );
-			canvas.style.setProperty( '--ucf-t-size', state.size + 'px' );
+			canvas.style.setProperty( '--pfont-t-size', state.size + 'px' );
 			canvas.style.lineHeight = state.lineHeight;
 			canvas.style.textAlign = state.align;
 			canvas.setAttribute( 'dir', state.dir );
@@ -275,17 +275,17 @@
 			if ( italic ) {
 				italic.checked = state.italic;
 			}
-			all( '[data-ucf-t-out]', tester ).forEach( function ( output ) {
-				var key = output.getAttribute( 'data-ucf-t-out' );
+			all( '[data-pfont-t-out]', tester ).forEach( function ( output ) {
+				var key = output.getAttribute( 'data-pfont-t-out' );
 				output.textContent = 'size' === key ? state.size + 'px' : ( 'lh' === key ? state.lineHeight.toFixed( 2 ) : state.weight );
 			} );
-			all( '[data-ucf-t-italic-btn]', tester ).forEach( function ( button ) {
+			all( '[data-pfont-t-italic-btn]', tester ).forEach( function ( button ) {
 				button.setAttribute( 'aria-pressed', String( state.italic ) );
 			} );
-			all( '[data-ucf-t-align]', tester ).forEach( function ( button ) {
-				button.setAttribute( 'aria-pressed', String( button.getAttribute( 'data-ucf-t-align' ) === state.align ) );
+			all( '[data-pfont-t-align]', tester ).forEach( function ( button ) {
+				button.setAttribute( 'aria-pressed', String( button.getAttribute( 'data-pfont-t-align' ) === state.align ) );
 			} );
-			all( '[data-ucf-t-dir]', tester ).forEach( function ( button ) {
+			all( '[data-pfont-t-dir]', tester ).forEach( function ( button ) {
 				button.setAttribute( 'aria-pressed', String( 'rtl' === state.dir ) );
 			} );
 			css.textContent = 'font-family: ' + family + '; font-weight: ' + state.weight + ';' + ( state.italic ? ' font-style: italic;' : '' ) + ' font-size: ' + state.size + 'px; line-height: ' + state.lineHeight + ';';
@@ -336,15 +336,15 @@
 			if ( ! button || button.disabled ) {
 				return;
 			}
-			if ( button.hasAttribute( 'data-ucf-t-step' ) ) {
-				set( 'size', Math.min( 120, Math.max( 12, state.size + Number( button.getAttribute( 'data-ucf-t-step' ) ) ) ) );
-			} else if ( button.hasAttribute( 'data-ucf-t-align' ) ) {
-				set( 'align', button.getAttribute( 'data-ucf-t-align' ) );
-			} else if ( button.hasAttribute( 'data-ucf-t-dir' ) ) {
+			if ( button.hasAttribute( 'data-pfont-t-step' ) ) {
+				set( 'size', Math.min( 120, Math.max( 12, state.size + Number( button.getAttribute( 'data-pfont-t-step' ) ) ) ) );
+			} else if ( button.hasAttribute( 'data-pfont-t-align' ) ) {
+				set( 'align', button.getAttribute( 'data-pfont-t-align' ) );
+			} else if ( button.hasAttribute( 'data-pfont-t-dir' ) ) {
 				set( 'dir', 'rtl' === state.dir ? 'ltr' : 'rtl' );
-			} else if ( button.hasAttribute( 'data-ucf-t-italic-btn' ) ) {
+			} else if ( button.hasAttribute( 'data-pfont-t-italic-btn' ) ) {
 				set( 'italic', ! state.italic );
-			} else if ( button.hasAttribute( 'data-ucf-t-reset' ) ) {
+			} else if ( button.hasAttribute( 'data-pfont-t-reset' ) ) {
 				reset();
 			}
 		} );

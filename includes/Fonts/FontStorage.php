@@ -141,7 +141,7 @@ final class FontStorage {
 		);
 
 		if ( ! is_array( $result ) || ! empty( $result['error'] ) ) {
-			return new WP_Error( 'ucf_store_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be saved.', 'pfont' ) );
+			return new WP_Error( 'pfont_store_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be saved.', 'pfont' ) );
 		}
 		return self::relative_from_path( (string) $result['file'] );
 	}
@@ -166,7 +166,7 @@ final class FontStorage {
 			}
 		);
 		if ( ! is_array( $result ) || ! empty( $result['error'] ) ) {
-			return new WP_Error( 'ucf_write_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be written.', 'pfont' ) );
+			return new WP_Error( 'pfont_write_failed', is_array( $result ) && is_string( $result['error'] ?? null ) ? $result['error'] : __( 'The file could not be written.', 'pfont' ) );
 		}
 		return self::relative_from_path( (string) $result['file'] );
 	}
@@ -260,7 +260,7 @@ final class FontStorage {
 		$base = wp_normalize_path( self::base_dir() ) . '/';
 		$path = wp_normalize_path( $path );
 		if ( ! str_starts_with( $path, $base ) ) {
-			return new WP_Error( 'ucf_path', __( 'The file was saved outside the fonts folder.', 'pfont' ) );
+			return new WP_Error( 'pfont_path', __( 'The file was saved outside the fonts folder.', 'pfont' ) );
 		}
 		return substr( $path, strlen( $base ) );
 	}

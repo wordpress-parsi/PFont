@@ -27,7 +27,7 @@ final class DebugPanel {
 	public static function render(): void {
 		AdminPage::page_header( __( 'Debug', 'pfont' ), __( 'Technical details for troubleshooting. Server paths are never shown.', 'pfont' ) );
 		if ( ! Settings::get( 'debug' ) ) {
-			printf( '<div class="ucf-card"><p>%s</p></div>', esc_html__( 'Turn on debug mode under Settings to use this page.', 'pfont' ) );
+			printf( '<div class="pfont-card"><p>%s</p></div>', esc_html__( 'Turn on debug mode under Settings to use this page.', 'pfont' ) );
 			return;
 		}
 		global $wp_version;
@@ -70,7 +70,7 @@ final class DebugPanel {
 		self::dump( __( 'Font registry', 'pfont' ), $registry );
 		self::dump( __( 'Generated @font-face CSS', 'pfont' ), $css );
 		self::dump( __( 'CDN stylesheet URLs', 'pfont' ), $urls );
-		$last = get_transient( 'ucf_debug_last_load' );
+		$last = get_transient( 'pfont_debug_last_load' );
 		self::dump( __( 'Last front-end page with fonts', 'pfont' ), is_array( $last ) ? $last : __( 'Nothing recorded yet. Visit a page that uses a font.', 'pfont' ) );
 	}
 
@@ -81,9 +81,9 @@ final class DebugPanel {
 	 * @param array  $rows  Rows.
 	 */
 	private static function table( string $title, array $rows ): void {
-		printf( '<section class="ucf-card ucf-mt"><h2 class="ucf-card__title">%s</h2><dl class="ucf-dl">', esc_html( $title ) );
+		printf( '<section class="pfont-card pfont-mt"><h2 class="pfont-card__title">%s</h2><dl class="pfont-dl">', esc_html( $title ) );
 		foreach ( $rows as $key => $value ) {
-			printf( '<dt>%1$s</dt><dd><pre class="ucf-pre">%2$s</pre></dd>', esc_html( (string) $key ), esc_html( (string) $value ) );
+			printf( '<dt>%1$s</dt><dd><pre class="pfont-pre">%2$s</pre></dd>', esc_html( (string) $key ), esc_html( (string) $value ) );
 		}
 		echo '</dl></section>';
 	}
@@ -96,6 +96,6 @@ final class DebugPanel {
 	 */
 	private static function dump( string $title, mixed $data ): void {
 		$text = is_string( $data ) ? $data : (string) wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
-		printf( '<section class="ucf-card ucf-mt"><h2 class="ucf-card__title">%1$s</h2><pre class="ucf-pre">%2$s</pre></section>', esc_html( $title ), esc_html( $text ) );
+		printf( '<section class="pfont-card pfont-mt"><h2 class="pfont-card__title">%1$s</h2><pre class="pfont-pre">%2$s</pre></section>', esc_html( $title ), esc_html( $text ) );
 	}
 }

@@ -52,6 +52,5 @@ final class Plugin {
 		 * Fires after PFont has registered its hooks.
 		 */
 		do_action( 'pfont_loaded' );
-		do_action_deprecated( 'ucf_loaded', array(), '1.4.0', 'pfont_loaded' );
 	}
 }

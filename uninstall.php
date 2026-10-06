@@ -11,7 +11,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
  * Remove data for the current site according to its own uninstall settings.
  */
 function pfont_uninstall_site() {
-	$settings = get_option( 'ucf_settings', array() );
+	$settings = get_option( 'pfont_settings', array() );
 	$settings = is_array( $settings ) ? $settings : array();
 
 	if ( ! empty( $settings['delete_files_on_uninstall'] ) ) {
@@ -27,11 +27,11 @@ function pfont_uninstall_site() {
 	}
 
 	if ( ! empty( $settings['delete_settings_on_uninstall'] ) ) {
-		delete_option( 'ucf_fonts' );
-		delete_option( 'ucf_settings' );
-		delete_option( 'ucf_db_version' );
-		delete_transient( 'ucf_native_index' );
-		delete_transient( 'ucf_debug_last_load' );
+		delete_option( 'pfont_fonts' );
+		delete_option( 'pfont_settings' );
+		delete_option( 'pfont_db_version' );
+		delete_transient( 'pfont_native_index' );
+		delete_transient( 'pfont_debug_last_load' );
 	}
 }
 

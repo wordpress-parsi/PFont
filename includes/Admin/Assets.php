@@ -29,9 +29,9 @@ final class Assets {
 		}
 		// 'wp-base-styles' defines --wp-admin-theme-color for the user's admin colour scheme.
 		$deps = wp_style_is( 'wp-base-styles', 'registered' ) ? array( 'wp-base-styles' ) : array();
-		wp_enqueue_style( 'ucf-admin', PFONT_URL . 'assets/css/admin.css', $deps, PFONT_VERSION );
+		wp_enqueue_style( 'pfont-admin', PFONT_URL . 'assets/css/admin.css', $deps, PFONT_VERSION );
 		wp_enqueue_script(
-			'ucf-admin',
+			'pfont-admin',
 			PFONT_URL . 'assets/js/admin.js',
 			array(),
 			PFONT_VERSION,
@@ -54,7 +54,7 @@ final class Assets {
 		}
 		if ( $specs ) {
 			// Only on this admin screen, so the site owner can compare the presets before adding one.
-			wp_enqueue_style( 'ucf-preset-previews', CdnFonts::css2_url( $specs, 'swap' ), array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Versioned by the font service.
+			wp_enqueue_style( 'pfont-preset-previews', CdnFonts::css2_url( $specs, 'swap' ), array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Versioned by the font service.
 		}
 	}
 }

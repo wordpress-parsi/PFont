@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin-level settings (ucf_settings option).
+ * Plugin-level settings (pfont_settings option).
  *
  * @package PFont
  */
@@ -12,11 +12,11 @@ use PFont\Fonts\CdnFonts;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Typed access to the ucf_settings option.
+ * Typed access to the pfont_settings option.
  */
 final class Settings {
 
-	public const OPTION = 'ucf_settings';
+	public const OPTION = 'pfont_settings';
 
 	/**
 	 * Request cache.

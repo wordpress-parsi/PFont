@@ -146,7 +146,7 @@ final class FontLoader {
 	}
 
 	/**
-	 * Stylesheet URLs for CDN fonts (one css2 request for all provider fonts).
+	 * Stylesheet URL(s) for CDN fonts (one css2 request on the configured provider for all of them).
 	 *
 	 * @param Font[] $fonts Fonts.
 	 * @return string[]
@@ -207,7 +207,7 @@ final class FontLoader {
 		++self::$flushes;
 
 		if ( '' !== $local_css ) {
-			$handle = 'ucf-fonts' . $suffix;
+			$handle = 'pfont-fonts' . $suffix;
 			wp_register_style( $handle, false, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Inline-only handle.
 			wp_add_inline_style( $handle, $local_css );
 			wp_enqueue_style( $handle );
@@ -216,7 +216,7 @@ final class FontLoader {
 		$urls = self::remote_urls( $remote );
 		foreach ( $urls as $i => $url ) {
 			// No ?ver= on third-party font URLs: it would only break shared caching.
-			wp_enqueue_style( 'ucf-cdn' . $suffix . ( $i ? '-' . $i : '' ), $url, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			wp_enqueue_style( 'pfont-cdn' . $suffix . ( $i ? '-' . $i : '' ), $url, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 		}
 		if ( $urls ) {
 			self::maybe_preconnect();
@@ -248,7 +248,7 @@ final class FontLoader {
 		}
 		$uri = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 		set_transient(
-			'ucf_debug_last_load',
+			'pfont_debug_last_load',
 			array(
 				'url'  => $uri,
 				'time' => time(),
@@ -297,13 +297,9 @@ final class FontLoader {
 		$display = 'swap';
 		foreach ( $items as $item ) {
 			list( $font, $weights ) = $item;
-			if ( '' !== $font->cdn_url() ) {
-				$urls[] = $font->cdn_url();
-				continue;
-			}
-			$preset  = $font->preset_data();
-			$specs[] = CdnFonts::css2_family( $font->remote_family(), $weights ? $weights : $font->weights(), $preset['range'] ?? null, $font->styles() );
-			$display = $font->display();
+			$preset                 = $font->preset_data();
+			$specs[]                = CdnFonts::css2_family( $font->remote_family(), $weights ? $weights : $font->weights(), $preset['range'] ?? null, $font->styles() );
+			$display                = $font->display();
 		}
 		if ( $specs ) {
 			array_unshift( $urls, CdnFonts::css2_url( $specs, $display ) );
